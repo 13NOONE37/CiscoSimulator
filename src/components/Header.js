@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import Logo from 'resources/Images/Logo.png';
 import { useTranslation } from 'react-i18next';
 
-import i18next from 'i18next';
 import 'css/Header.css';
 
 export default function Header() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const [language, setlanguage] = useState('en');
-
-  const handleChange = (e) => i18next.changeLanguage(e.target.value);
+  const handleChange = (e) => {
+    i18n.changeLanguage(e.target.value);
+  };
 
   return (
     <header className="pageHeader">
