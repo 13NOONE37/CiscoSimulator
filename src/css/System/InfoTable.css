@@ -1,0 +1,19 @@
+.InfoTable {
+   width: 500px;
+   display: flex;
+   flex-direction: column;
+   border: 1px solid var(--tplink-grey2);
+}
+.InfoTable .row {
+   border-bottom: 1px solid var(--tplink-grey2);
+   padding: 4px;
+   font-size: 14px;
+
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+}
+
+.InfoTable .InfoTableTitle {
+   background-color: var(--tplink-blue4);
+   color: var(--tplink-blue1);
+}

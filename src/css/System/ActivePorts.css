@@ -1,0 +1,23 @@
+.portStatusBox {
+   width: 450px;
+   border-radius: 4px;
+   border: 2px solid var(--tplink-blue1);
+   padding: 20px;
+
+   display: flex;
+   justify-content: center;
+   gap: 20px;
+   background-color: var(--tplink-grey1);
+}
+.portStatusBox span {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+.portStatusBox span i {
+   font-size: 20px;
+}
+.activePort i {
+   color: #5fdba7;
+}

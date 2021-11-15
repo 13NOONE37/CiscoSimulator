@@ -1,0 +1,45 @@
+.InfoContainer {
+   padding: 10px 0px 10px 10px;
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+.InfoContainer nav {
+   display: flex;
+}
+.navOption {
+   cursor: pointer;
+   background-color: var(--tplink-blue1);
+   color: var(--tplink-grey1);
+   box-shadow: inset 2px 0px 4px rgba(0, 0, 0, 0.7);
+
+   padding: 4px 10px;
+   font-size: 14px;
+   text-decoration: none;
+   outline: none;
+}
+.navOption:focus {
+   background-color: #eee;
+   color: var(--tplink-blue1);
+}
+.navOption:hover {
+   filter: brightness(1.1);
+}
+.navOption:nth-child(1) {
+   border-radius: 4px 0 0 0;
+   box-shadow: unset;
+}
+.navOption:last-child {
+   border-radius: 0 4px 0 0;
+}
+.InfoContainer article {
+   border-top: 2px solid #000;
+   background-color: #eee;
+   height: 100%;
+
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   gap: 10px;
+}

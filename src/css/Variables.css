@@ -1,0 +1,8 @@
+:root {
+   --tplink-blue1: hsl(204, 58%, 36%);
+   --tplink-blue2: hsl(204, 58%, 86%);
+   --tplink-blue3: hsl(204, 58%, 16%);
+   --tplink-blue4: hsl(218, 100%, 88%);
+   --tplink-grey1: hsl(0, 0%, 89%);
+   --tplink-grey2: hsl(0, 0%, 55%);
+}
