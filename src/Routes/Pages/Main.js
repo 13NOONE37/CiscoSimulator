@@ -58,28 +58,43 @@ export default function Main() {
       path: '/usermanagment',
       navItems: [
         {
-          path: '/systemsummary',
-          name: t('SystemSummary'),
+          path: '/usertable',
+          name: t('UserTable'),
           content: () => <h1>🛺11</h1>,
         },
         {
-          path: '/devicedescription',
-          name: t('DeviceDescription'),
+          path: '/userconfig',
+          name: t('UserConfig'),
+          content: () => <h1>🚕22</h1>,
+        },
+      ],
+    },
+    {
+      path: '/systemtools',
+      navItems: [
+        {
+          path: '/configrestore',
+          name: t('ConfigRestore'),
+          content: () => <h1>🛺11</h1>,
+        },
+        {
+          path: '/configbackup',
+          name: t('ConfigBackup'),
           content: () => <h1>🚕22</h1>,
         },
         {
-          path: '/systemtime',
-          name: t('SystemTime'),
+          path: '/firmwareupgrade',
+          name: t('FirmwareUpgrade'),
           content: () => <h1>🚓33</h1>,
         },
         {
-          path: '/daylightsavingtime',
-          name: t('DaylightSavingTime'),
+          path: '/systemreboot',
+          name: t('SystemReboot'),
           content: () => <h1>🚗44</h1>,
         },
         {
-          path: '/systemip',
-          name: t('SystemIP'),
+          path: '/systemreset',
+          name: t('SystemReset'),
           content: () => <h1>🚌55</h1>,
         },
       ],
@@ -95,16 +110,6 @@ export default function Main() {
           {pageRoutes.map((route1, index1) => (
             <Route path={route1.path}>
               <SubPages navItems={route1.navItems} />
-              {/* <div className="InfoContainer">
-                <SubPages navItems={route1.navItems} />
-                {route1.navItems.map((route2, index2) => (
-                  <Route
-                    exact={true}
-                    path={`${route1.path}${route2.path}`}
-                    component={route2.content}
-                  />
-                ))}
-              </div> */}
             </Route>
           ))}
         </Switch>
@@ -120,13 +125,13 @@ const SubPages = ({ navItems }) => {
     <div className="InfoContainer">
       <nav>
         {navItems.map((item, index) => (
-          <Link className="navOption" to={`${url}/${item.path}`} key={index}>
+          <Link className="navOption" to={`${url}${item.path}`} key={index}>
             {item.name}
           </Link>
         ))}
       </nav>
       {navItems.map((item, index) => (
-        <Route path={`${url}/${item.path}`} component={item.content} />
+        <Route path={`${url}${item.path}`} component={item.content} />
       ))}
     </div>
   );

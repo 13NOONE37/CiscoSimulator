@@ -25,11 +25,11 @@ export default function Sidebar() {
         },
         {
           name: 'System Tools',
-          action: () => history.push('/system/systemtools'),
+          action: () => history.push('/systemtools'),
         },
         {
           name: 'Access Security',
-          action: () => history.push('/system/security'),
+          action: () => history.push('/systemsecurity'),
         },
       ],
     },
