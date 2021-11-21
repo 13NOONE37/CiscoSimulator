@@ -9,7 +9,7 @@ import Header from './Header';
 import NotFound from './NotFound';
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [config, setConfig] = useState({
     ip: '192.168.0.40',
     mask: '255.255.255.0',

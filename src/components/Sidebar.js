@@ -1,81 +1,83 @@
 import React from 'react';
 import 'css/Sidebar.css';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 
 export default function Sidebar() {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const switchName = 'TL-SG2008';
   const elements = [
     {
       name: t('SideSystem'),
-      action: null,
+      action: () => history.push('/system/info'),
       style: null,
       isSubitem: true,
       subitems: [
         {
           name: 'System Info',
-          action: null,
+          action: () => history.push('/systeminfo'),
         },
         {
           name: 'User Managment',
-          action: null,
+          action: () => history.push('/usermanagment'),
         },
         {
           name: 'System Tools',
-          action: null,
+          action: () => history.push('/system/systemtools'),
         },
         {
           name: 'Access Security',
-          action: null,
+          action: () => history.push('/system/security'),
         },
       ],
     },
     {
       name: t('SideSwitching'),
-      action: null,
+      action: () => history.push('/switching'),
       style: null,
       isSubitem: false,
     },
     {
       name: t('SideVLAN'),
-      action: null,
+      action: () => history.push('/vlan'),
       style: null,
       isSubitem: false,
     },
     {
       name: t('SideSpaningTree'),
-      action: null,
+      action: () => history.push('/stp'),
       style: null,
       isSubitem: false,
     },
     {
       name: t('SideMulticast'),
-      action: null,
+      action: () => history.push('/multicast'),
       style: null,
       isSubitem: false,
     },
     {
       name: t('SideQoS'),
-      action: null,
+      action: () => history.push('/qos'),
       style: null,
       isSubitem: false,
     },
     {
       name: t('SideACL'),
-      action: null,
+      action: () => history.push('/acl'),
       style: null,
       isSubitem: false,
     },
     {
       name: t('SideSNMP'),
-      action: null,
+      action: () => history.push('/snmp'),
       style: null,
       isSubitem: false,
     },
     {
       name: t('SideMaintenance'),
-      action: null,
+      action: () => history.push('/maintance'),
       style: null,
       isSubitem: false,
     },
@@ -100,13 +102,21 @@ export default function Sidebar() {
         {elements.map((item, index) =>
           item.isSubitem ? (
             <details>
-              <summary className="sideButton">{item.name}</summary>
+              <summary className="sideButton" onClick={item.action}>
+                {item.name}
+              </summary>
               {item.subitems.map((item2) => (
-                <button className="sideButton">{item2.name}</button>
+                <button className="sideButton" onClick={item2.action}>
+                  {item2.name}
+                </button>
               ))}
             </details>
           ) : (
-            <button className="sideButton" style={item.style}>
+            <button
+              className="sideButton"
+              style={item.style}
+              onClick={item.action}
+            >
               {item.name}
             </button>
           ),

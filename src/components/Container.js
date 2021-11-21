@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import ContentContainer from './ContentContainer';
+// import ContentContainer from './ContentContainer';
 import AppContext from 'store/AppContext';
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ export default function Container() {
 
   return (
     <main className="container">
-      <ContentContainer config={config} setConfig={setConfig} t={t} />
+      {/* <ContentContainer config={config} setConfig={setConfig} t={t} /> */}
     </main>
   );
 }
