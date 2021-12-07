@@ -1,0 +1,42 @@
+.boxLoader {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.loader {
+   display: flex;
+   animation: rotateLoader 2.2s linear infinite;
+}
+.loader div {
+   border-radius: 50%;
+   background: #000;
+}
+.loader div:nth-child(1) {
+   animation: loadAnimation 1.2s 1.2s linear alternate infinite;
+}
+.loader div:nth-child(2) {
+   animation: loadAnimation 1.2s 0s linear alternate infinite;
+}
+.loader div:nth-child(3) {
+   animation: loadAnimation 1.2s 1.2s linear alternate infinite;
+}
+@keyframes loadAnimation {
+   from {
+      transform: scale(0.9);
+      opacity: 1;
+   }
+   to {
+      transform: scale(1.2);
+      opacity: 0.8;
+   }
+}
+@keyframes rotateLoader {
+   from {
+      transform: rotate(0deg);
+   }
+   to {
+      transform: rotate(360deg);
+   }
+}
