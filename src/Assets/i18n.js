@@ -11,6 +11,9 @@ i18n.init({
             Password: 'Password',
             Login: 'Login',
             LoginError: 'Username or password is wrong',
+            Apply: 'Apply',
+            Refresh: 'Refresh',
+            Help: 'Help',
 
             //Sidebar
             SideSystem: 'System',
@@ -46,6 +49,10 @@ i18n.init({
             Info_DefaultGateway: 'Default Gateway',
             Info_MACAddress: 'MAC Address',
             Info_SystemTimeConfig: 'Time Config',
+            Info_TimeZone: 'Time Zone',
+            Info_PrimaryServer: 'Primary Server',
+            Info_SecoundaryServer: 'Secoundary Server',
+            Info_UpdateRate: 'Update Rate',
          },
       },
       pl: {
@@ -57,6 +64,9 @@ i18n.init({
             Password: 'Hasło',
             Login: 'Zaloguj',
             LoginError: 'Nazwa użytkownika lub hasło nie pasuje',
+            Apply: 'Zatwierdź',
+            Refresh: 'Odśwież',
+            Help: 'Pomoc',
 
             //Sidebar
             SideSystem: 'System',
@@ -92,6 +102,10 @@ i18n.init({
             Info_DefaultGateway: 'Brama domyślna',
             Info_MACAddress: 'Adres MAC',
             Info_SystemTimeConfig: 'Konfiguracja czasu',
+            Info_TimeZone: 'Strefa czasowa',
+            Info_PrimaryServer: 'Pierwszy serwer',
+            Info_SecoundaryServer: 'Drugi serwer',
+            Info_UpdateRate: 'Częstotliowść aktualizacji',
          },
       },
    },

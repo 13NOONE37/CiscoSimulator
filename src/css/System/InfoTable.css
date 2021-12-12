@@ -12,3 +12,22 @@
    display: grid;
    grid-template-columns: 1fr 1fr;
 }
+.rowUser {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   place-items: center;
+   border-bottom: 1px solid var(--tplink-grey1);
+}
+.rowUser span {
+   width: 100%;
+   border-right: 1px solid var(--tplink-grey1);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.tableNav {
+   background-color: var(--tplink-grey1);
+   color: var(--tplink-blue1);
+   font-size: 14px;
+   border-bottom: 1px solid var(--tplink-grey2);
+}

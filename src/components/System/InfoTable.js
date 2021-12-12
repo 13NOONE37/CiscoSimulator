@@ -48,8 +48,10 @@ export default function InfoTable({ config, setConfig }) {
          value: config.mac,
       },
       {
-         title: t('Info_SystemTime'),
-         value: config.time,
+         title: t('SystemTime'),
+         value: `${new Date(config.currentTime).toDateString()} ${new Date(
+            config.currentTime
+         ).toLocaleTimeString()}`,
       },
    ];
 

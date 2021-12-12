@@ -30,7 +30,7 @@ import SystemReboot from './SystemTools/SystemReboot';
 import SystemReset from './SystemTools/SystemReset';
 
 export default function Main() {
-   const [loggedIn, setLoggedIn, config, setConfig] = useContext(AppContext);
+   const [loggedIn, setLoggedIn, config] = useContext(AppContext);
    const { t } = useTranslation();
    const pageRoutes = [
       {
@@ -39,45 +39,27 @@ export default function Main() {
             {
                path: '/systemsummary',
                name: t('SystemSummary'),
-               content: () => (
-                  <SystemSummary t={t} config={config} setConfig={setConfig} />
-               ),
+               content: () => <SystemSummary t={t} config={config} />,
             },
             {
                path: '/devicedescription',
                name: t('DeviceDescription'),
-               content: () => (
-                  <DeviceDescription
-                     t={t}
-                     config={config}
-                     setConfig={setConfig}
-                  />
-               ),
+               content: () => <DeviceDescription t={t} config={config} />,
             },
             {
                path: '/systemtime',
                name: t('SystemTime'),
-               content: () => (
-                  <SystemTime t={t} config={config} setConfig={setConfig} />
-               ),
+               content: () => <SystemTime t={t} config={config} />,
             },
             {
                path: '/daylightsavingtime',
                name: t('DaylightSavingTime'),
-               content: () => (
-                  <DayglightSavingTime
-                     t={t}
-                     config={config}
-                     setConfig={setConfig}
-                  />
-               ),
+               content: () => <DayglightSavingTime t={t} config={config} />,
             },
             {
                path: '/systemip',
                name: t('SystemIP'),
-               content: () => (
-                  <SystemIp t={t} config={config} setConfig={setConfig} />
-               ),
+               content: () => <SystemIp t={t} config={config} />,
             },
          ],
       },
@@ -87,12 +69,12 @@ export default function Main() {
             {
                path: '/usertable',
                name: t('UserTable'),
-               content: () => <Usertable />,
+               content: () => <Usertable t={t} config={config} />,
             },
             {
                path: '/userconfig',
                name: t('UserConfig'),
-               content: () => <Userconfig />,
+               content: () => <Userconfig t={t} config={config} />,
             },
          ],
       },
@@ -131,7 +113,7 @@ export default function Main() {
    return (
       <div className='ContentContainer'>
          <Router>
-            <Sidebar setLoggedIn={setLoggedIn} />
+            <Sidebar setLoggedIn={setLoggedIn} config={config} />
 
             <Switch>
                {pageRoutes.map((route1, index1) => (

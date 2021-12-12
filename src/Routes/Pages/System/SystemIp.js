@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import ReactInputMask from 'react-input-mask';
 import 'css/System/SystemIp.css';
 
-export default function SystemIp({ t, config, setConfig }) {
+export default function SystemIp({ t, config }) {
    const handleSubmit = (e) => {
       e.preventDefault();
       config.ip = currentIP;
@@ -105,7 +105,11 @@ export default function SystemIp({ t, config, setConfig }) {
                      value={currentIP}
                      onChange={(e) => handleChange(e, setcurrentIP)}
                   ></ReactInputMask>
-                  <input type='submit' className='moveRight' value={'Help'} />
+                  <input
+                     type='submit'
+                     className='moveRight'
+                     value={t('Help')}
+                  />
                </span>
                <span>
                   {t('Info_SubnetMask')}:

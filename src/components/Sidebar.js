@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'css/Sidebar.css';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
-export default function Sidebar({ setLoggedIn }) {
+export default function Sidebar({ setLoggedIn, config }) {
+   const downloadRef = useRef(null);
+   const [downloadHref, setdownloadHref] = useState('');
+
    const { t } = useTranslation();
    const history = useHistory();
+
+   const handlePrepareJson = async () => {
+      const backup = { config };
+      const json = JSON.stringify(backup);
+      const blob = new Blob([json], { type: 'application/json' });
+      const href = await URL.createObjectURL(blob);
+      setdownloadHref(href);
+   };
+   useEffect(() => {
+      handlePrepareJson();
+   }, []);
 
    const switchName = 'TL-SG2008';
    const elements = [
@@ -83,7 +97,9 @@ export default function Sidebar({ setLoggedIn }) {
       },
       {
          name: t('SideSaveConfig'),
-         action: null,
+         action: () => {
+            downloadRef.current.click();
+         },
          style: null,
          isSubitem: false,
       },
@@ -100,6 +116,12 @@ export default function Sidebar({ setLoggedIn }) {
 
    return (
       <aside className='sidebar'>
+         <a
+            ref={downloadRef}
+            href={downloadHref}
+            download='Config.json'
+            style={{ display: 'none' }}
+         ></a>
          <h1>{switchName}</h1>
          <div className='elements'>
             {elements.map((item, index) =>
