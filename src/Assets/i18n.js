@@ -14,6 +14,13 @@ i18n.init({
             Apply: 'Apply',
             Refresh: 'Refresh',
             Help: 'Help',
+            Create: 'Create',
+            Clear: 'Clear',
+            Delete: 'Delete',
+            Select: 'Select',
+            Operation: 'Operation',
+            Edit: 'Edit',
+            userID: 'User ID',
 
             //Sidebar
             SideSystem: 'System',
@@ -67,6 +74,13 @@ i18n.init({
             Apply: 'Zatwierdź',
             Refresh: 'Odśwież',
             Help: 'Pomoc',
+            Create: 'Utwórz',
+            Clear: 'Wyczyść',
+            Delete: 'Usuń',
+            Select: 'Wybierz',
+            Operation: 'Operacja',
+            Edit: 'Edytuj',
+            userID: 'ID użytkownika',
 
             //Sidebar
             SideSystem: 'System',
@@ -110,7 +124,7 @@ i18n.init({
       },
    },
    fallbackLng: 'en',
-   debug: true,
+   debug: false,
 
    ns: ['translations'],
    defaultNS: 'translations',

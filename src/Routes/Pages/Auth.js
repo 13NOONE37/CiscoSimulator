@@ -5,7 +5,7 @@ import 'css/ContentContainer.css';
 
 import Loading from 'components/Loading';
 import { useTranslation } from 'react-i18next';
-import handleGlobalChange from 'utils/handleGlobalChange';
+import handleGlobalChange from 'Utils/handleGlobalChange';
 
 export default function Auth() {
   const { t } = useTranslation();

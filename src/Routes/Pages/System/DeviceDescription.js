@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import handleGlobalChange from 'utils/handleGlobalChange';
+import handleGlobalChange from 'Utils/handleGlobalChange';
 
 export default function DeviceDescription({ t, config }) {
   const [deviceName, setdeviceName] = useState(config.deviceName);

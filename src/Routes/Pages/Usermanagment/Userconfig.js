@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import handleGlobalChange from 'utils/handleGlobalChange';
+import handleGlobalChange from 'Utils/handleGlobalChange';
 
 export default function Userconfig({ t, config }) {
   const [username, setusername] = useState('');
@@ -40,21 +40,20 @@ export default function Userconfig({ t, config }) {
     }
   };
   const handleDelete = () => {
-    console.log(
-      editUser,
-      config.users,
-      config.users.filter((item) => !editUser.includes(item.name)),
-    );
+    config.users.filter((item, index) => !editUser.includes(index));
+
+    seteditUser([]);
   };
-  const handleSelectUser = (item) => {
-    console.log(item);
-    if (editUser.includes(item.name)) {
-      seteditUser(editUser.filter((us) => us != item.name));
+  const handleSelectUser = (index) => {
+    if (editUser.includes(index)) {
+      seteditUser(editUser.filter((us) => us != index));
     } else {
-      editUser.push(item.name);
+      const temp = editUser;
+      editUser.push(index);
+      seteditUser(temp);
     }
-    console.log(editUser);
   };
+
   return (
     <article>
       <div className="tplinkBoxBase1">
@@ -120,7 +119,7 @@ export default function Userconfig({ t, config }) {
               <span>{t('userID')}</span>
               <span>{t('Username')}</span>
               <span>{t('AccessLevel')}</span>
-              <span>{t('operation')}</span>
+              <span>{t('Operation')}</span>
             </div>
             {config.users.map((item, index) => (
               <div className="rowUser rowUserSpecial" key={index}>
@@ -128,14 +127,14 @@ export default function Userconfig({ t, config }) {
                   <input
                     type="checkbox"
                     name="user"
-                    onClick={() => handleSelectUser(item)}
+                    onClick={() => handleSelectUser(index)}
                   />
                 </span>
                 <span>{index + 1}</span>
                 <span>{item.username}</span>
                 <span>{item.permission}</span>
                 <span>
-                  <button>{t('Edit')}</button>
+                  <button className="buttonClear">{t('Edit')}</button>
                 </span>
               </div>
             ))}
