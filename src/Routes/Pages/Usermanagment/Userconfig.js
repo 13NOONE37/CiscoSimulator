@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
-export default function Userconfig({ t, config }) {
+export default function Userconfig({ t, config, setConfig }) {
   const [username, setusername] = useState('');
   const [password1, setpassword1] = useState('');
   const [password2, setpassword2] = useState('');
   const [permission, setpermission] = useState('Guest');
   const [editUser, seteditUser] = useState([]);
+  const [forceUpdate, setforceUpdate] = useState(1);
 
   const handleClear = () => {
     setusername('');
@@ -40,9 +41,16 @@ export default function Userconfig({ t, config }) {
     }
   };
   const handleDelete = () => {
-    config.users.filter((item, index) => !editUser.includes(index));
+    let temp = config;
 
+    temp.users = temp.users.filter((item, index) => !editUser.includes(index));
+    setConfig(temp);
+    setforceUpdate(forceUpdate + 1);
     seteditUser([]);
+
+    // config.users.filter((item, index) => !editUser.includes(index));
+
+    // seteditUser([]);
   };
   const handleSelectUser = (index) => {
     if (editUser.includes(index)) {
