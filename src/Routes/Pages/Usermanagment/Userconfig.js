@@ -6,7 +6,8 @@ export default function Userconfig({ t, config, setConfig }) {
   const [password1, setpassword1] = useState('');
   const [password2, setpassword2] = useState('');
   const [permission, setpermission] = useState('Guest');
-  const [editUser, seteditUser] = useState([]);
+
+  const [tempUsersToDelete, settempUsersToDelete] = useState(config.users);
   const [forceUpdate, setforceUpdate] = useState(1);
 
   const handleClear = () => {
@@ -41,24 +42,17 @@ export default function Userconfig({ t, config, setConfig }) {
     }
   };
   const handleDelete = () => {
-    let temp = config;
-
-    temp.users = temp.users.filter((item, index) => !editUser.includes(index));
-    setConfig(temp);
+    config.users = tempUsersToDelete;
+    settempUsersToDelete(config.users);
     setforceUpdate(forceUpdate + 1);
-    seteditUser([]);
-
-    // config.users.filter((item, index) => !editUser.includes(index));
-
-    // seteditUser([]);
   };
-  const handleSelectUser = (index) => {
-    if (editUser.includes(index)) {
-      seteditUser(editUser.filter((us) => us != index));
+  const handleSelectUser = (item) => {
+    if (tempUsersToDelete.includes(item)) {
+      settempUsersToDelete(tempUsersToDelete.filter((us) => us != item));
     } else {
-      const temp = editUser;
-      editUser.push(index);
-      seteditUser(temp);
+      const temp = tempUsersToDelete;
+      temp.push(item);
+      settempUsersToDelete(temp);
     }
   };
 
@@ -68,7 +62,7 @@ export default function Userconfig({ t, config, setConfig }) {
         <div className="InfoTableTitle">{t('Info_UserInfo')}</div>
         <form onSubmit={handleSubmit} className="tplinkFormBase1">
           <span>
-            {t('UserName')}:
+            {t('Username')}:
             <input
               className="basicInput"
               type="text"
@@ -123,7 +117,7 @@ export default function Userconfig({ t, config, setConfig }) {
           <div className="InfoTable">
             <div className="row InfoTableTitle">{t('Usertable')}</div>
             <div className="rowUser rowUserSpecial tableNav ">
-              <span>{t('select')}</span>
+              <span>{t('Select')}</span>
               <span>{t('userID')}</span>
               <span>{t('Username')}</span>
               <span>{t('AccessLevel')}</span>
@@ -135,7 +129,7 @@ export default function Userconfig({ t, config, setConfig }) {
                   <input
                     type="checkbox"
                     name="user"
-                    onClick={() => handleSelectUser(index)}
+                    onChange={() => handleSelectUser(item)}
                   />
                 </span>
                 <span>{index + 1}</span>
