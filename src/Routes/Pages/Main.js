@@ -119,7 +119,7 @@ export default function Main() {
 
         <Switch>
           {pageRoutes.map((route1, index1) => (
-            <Route path={route1.path}>
+            <Route path={route1.path} key={index1}>
               <SubPages navItems={route1.navItems} />
             </Route>
           ))}

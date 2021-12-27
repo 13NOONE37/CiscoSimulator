@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
 export default function Userconfig({ t, config, setConfig }) {
@@ -8,43 +8,81 @@ export default function Userconfig({ t, config, setConfig }) {
   const [permission, setpermission] = useState('Guest');
 
   const [tempUsersToDelete, settempUsersToDelete] = useState(config.users);
-  const [forceUpdate, setforceUpdate] = useState(1);
+  const [tempUsers, settempUsers] = useState(config.users);
 
   const handleClear = () => {
     setusername('');
     setpassword1('');
     setpassword2('');
     setpermission('Guest');
+    setcurrentEdit(undefined);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if ((password1.length > 0) | (username.length > 0)) {
-      let addUser = true;
-      config.users.map((item) => {
-        if (item.username == username) {
+    if (currentEdit == undefined) {
+      if ((password1.length > 0) | (username.length > 0)) {
+        let addUser = true;
+        config.users.map((item) => {
+          if (item.username == username) {
+            addUser = false;
+            alert(`User already exist`);
+          }
+        });
+        if (password1 != password2) {
           addUser = false;
-          alert(`User already exist`);
+          alert(`Password don't match`);
         }
-      });
-      if (password1 != password2) {
-        addUser = false;
-        alert(`Password don't match`);
-      }
 
-      if (addUser) {
-        config.users.push({ username, password: password1, permission });
-        setusername('');
-        setpassword1('');
-        setpassword2('');
-        setpermission('Guest');
+        if (addUser) {
+          config.users.push({ username, password: password1, permission });
+          setusername('');
+          setpassword1('');
+          setpassword2('');
+          setpermission('Guest');
+        }
+      }
+    } else {
+      if (password1.length > 0 || username.length > 0) {
+        let applyUser = true;
+        config.users.map((item) => {
+          if (item != currentEdit && item.username == username) {
+            applyUser = false;
+            alert(`User already exist`);
+          }
+        });
+        if (password1 != password2) {
+          applyUser = false;
+          alert(`Password don't match`);
+        }
+
+        if (applyUser) {
+          console.log(username, password1, permission);
+          config.users.map((item) => {
+            if (item === currentEdit) {
+              item.username = username;
+              item.password = password1;
+              item.permission = permission;
+            }
+          });
+          setusername('');
+          setpassword1('');
+          setpassword2('');
+          setpermission('Guest');
+        }
       }
     }
   };
+
+  const usersRef = useRef(null);
   const handleDelete = () => {
+    [].forEach.call(usersRef.current.children, (item) => {
+      if (item.getAttribute('id') === 'userRow') {
+        item.children[0].children[0].checked = false;
+      }
+    });
+    settempUsers(tempUsersToDelete);
     config.users = tempUsersToDelete;
     settempUsersToDelete(config.users);
-    setforceUpdate(forceUpdate + 1);
   };
   const handleSelectUser = (item) => {
     if (tempUsersToDelete.includes(item)) {
@@ -54,6 +92,14 @@ export default function Userconfig({ t, config, setConfig }) {
       temp.push(item);
       settempUsersToDelete(temp);
     }
+  };
+  const [currentEdit, setcurrentEdit] = useState(undefined);
+  const handleEdit = (item) => {
+    setcurrentEdit(item);
+    setusername(item.username);
+    setpassword1(item.password);
+    setpassword2(item.password);
+    setpermission(item.permission);
   };
 
   return (
@@ -77,12 +123,16 @@ export default function Userconfig({ t, config, setConfig }) {
             <select
               className="basicInput"
               onChange={(e) => handleGlobalChange(e, setpermission)}
-              defaultValue={permission}
+              value={permission}
             >
               <option value="Guest">{t('Guest')}</option>
               <option value="Admin">{t('Admin')}</option>
             </select>
-            <input type="submit" className="moveRight" value={t('Create')} />
+            <input
+              type="submit"
+              className="moveRight"
+              value={currentEdit == undefined ? t('Create') : t('Apply')}
+            />
           </span>
           <span>
             {t('Password')}:
@@ -97,7 +147,7 @@ export default function Userconfig({ t, config, setConfig }) {
             <input
               type="button"
               className="moveRight"
-              value={t('Clear')}
+              value={currentEdit == undefined ? t('Clear') : t('Cancel')}
               onClick={handleClear}
             />
           </span>
@@ -114,7 +164,7 @@ export default function Userconfig({ t, config, setConfig }) {
           </span>
         </form>
         <div className="tplinkBoxBase1">
-          <div className="InfoTable">
+          <div className="InfoTable" ref={usersRef}>
             <div className="row InfoTableTitle">{t('Usertable')}</div>
             <div className="rowUser rowUserSpecial tableNav ">
               <span>{t('Select')}</span>
@@ -123,12 +173,13 @@ export default function Userconfig({ t, config, setConfig }) {
               <span>{t('AccessLevel')}</span>
               <span>{t('Operation')}</span>
             </div>
-            {config.users.map((item, index) => (
-              <div className="rowUser rowUserSpecial" key={index}>
+            {tempUsers.map((item, index) => (
+              <div className="rowUser rowUserSpecial" id="userRow" key={index}>
                 <span>
                   <input
                     type="checkbox"
                     name="user"
+                    defaultChecked={false}
                     onChange={() => handleSelectUser(item)}
                   />
                 </span>
@@ -136,7 +187,12 @@ export default function Userconfig({ t, config, setConfig }) {
                 <span>{item.username}</span>
                 <span>{item.permission}</span>
                 <span>
-                  <button className="buttonClear">{t('Edit')}</button>
+                  <button
+                    className="buttonClear"
+                    onClick={() => handleEdit(item)}
+                  >
+                    {t('Edit')}
+                  </button>
                 </span>
               </div>
             ))}
