@@ -1,0 +1,21 @@
+.configRestoreBox {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.configRestoreBox span:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+}
+.configRestoreBox span:nth-child(1) .spanText {
+  line-height: 35px;
+  margin-bottom: 5px;
+}
+
+.configRestoreBox .buttonRowSpan {
+  display: grid;
+  place-items: center;
+}
+.configRestoreBox .buttonRowSpan button {
+  margin: 4px;
+}

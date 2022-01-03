@@ -12,6 +12,7 @@ import {
 import 'css/ContentContainer.css';
 import 'css/Variables.css';
 import 'css/App.css';
+import 'css/System/SystemTools.css';
 
 import Sidebar from 'components/Sidebar';
 import AppContext from 'store/AppContext';
@@ -86,27 +87,29 @@ export default function Main() {
         {
           path: '/configrestore',
           name: t('ConfigRestore'),
-          content: () => <ConfigRestore />,
+          content: () => (
+            <ConfigRestore t={t} config={config} setConfig={setConfig} />
+          ),
         },
         {
           path: '/configbackup',
           name: t('ConfigBackup'),
-          content: () => <ConfigBackup />,
+          content: () => <ConfigBackup t={t} config={config} />,
         },
         {
           path: '/firmwareupgrade',
           name: t('FirmwareUpgrade'),
-          content: () => <FirmwareUpgrade />,
+          content: () => <FirmwareUpgrade t={t} />,
         },
         {
           path: '/systemreboot',
           name: t('SystemReboot'),
-          content: () => <SystemReboot />,
+          content: () => <SystemReboot t={t} />,
         },
         {
           path: '/systemreset',
           name: t('SystemReset'),
-          content: () => <SystemReset />,
+          content: () => <SystemReset t={t} />,
         },
       ],
     },

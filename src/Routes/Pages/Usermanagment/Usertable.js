@@ -20,18 +20,7 @@ export default function Usertable({ t, config }) {
             </div>
           ))}
         </div>
-        <button
-          className="basicInput"
-          style={{
-            cursor: 'pointer',
-            width: '80px',
-            margin: 'auto',
-            marginTop: '10px',
-            border: '1px solid var(--tplink-blue1)',
-          }}
-        >
-          {t('Refresh')}
-        </button>
+        <button className="basicInput bottomButton">{t('Refresh')}</button>
       </div>
     </article>
   );
