@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import 'css/Sidebar.css';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
@@ -9,17 +9,6 @@ export default function Sidebar({ setLoggedIn, config }) {
 
   const { t } = useTranslation();
   const history = useHistory();
-
-  const handlePrepareJson = async () => {
-    const backup = { config };
-    const json = JSON.stringify(backup);
-    const blob = new Blob([json], { type: 'application/json' });
-    const href = await URL.createObjectURL(blob);
-    setdownloadHref(href);
-  };
-  useEffect(() => {
-    handlePrepareJson();
-  }, []);
 
   const switchName = 'TL-SG2008';
   const elements = [
@@ -39,7 +28,7 @@ export default function Sidebar({ setLoggedIn, config }) {
         },
         {
           name: 'System Tools',
-          action: () => history.push('/systemtools'),
+          action: () => history.push('/systemtools/configrestore'),
         },
         {
           name: 'Access Security',
@@ -97,9 +86,7 @@ export default function Sidebar({ setLoggedIn, config }) {
     },
     {
       name: t('SideSaveConfig'),
-      action: () => {
-        downloadRef.current.click();
-      },
+      action: () => {},
       style: null,
       isSubitem: false,
     },
@@ -116,12 +103,6 @@ export default function Sidebar({ setLoggedIn, config }) {
 
   return (
     <aside className="sidebar">
-      <a
-        ref={downloadRef}
-        href={downloadHref}
-        download="Config.json"
-        style={{ display: 'none' }}
-      ></a>
       <h1>{switchName}</h1>
       <div className="elements">
         {elements.map((item, index) =>

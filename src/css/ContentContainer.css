@@ -135,8 +135,10 @@
 }
 .bottomButton {
   cursor: pointer;
-  /* width: 80px; */
   margin: auto;
   margin-top: 10px;
   border: 1px solid var(--tplink-blue1);
+}
+.buttonPointer {
+  cursor: pointer;
 }

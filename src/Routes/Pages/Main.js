@@ -104,12 +104,12 @@ export default function Main() {
         {
           path: '/systemreboot',
           name: t('SystemReboot'),
-          content: () => <SystemReboot t={t} />,
+          content: () => <SystemReboot t={t} setLoggedIn={setLoggedIn} />,
         },
         {
           path: '/systemreset',
           name: t('SystemReset'),
-          content: () => <SystemReset t={t} />,
+          content: () => <SystemReset t={t} setConfig={setConfig} />,
         },
       ],
     },

@@ -15,7 +15,19 @@
 .configRestoreBox .buttonRowSpan {
   display: grid;
   place-items: center;
+  margin-top: 10px;
 }
 .configRestoreBox .buttonRowSpan button {
   margin: 4px;
+}
+
+.rebootBox {
+  gap: 15px;
+  padding-left: 25px;
+}
+.resetBox span {
+  display: unset !important;
+}
+.resetBox span button {
+  margin-left: 50px;
 }

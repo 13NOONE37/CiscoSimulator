@@ -35,7 +35,11 @@ export default function DeviceDescription({ t, config }) {
               value={deviceLocation}
               onChange={(e) => handleGlobalChange(e, setdeviceLocation)}
             />
-            <input type="submit" className="moveRight" value={t('Apply')} />
+            <input
+              type="submit"
+              className="moveRight buttonPointer"
+              value={t('Apply')}
+            />
           </span>
           <span>
             {t('Info_SystemContact')}:{' '}

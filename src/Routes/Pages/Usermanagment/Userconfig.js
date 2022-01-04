@@ -130,7 +130,7 @@ export default function Userconfig({ t, config, setConfig }) {
             </select>
             <input
               type="submit"
-              className="moveRight"
+              className="moveRight buttonPointer"
               value={currentEdit == undefined ? t('Create') : t('Apply')}
             />
           </span>
@@ -146,7 +146,7 @@ export default function Userconfig({ t, config, setConfig }) {
             />
             <input
               type="button"
-              className="moveRight"
+              className="moveRight buttonPointer"
               value={currentEdit == undefined ? t('Clear') : t('Cancel')}
               onClick={handleClear}
             />
@@ -201,7 +201,9 @@ export default function Userconfig({ t, config, setConfig }) {
             <button className="basicInput actionButton" onClick={handleDelete}>
               {t('Delete')}
             </button>
-            <button className="basicInput actionButton">{t('Help')}</button>
+            <button className="basicInput actionButton buttonPointer">
+              {t('Help')}
+            </button>
           </div>
         </div>
         <div className="note">

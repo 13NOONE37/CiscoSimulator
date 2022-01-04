@@ -1,27 +1,35 @@
 import React, { useState } from 'react';
 
-export default function ConfigRestore({ t, config }) {
+export default function ConfigRestore({ t, config, setConfig }) {
   const [uploadedConfig, setuploadedConfig] = useState(null);
+
+  const compareKeys = (a, b) => {
+    let aKeys = Object.keys(a).sort();
+    let bKeys = Object.keys(b).sort();
+    return JSON.stringify(aKeys) === JSON.stringify(bKeys);
+  };
 
   const handleChange = (e) => {
     const file = e.target.files[0];
-    let result;
-    if (file) {
-      const reader = new FileReader();
 
-      reader.addEventListener('load', function () {
-        if (
-          window.confirm('Arey you sure? It will overwrite all your profil.')
-        ) {
-          const myObj = JSON.parse(this.result);
-          console.log(myObj);
-        }
-      });
-      reader.readAsText(file);
-    }
+    const reader = new FileReader();
+    reader.addEventListener('load', function () {
+      const myObj = JSON.parse(this.result);
+      setuploadedConfig(myObj.config);
+    });
+    reader.readAsText(file);
   };
   const handleRestore = () => {
     if (uploadedConfig == null) return;
+    if (
+      window.confirm(
+        'Are you sure? It will overwrite your current configuration',
+      )
+    ) {
+      if (compareKeys(config, uploadedConfig)) {
+        setConfig(uploadedConfig);
+      }
+    }
   };
 
   return (

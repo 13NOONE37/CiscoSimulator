@@ -20,7 +20,7 @@ export default function Usertable({ t, config }) {
             </div>
           ))}
         </div>
-        <button className="basicInput bottomButton">{t('Refresh')}</button>
+        <button className="basicInput bottomButton ">{t('Refresh')}</button>
       </div>
     </article>
   );
