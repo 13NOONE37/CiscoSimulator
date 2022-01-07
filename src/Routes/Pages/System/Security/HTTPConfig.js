@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function UserManagment() {
+export default function HTTPConfig() {
   return <div></div>;
 }

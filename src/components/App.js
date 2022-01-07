@@ -28,6 +28,8 @@ export default function App() {
     firstNTP: '',
     secoundNTP: '',
     updateRate: 0,
+    firmware: '1.0.0 Build 20140126 Rel.34563',
+    hardware: 'TL-SG2008 1.0',
     deviceName: 'TL-SG2008',
     systemContact: 'www.tp-link.com',
     deviceLocation: 'SHENZEN',
@@ -41,6 +43,7 @@ export default function App() {
         permission: 'Guest',
       },
     ],
+    telnetEnabled: 'disabled',
   });
 
   useEffect(() => {

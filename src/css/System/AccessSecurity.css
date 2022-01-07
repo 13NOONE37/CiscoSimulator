@@ -1,0 +1,7 @@
+.telnetBox {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+}
+.boxSpaceBetween span {
+}

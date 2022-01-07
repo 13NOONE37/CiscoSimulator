@@ -13,22 +13,28 @@ import 'css/ContentContainer.css';
 import 'css/Variables.css';
 import 'css/App.css';
 import 'css/System/SystemTools.css';
+import 'css/System/AccessSecurity.css';
 
 import Sidebar from 'components/Sidebar';
 import AppContext from 'store/AppContext';
 import { useTranslation } from 'react-i18next';
-import SystemSummary from 'Routes/Pages/System/SystemSummary';
-import DeviceDescription from './System/DeviceDescription';
-import SystemTime from './System/SystemTime';
-import DayglightSavingTime from './System/DayglightSavingTime';
-import SystemIp from './System/SystemIp';
-import Usertable from './Usermanagment/Usertable';
-import Userconfig from './Usermanagment/Userconfig';
-import ConfigRestore from './SystemTools/ConfigRestore';
-import ConfigBackup from './SystemTools/ConfigBackup';
-import FirmwareUpgrade from './SystemTools/FirmwareUpgrade';
-import SystemReboot from './SystemTools/SystemReboot';
-import SystemReset from './SystemTools/SystemReset';
+import SystemSummary from 'Routes/Pages/System/Info/SystemSummary';
+import DeviceDescription from 'Routes/Pages/System/Info/DeviceDescription';
+import SystemTime from 'Routes/Pages/System/Info/SystemTime';
+import SystemIp from 'Routes/Pages/System/Info/SystemIp';
+import DayglightSavingTime from 'Routes/Pages/System/Info/DayglightSavingTime';
+import Usertable from 'Routes/Pages/System/Usermanagment/Usertable';
+import Userconfig from 'Routes/Pages/System/Usermanagment/Userconfig';
+import ConfigRestore from 'Routes/Pages/System/SystemTools/ConfigRestore';
+import ConfigBackup from 'Routes/Pages/System/SystemTools/ConfigBackup';
+import FirmwareUpgrade from 'Routes/Pages/System/SystemTools/FirmwareUpgrade';
+import SystemReboot from 'Routes/Pages/System/SystemTools/SystemReboot';
+import SystemReset from 'Routes/Pages/System/SystemTools/SystemReset';
+import AccessControl from './System/Security/AccessControl';
+import HTTPConfig from './System/Security/HTTPConfig';
+import HTTPSConfig from './System/Security/HTTPSConfig';
+import SSHConfig from './System/Security/SSHConfig';
+import Telnet from './System/Security/Telnet';
 
 export default function Main() {
   const [loggedIn, setLoggedIn, config, setConfig] = useContext(AppContext);
@@ -99,7 +105,7 @@ export default function Main() {
         {
           path: '/firmwareupgrade',
           name: t('FirmwareUpgrade'),
-          content: () => <FirmwareUpgrade t={t} />,
+          content: () => <FirmwareUpgrade t={t} config={config} />,
         },
         {
           path: '/systemreboot',
@@ -110,6 +116,42 @@ export default function Main() {
           path: '/systemreset',
           name: t('SystemReset'),
           content: () => <SystemReset t={t} setConfig={setConfig} />,
+        },
+      ],
+    },
+    {
+      path: '/accesssecurity',
+      navItems: [
+        {
+          path: '/accesscontrol',
+          name: t('AccessControl'),
+          content: () => (
+            <AccessControl t={t} config={config} setConfig={setConfig} />
+          ),
+        },
+        {
+          path: '/HTTPConfig',
+          name: t('HTTPConfig'),
+          content: () => (
+            <HTTPConfig t={t} config={config} setConfig={setConfig} />
+          ),
+        },
+        {
+          path: '/HTTPSConfig',
+          name: t('HTTPSConfig'),
+          content: () => (
+            <HTTPSConfig t={t} config={config} setConfig={setConfig} />
+          ),
+        },
+        {
+          path: '/SSHConfig',
+          name: t('SSHConfig'),
+          content: () => <SSHConfig t={t} config={config} />,
+        },
+        {
+          path: '/TelnetConfig',
+          name: t('TelnetConfig'),
+          content: () => <Telnet t={t} config={config} />,
         },
       ],
     },

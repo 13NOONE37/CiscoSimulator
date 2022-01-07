@@ -31,3 +31,12 @@
 .resetBox span button {
   margin-left: 50px;
 }
+.firmwareBox {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 12px;
+}
+.firmwareBox .moveRight {
+  margin-left: 100px;
+}

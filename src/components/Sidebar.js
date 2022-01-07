@@ -32,7 +32,7 @@ export default function Sidebar({ setLoggedIn, config }) {
         },
         {
           name: 'Access Security',
-          action: () => history.push('/systemsecurity'),
+          action: () => history.push('/accesssecurity/accesscontrol'),
         },
       ],
     },

@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function AccessSecurity() {
+export default function HTTPSConfig() {
   return <div></div>;
 }
