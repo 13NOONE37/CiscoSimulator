@@ -1,7 +1,20 @@
 .telnetBox {
   padding: 12px;
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto auto 80px;
 }
-.boxSpaceBetween span {
+.subCategoryBox {
+  padding: 12px;
+}
+.boxSpaceBetween {
+  padding: 6px 0 6px 0;
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  align-items: center;
+}
+.boxSpaceBetween span:nth-child(1) {
+}
+.boxEqualSpaceBetween {
+  display: grid;
+  grid-template-columns: 100px 1fr;
 }

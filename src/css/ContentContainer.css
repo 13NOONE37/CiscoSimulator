@@ -73,7 +73,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
-.tplinkFormBase1 .moveRight {
+.moveRight {
   margin-left: 50px;
 }
 .spanText {
