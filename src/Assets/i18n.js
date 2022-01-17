@@ -62,6 +62,8 @@ i18n.init({
         Info_PrimaryServer: 'Primary Server',
         Info_SecoundaryServer: 'Secoundary Server',
         Info_UpdateRate: 'Update Rate',
+        ChooseSSHKey: 'Choose the SSH public key file to download into switch.',
+        KeyType: 'Key Type',
       },
     },
     pl: {
@@ -124,6 +126,9 @@ i18n.init({
         Info_PrimaryServer: 'Pierwszy serwer',
         Info_SecoundaryServer: 'Drugi serwer',
         Info_UpdateRate: 'Częstotliowść aktualizacji',
+        ChooseSSHKey:
+          'Wybierz plik z kluczem publicznym SSH aby wgrać go do przełącznika.',
+        KeyType: 'Typ klucza',
       },
     },
   },

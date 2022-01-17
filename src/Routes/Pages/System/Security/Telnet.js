@@ -1,34 +1,36 @@
 import React, { useState } from 'react';
+import handleGlobalChange from 'Utils/handleGlobalChange';
 
 export default function Telnet({ t, config }) {
   const [telnetState, settelnetState] = useState(config.telnetEnabled);
   const handleApply = () => (config.telnetEnabled = telnetState);
-  const handleChange = (e) => settelnetState(e.target.value);
   return (
     <article>
       <div className="tplinkBoxBase1">
         <div className="InfoTableTitle">{t('GlobalConfig')}</div>
 
-        <div className="telnetBox boxSpaceBetween">
-          Telnet
-          <span>
-            <input
-              type="radio"
-              name="telnetState"
-              value="enabled"
-              onChange={handleChange}
-              defaultChecked={telnetState == 'enabled'}
-            />
-            <label>Enable</label>
-            <input
-              type="radio"
-              name="telnetState"
-              value="disabled"
-              onChange={handleChange}
-              defaultChecked={telnetState == 'disabled'}
-            />
-            <label>Disable</label>
-            {telnetState == false && ' true'}
+        <div className="boxSpaceBetween">
+          <span className="boxEqualSpaceBetween">
+            <span>Telnet:</span>
+            <span>
+              <input
+                type="radio"
+                name="telnetState"
+                value="enabled"
+                onChange={(e) => handleGlobalChange(e, settelnetState)}
+                defaultChecked={telnetState == 'enabled'}
+              />
+              <label>Enable</label>
+              <input
+                type="radio"
+                name="telnetState"
+                value="disabled"
+                onChange={(e) => handleGlobalChange(e, settelnetState)}
+                defaultChecked={telnetState == 'disabled'}
+              />
+              <label>Disable</label>
+              {telnetState == false && ' true'}
+            </span>
           </span>
         </div>
         <div className="buttonsRow">

@@ -1,0 +1,38 @@
+const defaultConfig = {
+  ip: '192.168.0.40',
+  mask: '255.255.255.0',
+  gateway: '',
+  mac: 'E8-DE-27-B0-AA-AB',
+  timeSource: 'Manual',
+  currentTime: 0,
+  timeZone: '',
+  firstNTP: '',
+  secoundNTP: '',
+  updateRate: 0,
+  firmware: '1.0.0 Build 20140126 Rel.34563',
+  hardware: 'TL-SG2008 1.0',
+  deviceName: 'TL-SG2008',
+  systemContact: 'www.tp-link.com',
+  deviceLocation: 'SHENZEN',
+  addressMode: 'Static IP',
+  managmentVlan: '1',
+  users: [
+    { username: 'admin', password: 'admin', permission: 'Admin' },
+    {
+      username: 'Jarek',
+      password: 'admin',
+      permission: 'Guest',
+    },
+  ],
+  telnetEnabled: 'disabled',
+  sshEnabled: 'disabled',
+  v2Enabled: 'disabled',
+  v1Enabled: 'disabled',
+  idleTimeout: undefined,
+  maxConnect: undefined,
+  encryptionAlgorithm: '',
+  dataIntegrityAlgorithm: ['HMAC-SHA1', 'HMAC-MD5'],
+  keyType: '',
+};
+
+export default defaultConfig;

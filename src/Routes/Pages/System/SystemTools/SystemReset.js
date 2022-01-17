@@ -1,32 +1,8 @@
 import React from 'react';
+import defaultConfig from 'store/defaultConfig';
 
 export default function SystemReset({ t, setConfig }) {
-  const handleReset = () =>
-    setConfig({
-      ip: '192.168.0.40',
-      mask: '255.255.255.0',
-      gateway: '',
-      mac: 'E8-DE-27-B0-AA-AB',
-      timeSource: 'Manual',
-      currentTime: 0,
-      timeZone: '',
-      firstNTP: '',
-      secoundNTP: '',
-      updateRate: 0,
-      deviceName: 'TL-SG2008',
-      systemContact: 'www.tp-link.com',
-      deviceLocation: 'SHENZEN',
-      addressMode: 'Static IP',
-      managmentVlan: '1',
-      users: [
-        { username: 'admin', password: 'admin', permission: 'Admin' },
-        {
-          username: 'Jarek',
-          password: 'admin',
-          permission: 'Guest',
-        },
-      ],
-    });
+  const handleReset = () => setConfig({ ...defaultConfig });
   return (
     <article>
       <div className="tplinkBoxBase1">
