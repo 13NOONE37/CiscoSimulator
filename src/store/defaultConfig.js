@@ -30,7 +30,14 @@ const defaultConfig = {
   v1Enabled: 'disabled',
   idleTimeout: undefined,
   maxConnect: undefined,
-  encryptionAlgorithm: '',
+  encryptionAlgorithm: [
+    'AES128-CBC',
+    'AES192-CBC',
+    'AES256-CBC',
+    'Blowfish-CBC',
+    'Cast128-CBC',
+    '3DES-CBC',
+  ],
   dataIntegrityAlgorithm: ['HMAC-SHA1', 'HMAC-MD5'],
   keyType: '',
 };

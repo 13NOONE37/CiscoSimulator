@@ -16,7 +16,6 @@ export default function SSHConfig({ t, config }) {
   const [keyType, setkeyType] = useState(config.keyType);
 
   const handleSubmit1 = () => {
-    console.log(sshEnabled);
     config.sshEnabled = sshEnabled;
     config.v1Enabled = v1Enabled;
     config.v2Enabled = v2Enabled;
@@ -24,17 +23,30 @@ export default function SSHConfig({ t, config }) {
     config.idleTimeout = idleTimeout;
     config.maxConnect = maxConnect;
   };
-  const handleSubmit2 = () => {};
+  const handleSubmit2 = () => {
+    console.log(encryptionAlgorithm);
+    config.encryptionAlgorithm = encryptionAlgorithm;
+  };
   const handleSubmit3 = () => {
-    console.log(dataIntegrity);
+    config.dataIntegrityAlgorithm = dataIntegrity;
   };
 
+  const handleEncryptionChange = (e) => {
+    const index = encryptionAlgorithm.indexOf(e.target.value);
+    if (index != -1) {
+      setencryptionAlgorithm(
+        encryptionAlgorithm.filter((item) => item != e.target.value),
+      );
+    } else {
+      const temp = encryptionAlgorithm;
+      temp.push(e.target.value);
+      setencryptionAlgorithm(encryptionAlgorithm);
+    }
+  };
   const handleIntegrityChange = (e) => {
     const index = dataIntegrity.indexOf(e.target.value);
-    console.log(e.target.value, index);
     if (index != -1) {
-      console.log(dataIntegrity.splice(index, index + 1));
-      setdataIntegrity(dataIntegrity.splice(index, index + 1));
+      setdataIntegrity(dataIntegrity.filter((item) => item != e.target.value));
     } else {
       const temp = dataIntegrity;
       temp.push(e.target.value);
@@ -168,25 +180,32 @@ export default function SSHConfig({ t, config }) {
         <div className="subCategoryBox">
           <div className="boxSpaceBetween">
             <span>
-              <input type="checkbox" />
-              <label>AES128-CBC</label>
-              <input type="checkbox" />
-              <label>AES128-CBC</label>
-              <input type="checkbox" />
-              <label>AES128-CBC</label>
-              <br />
-              <input type="checkbox" />
-              <label>AES128-CBC</label>
-              <input type="checkbox" />
-              <label>AES128-CBC</label>
-              <input type="checkbox" />
-              <label>AES128-CBC</label>
+              {[
+                'AES128-CBC',
+                'AES192-CBC',
+                'AES256-CBC',
+                'Blowfish-CBC',
+                'Cast128-CBC',
+                '3DES-CBC',
+              ].map((item, index) => (
+                <>
+                  <input
+                    value={item}
+                    type="checkbox"
+                    onChange={handleEncryptionChange}
+                    defaultChecked={encryptionAlgorithm.indexOf(item) != -1}
+                  />
+                  <label>{item}</label>
+                  {index == 2 && <br />}
+                </>
+              ))}
             </span>
             <span>
               <input
                 value={t('Apply')}
                 className="buttonPointer"
                 type="button"
+                onClick={handleSubmit2}
               />
             </span>
           </div>
@@ -261,7 +280,7 @@ export default function SSHConfig({ t, config }) {
           <br />
           2. After the Key File is downloaded, the user's original key of the
           same type will be replaced. The wrong downloaded file will result in
-          the SHH access to the switch via Password authentication.
+          the SSH access to the switch via Password authentication.
         </div>
       </div>
     </article>
