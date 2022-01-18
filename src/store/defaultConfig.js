@@ -40,6 +40,11 @@ const defaultConfig = {
   ],
   dataIntegrityAlgorithm: ['HMAC-SHA1', 'HMAC-MD5'],
   keyType: '',
+  httpEnabled: 'disabled',
+  sessionTimeout: '30',
+  numberControl: undefined,
+  adminNumber: undefined,
+  guestNumber: undefined,
 };
 
 export default defaultConfig;

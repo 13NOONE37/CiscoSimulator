@@ -16,5 +16,22 @@
 }
 .boxEqualSpaceBetween {
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 120px 1fr;
+}
+.accessControl .boxEqualSpaceBetween {
+  grid-template-columns: 120px 1fr;
+}
+.boxRow {
+  display: flex;
+  align-items: center;
+}
+.boxColumn {
+  display: flex;
+  flex-direction: column;
+}
+.borderGreyBox {
+  border-top: 2px solid var(--tplink-grey1);
+  border-bottom: 2px solid var(--tplink-grey1);
+  display: flex;
+  justify-content: space-between;
 }
