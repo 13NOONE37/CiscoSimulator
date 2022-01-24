@@ -35,6 +35,7 @@ import HTTPConfig from './System/Security/HTTPConfig';
 import HTTPSConfig from './System/Security/HTTPSConfig';
 import SSHConfig from './System/Security/SSHConfig';
 import Telnet from './System/Security/Telnet';
+import NotFound from 'components/NotFound';
 
 export default function Main() {
   const [loggedIn, setLoggedIn, config, setConfig] = useContext(AppContext);
@@ -156,7 +157,6 @@ export default function Main() {
       ],
     },
   ];
-
   return (
     <div className="ContentContainer">
       <Router>
@@ -168,6 +168,9 @@ export default function Main() {
               <SubPages navItems={route1.navItems} />
             </Route>
           ))}
+          <Route path="*">
+            <NotFound />
+          </Route>
         </Switch>
       </Router>
     </div>

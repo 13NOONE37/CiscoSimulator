@@ -40,7 +40,25 @@ export default function Sidebar({ setLoggedIn, config }) {
       name: t('SideSwitching'),
       action: () => history.push('/switching'),
       style: null,
-      isSubitem: false,
+      isSubitem: true,
+      subitems: [
+        {
+          name: 'Port',
+          action: () => history.push('/switching/Port'),
+        },
+        {
+          name: 'LAG',
+          action: () => history.push('/switching/LAG'),
+        },
+        {
+          name: 'Traffic Monitor',
+          action: () => history.push('/switching/TrafficMonitor'),
+        },
+        {
+          name: 'MAC Address',
+          action: () => history.push('/switching/MACAddress'),
+        },
+      ],
     },
     {
       name: t('SideVLAN'),

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  MemoryRouter,
+} from 'react-router-dom';
 import Auth from 'Routes/Profiles/Auth';
 import Guest from 'Routes/Profiles/Guest';
 
@@ -8,6 +13,7 @@ import AppContext from 'store/AppContext';
 import Header from './Header';
 import NotFound from './NotFound';
 import defaultConfig from 'store/defaultConfig';
+import Main from 'Routes/Pages/Main';
 
 export default function App() {
   const checkIsLogged = () => {
@@ -24,7 +30,7 @@ export default function App() {
     checkIsLogged();
   }, []);
   return (
-    <Router>
+    <MemoryRouter>
       <div className="App">
         <Header />
         <AppContext.Provider value={[loggedIn, setLoggedIn, config, setConfig]}>
@@ -63,6 +69,6 @@ export default function App() {
           </Switch>
         </AppContext.Provider>
       </div>
-    </Router>
+    </MemoryRouter>
   );
 }
