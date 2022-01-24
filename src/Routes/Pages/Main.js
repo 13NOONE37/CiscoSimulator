@@ -36,6 +36,11 @@ import HTTPSConfig from './System/Security/HTTPSConfig';
 import SSHConfig from './System/Security/SSHConfig';
 import Telnet from './System/Security/Telnet';
 import NotFound from 'components/NotFound';
+import PortConfig from './Switching/Port/PortConfig';
+import PortMirror from './Switching/Port/PortMirror';
+import PortSecurity from './Switching/Port/PortSecurity';
+import PortIsolation from './Switching/Port/PortIsolation';
+import LoopbackDetection from './Switching/Port/LoopbackDetection';
 
 export default function Main() {
   const [loggedIn, setLoggedIn, config, setConfig] = useContext(AppContext);
@@ -153,6 +158,42 @@ export default function Main() {
           path: '/TelnetConfig',
           name: t('TelnetConfig'),
           content: () => <Telnet t={t} config={config} />,
+        },
+      ],
+    },
+    {
+      path: '/switching/port',
+      navItems: [
+        {
+          path: '/portconfig',
+          name: t('PortConfig'),
+          content: () => (
+            <PortConfig t={t} config={config} setConfig={setConfig} />
+          ),
+        },
+        {
+          path: '/portmirror',
+          name: t('PortMirror'),
+          content: () => (
+            <PortMirror t={t} config={config} setConfig={setConfig} />
+          ),
+        },
+        {
+          path: '/portsecurity',
+          name: t('PortSecurity'),
+          content: () => (
+            <PortSecurity t={t} config={config} setConfig={setConfig} />
+          ),
+        },
+        {
+          path: '/portisolation',
+          name: t('PortIsolation'),
+          content: () => <PortIsolation t={t} config={config} />,
+        },
+        {
+          path: '/loopbackdetection',
+          name: t('LoopbackDetection'),
+          content: () => <LoopbackDetection t={t} config={config} />,
         },
       ],
     },
