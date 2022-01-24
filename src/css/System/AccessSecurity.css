@@ -35,3 +35,7 @@
   display: flex;
   justify-content: space-between;
 }
+
+.cipherSuite .moveRight {
+  margin-left: 135px;
+}

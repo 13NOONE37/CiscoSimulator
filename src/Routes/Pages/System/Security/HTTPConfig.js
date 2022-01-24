@@ -3,10 +3,10 @@ import handleGlobalChange from 'Utils/handleGlobalChange';
 
 export default function HTTPConfig({ t, config }) {
   const [httpState, sethttpState] = useState(config.httpEnabled);
-  const [sessionTime, setsessionTime] = useState(config.sessionTimeout);
-  const [numberControl, setnumberControl] = useState(config.numberControl);
-  const [adminNumber, setadminNumber] = useState(config.adminNumber);
-  const [guestNumber, setguestNumber] = useState(config.guestNumber);
+  const [sessionTime, setsessionTime] = useState(config.sessionTimeoutHTTP);
+  const [numberControl, setnumberControl] = useState(config.numberControlHTTP);
+  const [adminNumber, setadminNumber] = useState(config.adminNumberHTTP);
+  const [guestNumber, setguestNumber] = useState(config.guestNumberHTTP);
 
   const handleSubmit1 = () => {
     config.httpEnabled = httpState;
