@@ -23,6 +23,8 @@ export default function SystemReboot({ t, setLoggedIn }) {
         </div>
 
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           To avoid damage, please don't turn off the device while rebooting.
         </div>
       </div>

@@ -38,6 +38,8 @@ export default function FirmwareUpgrade({ t, config }) {
           </span>
         </span>
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           1. Please select the proper software version matching with your
           hardware to upgrade.
           <br />

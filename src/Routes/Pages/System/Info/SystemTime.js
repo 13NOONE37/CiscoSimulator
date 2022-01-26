@@ -56,6 +56,7 @@ export default function SystemTime({ t, config }) {
               <div>
                 Date:
                 <input
+                  className="basicInput"
                   type="date"
                   disabled={currentTimeSource != 'Manual'}
                   onChange={(e) => handleGlobalChange(e, settempDate)}
@@ -64,6 +65,7 @@ export default function SystemTime({ t, config }) {
               <div>
                 Time:
                 <input
+                  className="basicInput"
                   type="time"
                   step={1}
                   disabled={currentTimeSource != 'Manual'}
@@ -85,7 +87,7 @@ export default function SystemTime({ t, config }) {
               <span>
                 {t('Info_TimeZone')}:
                 <select
-                  className="selectTplink"
+                  className="selectTplink basicInput"
                   disabled={currentTimeSource != 'NTP'}
                   defaultValue={currentTimeZone}
                   onChange={(e) => handleGlobalChange(e, setcurrentTimeZone)}
@@ -331,7 +333,10 @@ export default function SystemTime({ t, config }) {
             Synchronize with PC's Clock
           </span>
         </div>
-        <div className="note"></div>
+        <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
+        </div>
       </div>
     </article>
   );

@@ -14,6 +14,7 @@ import 'css/Variables.css';
 import 'css/App.css';
 import 'css/System/SystemTools.css';
 import 'css/System/AccessSecurity.css';
+import 'css/Switching/Port.css';
 
 import Sidebar from 'components/Sidebar';
 import AppContext from 'store/AppContext';
@@ -162,14 +163,12 @@ export default function Main() {
       ],
     },
     {
-      path: '/switching/port',
+      path: '/switching',
       navItems: [
         {
           path: '/portconfig',
           name: t('PortConfig'),
-          content: () => (
-            <PortConfig t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <PortConfig t={t} config={config} />,
         },
         {
           path: '/portmirror',

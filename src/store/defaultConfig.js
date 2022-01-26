@@ -56,6 +56,64 @@ const defaultConfig = {
   numberControlHTTPS: undefined,
   adminNumberHTTPS: undefined,
   guestNumberHTTPS: undefined,
+  portConfig: [
+    {
+      description: '',
+      status: 'Enable',
+      speed: 'Auto',
+      flow: 'Disable',
+      lag: 'LAG1',
+    },
+    {
+      description: '',
+      status: 'Enable',
+      speed: 'Auto',
+      flow: 'Disable',
+      lag: 'LAG1',
+    },
+    {
+      description: '',
+      status: 'Enable',
+      speed: 'Auto',
+      flow: 'Disable',
+      lag: '---',
+    },
+    {
+      description: '',
+      status: 'Enable',
+      speed: 'Auto',
+      flow: 'Disable',
+      lag: '---',
+    },
+    {
+      description: '',
+      status: 'Enable',
+      speed: 'Auto',
+      flow: 'Disable',
+      lag: '---',
+    },
+    {
+      description: '',
+      status: 'Enable',
+      speed: 'Auto',
+      flow: 'Disable',
+      lag: '---',
+    },
+    {
+      description: '',
+      status: 'Enable',
+      speed: 'Auto',
+      flow: 'Disable',
+      lag: '---',
+    },
+    {
+      description: '',
+      status: 'Enable',
+      speed: 'Auto',
+      flow: 'Disable',
+      lag: '---',
+    },
+  ],
 };
 
 export default defaultConfig;

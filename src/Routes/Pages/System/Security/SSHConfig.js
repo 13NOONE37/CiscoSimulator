@@ -250,7 +250,7 @@ export default function SSHConfig({ t, config }) {
             <span className="boxEqualSpaceBetween">
               <span>{t('KeyType')}:</span>
               <span className="moveRight">
-                <select>
+                <select className="basicInput">
                   <option>a</option>
                   <option>b</option>
                   <option>c</option>
@@ -275,6 +275,8 @@ export default function SSHConfig({ t, config }) {
           </div>
         </div>
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           1. It will take a long time to download the key file. Please wait
           without any operation.
           <br />

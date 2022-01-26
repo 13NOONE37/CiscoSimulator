@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function LoopbackDetection() {
-  return <div></div>;
+  return <div>a</div>;
 }

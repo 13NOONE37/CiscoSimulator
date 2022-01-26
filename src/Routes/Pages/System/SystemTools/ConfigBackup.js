@@ -48,6 +48,8 @@ export default function ConfigBackup({ t, config }) {
         </div>
 
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           It will take a long time to backup the config file. Please wait
           without any operation.
         </div>

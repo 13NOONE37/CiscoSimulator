@@ -125,6 +125,8 @@ export default function SystemIp({ t, config }) {
           </span>
         </form>
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           Changing IP address to a different IP segment will interrupt the
           network communication, so please keep the new IP address in the same
           IP segment with the local network.

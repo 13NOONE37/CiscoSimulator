@@ -21,6 +21,7 @@ export default function DeviceDescription({ t, config }) {
           <span>
             {t('Info_DeviceName')}:{' '}
             <input
+              className="basicInput"
               type="text"
               maxLength={32}
               value={deviceName}
@@ -30,6 +31,7 @@ export default function DeviceDescription({ t, config }) {
           <span>
             {t('Info_DeviceLocation')}:{' '}
             <input
+              className="basicInput"
               type="text"
               maxLength={32}
               value={deviceLocation}
@@ -44,6 +46,7 @@ export default function DeviceDescription({ t, config }) {
           <span>
             {t('Info_SystemContact')}:{' '}
             <input
+              className="basicInput"
               type="text"
               maxLength={32}
               value={systemContact}
@@ -52,6 +55,8 @@ export default function DeviceDescription({ t, config }) {
           </span>
         </form>
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           The Device Name, Location and Contact should not be more than 32
           characters.
         </div>

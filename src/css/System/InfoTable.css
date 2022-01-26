@@ -1,41 +1,41 @@
 .InfoTable {
-   width: 500px;
-   display: flex;
-   flex-direction: column;
-   border: 1px solid var(--tplink-grey2);
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--tplink-grey2);
 }
 .InfoTable .row {
-   border-bottom: 1px solid var(--tplink-grey2);
-   padding: 4px;
-   font-size: 14px;
+  border-bottom: 1px solid var(--tplink-grey2);
+  padding: 4px;
+  font-size: 14px;
 
-   display: grid;
-   grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .rowUser {
-   display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
-   place-items: center;
-   border-bottom: 1px solid var(--tplink-grey1);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  place-items: center;
+  border-bottom: 1px solid var(--tplink-grey1);
 }
 .rowUserSpecial {
-   display: grid;
-   grid-template-columns: repeat(5, 1fr);
-   place-items: center;
-   border-bottom: 1px solid var(--tplink-grey1);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  place-items: center;
+  border-bottom: 1px solid var(--tplink-grey1);
 }
 .rowUser span {
-   width: 100%;
-   border-right: 1px solid var(--tplink-grey1);
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   text-align: center;
+  width: 100%;
+  border-right: 1px solid var(--tplink-grey1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 .tableNav {
-   padding: 4px;
-   background-color: var(--tplink-grey1);
-   color: var(--tplink-blue1);
-   font-size: 14px;
-   border-bottom: 1px solid var(--tplink-grey2);
+  padding: 4px;
+  background-color: var(--tplink-grey1);
+  color: var(--tplink-blue1);
+  font-size: 14px;
+  border-bottom: 1px solid var(--tplink-grey2);
 }

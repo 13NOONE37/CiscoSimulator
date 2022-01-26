@@ -368,7 +368,10 @@ export default function HTTPSConfig({ t, config }) {
             </span>
           </div>
         </div>
-        <div className="note"></div>
+        <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
+        </div>
       </div>
     </article>
   );

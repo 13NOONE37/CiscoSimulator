@@ -38,13 +38,13 @@ export default function Sidebar({ setLoggedIn, config }) {
     },
     {
       name: t('SideSwitching'),
-      action: () => history.push('/switching/port'),
+      action: () => history.push('/switching/portconfig'),
       style: null,
       isSubitem: true,
       subitems: [
         {
           name: 'Port',
-          action: () => history.push('/switching/port'),
+          action: () => history.push('/switching/portconfig'),
         },
         {
           name: 'LAG',

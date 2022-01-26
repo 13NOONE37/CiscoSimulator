@@ -1,0 +1,18 @@
+.portTable {
+  width: 600px !important;
+}
+.portTable .rowUser {
+  grid-template-columns: 1fr 1fr 170px 2fr 2fr 2fr 1fr;
+}
+.portSelect span {
+  grid-column-start: 7;
+  padding: 2px;
+  gap: 4px;
+  color: var(--tplink-blue1);
+}
+.portSelect span input {
+  width: 40px;
+}
+.controlRow {
+  padding: 4px 0;
+}

@@ -42,7 +42,10 @@ export default function Telnet({ t, config }) {
           </button>
         </div>
 
-        <div className="note"></div>
+        <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
+        </div>
       </div>
     </article>
   );

@@ -12,7 +12,7 @@ export default function AccessControl({ t, config }) {
             <span className="boxEqualSpaceBetween">
               <span>{t('ControlMode')}:</span>
               <span>
-                <select>
+                <select className="basicInput">
                   <option>Disable</option>
                   <option>Enable</option>
                 </select>
@@ -98,7 +98,10 @@ export default function AccessControl({ t, config }) {
             </button>
           </div>
         </div>
-        <div className="note"></div>
+        <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
+        </div>
       </div>
     </article>
   );

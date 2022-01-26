@@ -207,6 +207,8 @@ export default function Userconfig({ t, config, setConfig }) {
           </div>
         </div>
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           The user name should not be more than 16 characters using digits,
           English letters and underlines only and password should not be more
           than 31 characters

@@ -18,6 +18,8 @@ export default function SystemReset({ t, setConfig }) {
         </div>
 
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           The System Reset option will restore the configuration to default and
           your current settings will be lost.
         </div>

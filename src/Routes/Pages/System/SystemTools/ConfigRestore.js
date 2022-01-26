@@ -67,6 +67,8 @@ export default function ConfigRestore({ t, config, setConfig }) {
         </div>
 
         <div className="note">
+          <strong>{t('Note')}:</strong>
+          <br />
           It will take a long time to restore the config file. Please wait
           wihout any operation.
         </div>
