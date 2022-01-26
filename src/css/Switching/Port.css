@@ -16,3 +16,19 @@
 .controlRow {
   padding: 4px 0;
 }
+
+.mirrorTable {
+  width: 600px !important;
+}
+.mirrorTable .rowUser {
+  grid-template-columns: 1fr 1fr 1fr 4fr 1fr;
+}
+.devideSquare {
+  display: flex;
+  flex-direction: column;
+}
+.devider {
+  width: 100%;
+  background-color: var(--tplink-grey1);
+  height: 2px;
+}

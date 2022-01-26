@@ -5,7 +5,7 @@
   border: 1px solid var(--tplink-grey2);
 }
 .InfoTable .row {
-  border-bottom: 1px solid var(--tplink-grey2);
+  /* border-bottom: 1px solid var(--tplink-grey2); */
   padding: 4px;
   font-size: 14px;
 
@@ -16,7 +16,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
-  border-bottom: 1px solid var(--tplink-grey1);
+  border-bottom: 2px solid var(--tplink-grey2);
 }
 .rowUserSpecial {
   display: grid;

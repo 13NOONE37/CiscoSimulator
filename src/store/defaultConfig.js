@@ -114,6 +114,32 @@ const defaultConfig = {
       lag: '---',
     },
   ],
+  mirrorList: [
+    {
+      group: 1,
+      mirroring: 0,
+      mirroredPortIngress: [],
+      mirroredPortEgress: [],
+    },
+    {
+      group: 2,
+      mirroring: 0,
+      mirroredPortIngress: [],
+      mirroredPortEgress: [],
+    },
+    {
+      group: 3,
+      mirroring: 0,
+      mirroredPortIngress: [],
+      mirroredPortEgress: [],
+    },
+    {
+      group: 4,
+      mirroring: 0,
+      mirroredPortIngress: [],
+      mirroredPortEgress: [],
+    },
+  ],
 };
 
 export default defaultConfig;
