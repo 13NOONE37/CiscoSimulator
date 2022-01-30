@@ -32,3 +32,21 @@
   background-color: var(--tplink-grey1);
   height: 2px;
 }
+
+.portSecurityTable {
+  width: 600px !important;
+}
+.portSecurityTable .rowUser {
+  grid-template-columns: 1fr 1fr 170px 2fr 2fr 2fr;
+}
+.portIsolationTable {
+  width: 600px !important;
+}
+.portIsolationTable .rowUser {
+  grid-template-columns: 1fr 3fr;
+}
+
+.checkboxContainer {
+  display: flex;
+  gap: 38px;
+}

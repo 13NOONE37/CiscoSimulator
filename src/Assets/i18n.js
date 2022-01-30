@@ -97,7 +97,7 @@ i18n.init({
         SideQoS: 'QoS',
         SideACL: 'ACL',
         SideSNMP: 'SNMP',
-        SideMaintenance: 'Maintenance',
+        SideMaintenance: 'Utrzymanie',
         SideSaveConfig: 'Zapisz konfiguracje',
         SideLogout: 'Wyloguj',
 

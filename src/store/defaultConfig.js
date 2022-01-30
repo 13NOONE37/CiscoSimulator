@@ -140,6 +140,66 @@ const defaultConfig = {
       mirroredPortEgress: [],
     },
   ],
+  portSecurityConfig: [
+    {
+      maxLearnedMAC: 64,
+      learnedNum: 0,
+      learnMode: 'Dynamic',
+      status: 'Disable',
+    },
+    {
+      maxLearnedMAC: 64,
+      learnedNum: 0,
+      learnMode: 'Dynamic',
+      status: 'Disable',
+    },
+    {
+      maxLearnedMAC: 64,
+      learnedNum: 0,
+      learnMode: 'Dynamic',
+      status: 'Disable',
+    },
+    {
+      maxLearnedMAC: 64,
+      learnedNum: 0,
+      learnMode: 'Dynamic',
+      status: 'Disable',
+    },
+    {
+      maxLearnedMAC: 64,
+      learnedNum: 0,
+      learnMode: 'Dynamic',
+      status: 'Disable',
+    },
+    {
+      maxLearnedMAC: 64,
+      learnedNum: 0,
+      learnMode: 'Dynamic',
+      status: 'Disable',
+    },
+    {
+      maxLearnedMAC: 64,
+      learnedNum: 0,
+      learnMode: 'Dynamic',
+      status: 'Disable',
+    },
+    {
+      maxLearnedMAC: 64,
+      learnedNum: 0,
+      learnMode: 'Dynamic',
+      status: 'Disable',
+    },
+  ],
+  portIsolationConfig: [
+    { forwardList: [false, false, false, false, false, false, false, false] },
+    { forwardList: [false, false, false, false, false, false, false, false] },
+    { forwardList: [false, false, false, false, false, false, false, false] },
+    { forwardList: [false, false, false, false, false, false, false, false] },
+    { forwardList: [false, false, false, false, false, false, false, false] },
+    { forwardList: [false, false, false, false, false, false, false, false] },
+    { forwardList: [false, false, false, false, false, false, false, false] },
+    { forwardList: [false, false, false, true, false, false, false, false] },
+  ],
 };
 
 export default defaultConfig;
