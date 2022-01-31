@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 
 export default function PortIsolation({ t, config }) {
-  const [portIsolationConf, setportIsolationConf] = useState(
-    config.portIsolationConfig,
-  );
   const [currentPort, setcurrentPort] = useState(1);
   const [forwardPortChecked, setforwardPortChecked] = useState([
     false,
@@ -24,7 +21,14 @@ export default function PortIsolation({ t, config }) {
     setforwardPortChecked(config.portIsolationConfig[value - 1].forwardList);
   };
   const handleSelectPort = (index) => {
-    forwardPortChecked[index] = !forwardPortChecked[index];
+    setforwardPortChecked(
+      forwardPortChecked.map((item, num) => {
+        if (index === num) {
+          item = !item;
+        }
+        return item;
+      }),
+    );
   };
   const handleSelectAllPorts = () => {
     let temp = forwardPortChecked;
@@ -39,22 +43,39 @@ export default function PortIsolation({ t, config }) {
     setforwardPortChecked(temp);
   };
   const handleApply = () => {
-    console.log(forwardPortChecked);
-    config.portIsolationConfig = portIsolationConf;
-    setforwardPortChecked([
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-    ]);
+    config.portIsolationConfig[currentPort - 1].forwardList =
+      forwardPortChecked;
+    setforceUpdate(forceUpdate + 1);
   };
 
   const getForwardList = (list) => {
-    return '1-8';
+    // const list = [true, true, true, false, false, true, true, false];
+    // const ranges = [];
+    // let startIndex = 0;
+    // let lastIndex = 0;
+    // let prevState;
+    // for (const state of list) {
+    //   if (prevState != undefined && prevState !== state) {
+    //     console.log(state);
+    //     ranges.push(list.splice(startIndex, lastIndex + 1));
+    //     startIndex = lastIndex + 1;
+    //     lastIndex = lastIndex + 1;
+    //   }
+    //   if (prevState != undefined && prevState === state) {
+    //     lastIndex++;
+    //   }
+
+    //   prevState = state;
+    // }
+    // console.log(ranges);
+    for (let i = 0; i < 8; i++) {
+      console.log(list[i]);
+    }
+    return `${list
+      .map((item, index) => {
+        if (item) return `${index + 1}`;
+      })
+      .join('-')}`;
   };
 
   return (
@@ -66,7 +87,7 @@ export default function PortIsolation({ t, config }) {
             <span class="boxEqualSpaceBetween">
               <span>Port:</span>
               <span className="moveRight">
-                <select class="basicInput" onChange={handleSelectMainPort}>
+                <select className="basicInput" onChange={handleSelectMainPort}>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -79,10 +100,10 @@ export default function PortIsolation({ t, config }) {
               </span>
             </span>
           </div>
-          <div className="boxSpaceBetween">
+          <div className="boxSpaceBetween ">
             <span className="boxColumn">
               <span>{t('ForwardPortlist')}:</span>
-              <span class="devideSquare">
+              <span class="devideSquare portList">
                 <span className="checkboxContainer">
                   {forwardPortChecked.map(
                     (item, index) =>
@@ -90,11 +111,11 @@ export default function PortIsolation({ t, config }) {
                         <label>
                           <input
                             type="checkbox"
-                            defaultChecked={item}
+                            checked={item}
                             onChange={() => handleSelectPort(index)}
                           />
                           {index + 1}
-                          {`${item}`}
+                          {index < 2 && ' (LAG1)'}
                         </label>
                       ),
                   )}
@@ -107,11 +128,10 @@ export default function PortIsolation({ t, config }) {
                         <label>
                           <input
                             type="checkbox"
-                            defaultChecked={item}
+                            checked={item}
                             onChange={() => handleSelectPort(index)}
                           />
                           {index + 1}
-                          {`${item}`}
                         </label>
                       ),
                   )}
@@ -139,7 +159,7 @@ export default function PortIsolation({ t, config }) {
             <span>{t('Port')}</span>
             <span>{t('ForwardPortlist')}</span>
           </div>
-          {portIsolationConf.map((item, index) => (
+          {config.portIsolationConfig.map((item, index) => (
             <div className="rowUser" key={index}>
               <span>{index + 1}</span>
               <span>{getForwardList(item.forwardList)}</span>

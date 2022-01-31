@@ -154,7 +154,7 @@ export default function PortSecurity({ t, config }) {
         <strong>{t('Note')}:</strong>
         <br />
         The maximum number of MAC addresses learned from individual port can be
-        set to 64.{' '}
+        set to 64.
       </div>
     </article>
   );

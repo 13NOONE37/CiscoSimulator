@@ -50,3 +50,6 @@
   display: flex;
   gap: 38px;
 }
+.portList {
+  margin: 10px 0;
+}
