@@ -49,25 +49,7 @@ export default function PortIsolation({ t, config }) {
   };
 
   const getForwardList = (list) => {
-    // const list = [true, true, true, false, false, true, true, false];
-    // const ranges = [];
-    // let startIndex = 0;
-    // let lastIndex = 0;
-    // let prevState;
-    // for (const state of list) {
-    //   if (prevState != undefined && prevState !== state) {
-    //     console.log(state);
-    //     ranges.push(list.splice(startIndex, lastIndex + 1));
-    //     startIndex = lastIndex + 1;
-    //     lastIndex = lastIndex + 1;
-    //   }
-    //   if (prevState != undefined && prevState === state) {
-    //     lastIndex++;
-    //   }
-
-    //   prevState = state;
-    // }
-    // console.log(ranges);
+    //#TODO: better ranges
     for (let i = 0; i < 8; i++) {
       console.log(list[i]);
     }

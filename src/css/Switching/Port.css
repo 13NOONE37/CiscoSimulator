@@ -53,3 +53,10 @@
 .portList {
   margin: 10px 0;
 }
+
+.isolationTable {
+  width: 700px !important;
+}
+.isolationTable .rowUser {
+  grid-template-columns: 0.5fr 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
