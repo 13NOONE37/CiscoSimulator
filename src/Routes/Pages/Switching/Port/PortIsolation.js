@@ -75,7 +75,7 @@ export default function PortIsolation({ t, config }) {
       .map((item, index) => {
         if (item) return `${index + 1}`;
       })
-      .join('-')}`;
+      .join(' ')}`;
   };
 
   return (
