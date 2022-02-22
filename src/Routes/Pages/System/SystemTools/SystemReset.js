@@ -1,3 +1,4 @@
+import Note from 'components/General/Note/Note';
 import React from 'react';
 import defaultConfig from 'store/defaultConfig';
 
@@ -17,12 +18,15 @@ export default function SystemReset({ t, setConfig }) {
           </span>
         </div>
 
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-          The System Reset option will restore the configuration to default and
-          your current settings will be lost.
-        </div>
+        <Note
+          content={
+            <>
+              <br />
+              The System Reset option will restore the configuration to default
+              and your current settings will be lost.
+            </>
+          }
+        />
       </div>
     </article>
   );

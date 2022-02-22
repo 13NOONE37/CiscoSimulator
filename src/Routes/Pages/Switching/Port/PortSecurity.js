@@ -1,3 +1,4 @@
+import Note from 'components/General/Note/Note';
 import React, { useState } from 'react';
 
 export default function PortSecurity({ t, config }) {
@@ -150,12 +151,15 @@ export default function PortSecurity({ t, config }) {
           <button class="basicInput actionButton">Help</button>
         </div>
       </div>
-      <div className="note">
-        <strong>{t('Note')}:</strong>
-        <br />
-        The maximum number of MAC addresses learned from individual port can be
-        set to 64.
-      </div>
+      <Note
+        content={
+          <>
+            <br />
+            The maximum number of MAC addresses learned from individual port can
+            be set to 64.
+          </>
+        }
+      />
     </article>
   );
 }

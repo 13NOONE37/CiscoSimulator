@@ -1,3 +1,4 @@
+import Note from 'components/General/Note/Note';
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function ConfigBackup({ t, config }) {
@@ -46,13 +47,15 @@ export default function ConfigBackup({ t, config }) {
             </div>
           </span>
         </div>
-
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-          It will take a long time to backup the config file. Please wait
-          without any operation.
-        </div>
+        <Note
+          content={
+            <>
+              <br />
+              It will take a long time to backup the config file. Please wait
+              without any operation.
+            </>
+          }
+        />
       </div>
     </article>
   );

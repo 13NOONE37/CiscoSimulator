@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import 'css/System/SystemTime.css';
 import ReactInputMask from 'react-input-mask';
 import handleGlobalChange from 'Utils/handleGlobalChange';
+import Note from 'components/General/Note/Note';
 
 export default function SystemTime({ t, config }) {
   const [currentTimeSource, setcurrentTimeSource] = useState(config.timeSource);
@@ -333,10 +334,7 @@ export default function SystemTime({ t, config }) {
             Synchronize with PC's Clock
           </span>
         </div>
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-        </div>
+        <Note />
       </div>
     </article>
   );

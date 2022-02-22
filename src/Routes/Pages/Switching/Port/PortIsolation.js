@@ -1,3 +1,5 @@
+import Note from 'components/General/Note/Note';
+import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 
 export default function PortIsolation({ t, config }) {
@@ -63,7 +65,7 @@ export default function PortIsolation({ t, config }) {
   return (
     <article>
       <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('PortIsolationConfig')}</div>
+        <Title content="PortIsolationConfig" />
         <div className="subCategoryBox">
           <div class="boxSpaceBetween">
             <span class="boxEqualSpaceBetween">
@@ -149,9 +151,7 @@ export default function PortIsolation({ t, config }) {
           ))}
         </div>
       </div>
-      <div className="note">
-        <strong>{t('Note')}:</strong>
-      </div>
+      <Note />
     </article>
   );
 }

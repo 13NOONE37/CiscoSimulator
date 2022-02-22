@@ -1,3 +1,4 @@
+import Note from 'components/General/Note/Note';
 import React from 'react';
 
 export default function FirmwareUpgrade({ t, config }) {
@@ -37,18 +38,22 @@ export default function FirmwareUpgrade({ t, config }) {
             </span>
           </span>
         </span>
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-          1. Please select the proper software version matching with your
-          hardware to upgrade.
-          <br />
-          2. To avoid damage, please don't turn off the device while upgrading.
-          <br />
-          3. After upgrading, the device will reboot automatically.
-          <br />
-          4. You are suggested to backup the configuration before upgrading.
-        </div>
+        <Note
+          content={
+            <>
+              <br />
+              1. Please select the proper software version matching with your
+              hardware to upgrade.
+              <br />
+              2. To avoid damage, please don't turn off the device while
+              upgrading.
+              <br />
+              3. After upgrading, the device will reboot automatically.
+              <br />
+              4. You are suggested to backup the configuration before upgrading.
+            </>
+          }
+        />
       </div>
     </article>
   );

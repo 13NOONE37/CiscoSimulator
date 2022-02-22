@@ -1,3 +1,5 @@
+import Note from 'components/General/Note/Note';
+import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
@@ -56,7 +58,7 @@ export default function SSHConfig({ t, config }) {
   return (
     <article>
       <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('GlobalConfig')}</div>
+        <Title content="GlobalConfig" />
         <div className="subCategoryBox">
           <div className="boxSpaceBetween">
             <span className="boxEqualSpaceBetween">
@@ -175,7 +177,6 @@ export default function SSHConfig({ t, config }) {
             </span>
           </div>
         </div>
-
         <div className="InfoTableTitle">{t('EncryptionAlgorithm')}</div>
         <div className="subCategoryBox">
           <div className="boxSpaceBetween">
@@ -210,7 +211,6 @@ export default function SSHConfig({ t, config }) {
             </span>
           </div>
         </div>
-
         <div className="InfoTableTitle">{t('DataIntegrityAlogorithm')}</div>
         <div className="subCategoryBox">
           <div className="boxSpaceBetween">
@@ -240,7 +240,6 @@ export default function SSHConfig({ t, config }) {
             </span>
           </div>
         </div>
-
         <div className="InfoTableTitle">{t('KeyDownload')}</div>
         <div className="subCategoryBox">
           <div className="boxSpaceBetween">
@@ -273,17 +272,21 @@ export default function SSHConfig({ t, config }) {
               </span>
             </span>
           </div>
-        </div>
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-          1. It will take a long time to download the key file. Please wait
-          without any operation.
-          <br />
-          2. After the Key File is downloaded, the user's original key of the
-          same type will be replaced. The wrong downloaded file will result in
-          the SSH access to the switch via Password authentication.
-        </div>
+        </div>{' '}
+        <Note
+          content={
+            <>
+              <br />
+              1. It will take a long time to download the key file. Please wait
+              without any operation.
+              <br />
+              2. After the Key File is downloaded, the user's original key of
+              the same type will be replaced. The wrong downloaded file will
+              result in the SSH access to the switch via Password
+              authentication.
+            </>
+          }
+        />
       </div>
     </article>
   );

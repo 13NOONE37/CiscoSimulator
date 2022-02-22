@@ -1,12 +1,18 @@
-import Note from 'components/General/Note/Note';
 import Title from 'components/General/Title/Title';
-import React, { useState } from 'react';
+import React from 'react';
 
-export default function PortConfig({ t, config }) {
-  const [portConf, setportConf] = useState(
-    JSON.parse(JSON.stringify(config.portConfig)),
+export default function EditTable({
+  t,
+  config,
+  name,
+  navBar = [{ name: 'MAC', type: 'checkbox' }, 'LearnedNum', 'LearnMode'],
+}) {
+  const [defaultConfig, setDefaultConfig] = useState(
+    JSON.parse(JSON.stringify(config[name])),
   );
 
+  const [forceUpdate, setforceUpdate] = useState(1);
+  const [currentSelect, setcurrentSelect] = useState(undefined);
   const [portChecked, setportChecked] = useState([
     false,
     false,
@@ -17,8 +23,6 @@ export default function PortConfig({ t, config }) {
     false,
     false,
   ]);
-  const [currentSelect, setcurrentSelect] = useState(undefined);
-  const [forceUpdate, setforceUpdate] = useState(1);
 
   const handleSelectOne = () => {
     if (!isNaN(currentSelect)) {
@@ -46,20 +50,9 @@ export default function PortConfig({ t, config }) {
     }
     setportChecked(temp);
   };
-
-  const handleChangeDescription = (e) => {
-    setportConf(
-      portConf.map((item, index) => {
-        if (portChecked[index] == true) {
-          item.description = e.target.value;
-        }
-        return item;
-      }),
-    );
-  };
   const handleChange = (e, param) =>
-    setportConf(
-      portConf.map((item, index) => {
+    setDefaultConfig(
+      defaultConfig.map((item, index) => {
         if (portChecked[index] == true) {
           item[param] = e.target.value;
         }
@@ -67,13 +60,13 @@ export default function PortConfig({ t, config }) {
       }),
     );
   const handleApply = () => {
-    config.portConfig = portConf;
+    config[name] = defaultConfig;
   };
 
   return (
     <article>
       <div className="tplinkBoxBase1">
-        <div className="InfoTable portTable">
+        <div className="InfoTable portSecurityTable">
           <Title content="Usertable" addClass="row" />
           <div className="rowUser portSelect">
             <span>
@@ -98,11 +91,10 @@ export default function PortConfig({ t, config }) {
           <div className="rowUser tableNav">
             <span>{t('Select')}</span>
             <span>{t('Port')}</span>
-            <span>{t('Description')}</span>
+            <span>{t('MaxLearnedMAC')}</span>
+            <span>{t('LearnedNum')}</span>
+            <span>{t('LearnMode')}</span>
             <span>{t('Status')}</span>
-            <span>{t('SpeedAndDuplex')}</span>
-            <span>{t('FlowControl')}</span>
-            <span>{t('LAG')}</span>
           </div>
           <div className="rowUser controlRow">
             <span>
@@ -112,10 +104,21 @@ export default function PortConfig({ t, config }) {
             <span>
               <input
                 className="basicInput"
-                type="text"
-                maxLength={16}
-                onChange={handleChangeDescription}
+                type="number"
+                min={1}
+                max={64}
+                onChange={(e) => handleChange(e, 'maxLearnedMAC')}
               />
+            </span>
+            <span></span>
+            <span>
+              <select
+                className="basicInput"
+                onChange={(e) => handleChange(e, 'learnMode')}
+              >
+                <option>Dynamic</option>
+                <option>Static</option>
+              </select>
             </span>
             <span>
               <select
@@ -126,27 +129,9 @@ export default function PortConfig({ t, config }) {
                 <option>Disable</option>
               </select>
             </span>
-            <span>
-              <select
-                className="basicInput"
-                onChange={(e) => handleChange(e, 'speed')}
-              >
-                <option>Auto</option>
-                <option>10MHD</option>
-              </select>
-            </span>
-            <span>
-              <select
-                className="basicInput"
-                onChange={(e) => handleChange(e, 'flow')}
-              >
-                <option>Enable</option>
-                <option>Disable</option>
-              </select>
-            </span>
             <span></span>
           </div>
-          {portConf.map((item, index) => (
+          {portSecurityConf.map((item, index) => (
             <div className="rowUser" key={index}>
               <span>
                 <input
@@ -156,11 +141,10 @@ export default function PortConfig({ t, config }) {
                 />
               </span>
               <span>{index + 1}</span>
-              <span>{item.description}</span>
+              <span>{item.maxLearnedMAC}</span>
+              <span>{item.learnedNum}</span>
+              <span>{item.learnMode}</span>
               <span>{item.status}</span>
-              <span>{item.speed}</span>
-              <span>{item.flow}</span>
-              <span>{item.lag}</span>
             </div>
           ))}
         </div>
@@ -171,14 +155,12 @@ export default function PortConfig({ t, config }) {
           <button class="basicInput actionButton">Help</button>
         </div>
       </div>
-      <Note
-        content={
-          <>
-            <br />
-            The Port Description should not be more than 16 characters.
-          </>
-        }
-      />
+      <div className="note">
+        <strong>{t('Note')}:</strong>
+        <br />
+        The maximum number of MAC addresses learned from individual port can be
+        set to 64.
+      </div>
     </article>
   );
 }

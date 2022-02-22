@@ -1,3 +1,5 @@
+import Note from 'components/General/Note/Note';
+import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
@@ -7,7 +9,7 @@ export default function Telnet({ t, config }) {
   return (
     <article>
       <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('GlobalConfig')}</div>
+        <Title content="GlobalConfig" />
 
         <div className="boxSpaceBetween">
           <span className="boxEqualSpaceBetween">
@@ -42,10 +44,7 @@ export default function Telnet({ t, config }) {
           </button>
         </div>
 
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-        </div>
+        <Note />
       </div>
     </article>
   );

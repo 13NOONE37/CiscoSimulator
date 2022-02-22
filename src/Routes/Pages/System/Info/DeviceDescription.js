@@ -1,3 +1,5 @@
+import Note from 'components/General/Note/Note';
+import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
@@ -16,7 +18,7 @@ export default function DeviceDescription({ t, config }) {
   return (
     <article>
       <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('DeviceDescription')}</div>
+        <Title content="DeviceDescription" />
         <form onSubmit={handleSubmit} className="tplinkFormBase1">
           <span>
             {t('Info_DeviceName')}:{' '}
@@ -54,12 +56,15 @@ export default function DeviceDescription({ t, config }) {
             />
           </span>
         </form>
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-          The Device Name, Location and Contact should not be more than 32
-          characters.
-        </div>
+        <Note
+          content={
+            <>
+              <br />
+              The Device Name, Location and Contact should not be more than 32
+              characters.
+            </>
+          }
+        />
       </div>
     </article>
   );

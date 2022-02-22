@@ -1,3 +1,4 @@
+import Note from 'components/General/Note/Note';
 import React from 'react';
 
 export default function AccessControl({ t, config }) {
@@ -98,10 +99,7 @@ export default function AccessControl({ t, config }) {
             </button>
           </div>
         </div>
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-        </div>
+        <Note />
       </div>
     </article>
   );

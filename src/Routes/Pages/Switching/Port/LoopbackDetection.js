@@ -1,7 +1,10 @@
+import Note from 'components/General/Note/Note';
+import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
 export default function LoopbackDetection({ t, config }) {
+  //TODO: przenieść komponent tablicy do zewnętrznego pliku i zrobić go na propsach bo powtarza się w wielu plikach
   const [loopbackDetection, setloopbackDetection] = useState(
     config.portLoopbackGlobal.detection,
   );
@@ -82,7 +85,7 @@ export default function LoopbackDetection({ t, config }) {
   return (
     <article>
       <div className="tplinkBoxBase1">
-        <div className="row InfoTableTitle">{t('GlobalConfig')}</div>
+        <Title content="GlobalConfig" addClass="row" />
 
         <div className="subCategoryBox">
           <div className="boxSpaceBetween">
@@ -283,13 +286,16 @@ export default function LoopbackDetection({ t, config }) {
           <button class="basicInput actionButton">Help</button>
         </div>
       </div>
-      <div className="note">
-        <strong>{t('Note')}:</strong>
-        <br />
-        Recovery mode is just useful to process not in Alrt process mode.
-        <br />
-        Loopback Detection must coordinate with storm control.
-      </div>
+      <Note
+        content={
+          <>
+            <br />
+            Recovery mode is just useful to process not in Alrt process mode.
+            <br />
+            Loopback Detection must coordinate with storm control.
+          </>
+        }
+      />
     </article>
   );
 }

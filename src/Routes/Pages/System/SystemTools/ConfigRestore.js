@@ -1,3 +1,4 @@
+import Note from 'components/General/Note/Note';
 import React, { useState } from 'react';
 
 export default function ConfigRestore({ t, config, setConfig }) {
@@ -65,13 +66,15 @@ export default function ConfigRestore({ t, config, setConfig }) {
             </div>
           </span>
         </div>
-
-        <div className="note">
-          <strong>{t('Note')}:</strong>
-          <br />
-          It will take a long time to restore the config file. Please wait
-          wihout any operation.
-        </div>
+        <Note
+          content={
+            <>
+              <br />
+              It will take a long time to restore the config file. Please wait
+              wihout any operation.
+            </>
+          }
+        />
       </div>
     </article>
   );

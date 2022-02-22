@@ -1,0 +1,8 @@
+.BasicTitle {
+  background-color: var(--tplink-blue4);
+  color: var(--tplink-blue1);
+  padding: 4px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
