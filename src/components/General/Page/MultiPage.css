@@ -19,10 +19,11 @@
   margin-top: 10px;
 }
 .buttonDefault,
-.buttonSpecial {
+.inputDefault {
   cursor: pointer;
 }
-.buttonSpecial {
+.buttonSpecial,
+.inputSpecial {
   border: none;
   outline: none;
   transition: all 0.1s ease-in;
@@ -31,12 +32,29 @@
   border: 1px solid var(--tplink-blue1);
   box-shadow: 0px 0px 0px 1px var(--tplink-grey1);
 }
-.buttonSpecial:hover {
+.buttonSpecial:hover,
+.inputSpecial:hover {
   box-shadow: inset 0px 0px 30px rgba(255, 255, 255, 0.2);
   box-shadow: 0px 0px 0px 1px var(--tplink-blue2),
     0px 0px 4px 0px var(--tplink-blue2);
 }
-.buttonSpecial:focus {
+.buttonSpecial:focus,
+.inputSpecial:focus {
   box-shadow: 0px 0px 0px 1px var(--tplink-blue1),
     0px 0px 4px 0px var(--tplink-blue1);
+}
+.inputDefault,
+.inputSpecial {
+  height: 18px;
+  width: fit-content;
+}
+.elementsLine {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  align-items: center;
+  padding: 6px 0 6px 0;
+}
+.subElementLine {
+  display: grid;
+  grid-template-columns: 120px 1fr;
 }

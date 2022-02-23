@@ -118,8 +118,8 @@ export default function SystemIp({ t, config }) {
             {t('Info_DefaultGateway')}:
             <ReactInputMask
               className="basicInput"
-              mask="999.999.999.999"
-              maskChar={' '}
+              mask="00?0?.00?0?.00?0?.00?0?"
+              maskChar="0"
               value={currentDefaultGateway}
               onChange={(e) => handleChange(e, setcurrentDefaultGateway)}
             ></ReactInputMask>
