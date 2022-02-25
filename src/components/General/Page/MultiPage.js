@@ -16,6 +16,7 @@ const Note = ({ children }) => {
   return (
     <div className="note">
       <strong>{t('Note')}:</strong>
+      <br />
       {t(children)}
     </div>
   );
@@ -43,15 +44,19 @@ Button.defaultProps = {
 const ButtonsRow = ({ children }) => {
   return <div className="buttonsRow">{children}</div>;
 };
-const ElementsLine = ({ children }) => {
-  return <div className="elementsLine">{children}</div>;
+const ElementsLine = ({ children, isWihoutButton }) => {
+  return (
+    <div className={`elementsLine ${isWihoutButton && 'elementsLineNoButton'}`}>
+      {children}
+    </div>
+  );
 };
 
 const SubElementsLine = ({ children, FirstColumnWidth }) => {
   return (
     <div
       className="subElementLine"
-      style={{ gridTemplateColumns: `${FirstColumnWidth}px 1fr` }}
+      style={{ gridTemplateColumns: `${FirstColumnWidth}% 1fr` }}
     >
       {children}
     </div>
@@ -61,27 +66,131 @@ SubElementsLine.propTypes = {
   FirstColumnWidth: PropTypes.number,
 };
 SubElementsLine.defaultProps = {
-  FirstColumnWidth: 120,
+  FirstColumnWidth: 25,
 };
-const Input = ({ type, isSpecial }) => {
+const Input = ({ isSpecial, afterText, inputProps }) => {
   return (
-    <input
-      type={type}
-      className={isSpecial ? 'inputSpecial' : 'inputDefault'}
-    />
+    <div className="alignVerticaly">
+      <input
+        {...inputProps}
+        className={isSpecial ? 'inputSpecial' : 'inputDefault'}
+      />
+      {afterText.length > 0 && <span>{afterText}</span>}
+    </div>
   );
 };
-
 Input.propTypes = {
-  type: PropTypes.string,
   isSpecial: PropTypes.bool,
+  inputProps: PropTypes.object,
 };
 Input.defaultProps = {
-  type: 'text',
   isSpecial: true,
+  afterText: '',
+  inputProps: {
+    type: 'text',
+    placeholder: 'Value',
+    name: 'Text input',
+    value: '',
+    onChange: () => {},
+  },
 };
-const DefaultTable = ({}) => {};
-const EditableTable = ({}) => {};
+const DefaultTable = ({}) => {
+  return <div>Table</div>;
+};
+const EditableTable = ({}) => {
+  // return (
+  //   <div className="InfoTable portTable">
+  //     <Title content="Usertable" addClass="row" />
+  //     <div className="rowUser portSelect">
+  //       <span>
+  //         Port
+  //         <input
+  //           className="basicInput"
+  //           type="number"
+  //           min={1}
+  //           max={8}
+  //           value={currentSelect}
+  //           onChange={(e) =>
+  //             setcurrentSelect(Math.max(1, Math.min(e.target.valueAsNumber, 8)))
+  //           }
+  //         />
+  //         <button className="buttonPointer" onClick={handleSelectOne}>
+  //           {t('Select')}
+  //         </button>
+  //       </span>
+  //     </div>
+  //     <div className="rowUser tableNav">
+  //       <span>{t('Select')}</span>
+  //       <span>{t('Port')}</span>
+  //       <span>{t('Description')}</span>
+  //       <span>{t('Status')}</span>
+  //       <span>{t('SpeedAndDuplex')}</span>
+  //       <span>{t('FlowControl')}</span>
+  //       <span>{t('LAG')}</span>
+  //     </div>
+  //     <div className="rowUser controlRow">
+  //       <span>
+  //         <input type="checkbox" onChange={handleSelectAllPorts} />
+  //       </span>
+  //       <span></span>
+  //       <span>
+  //         <input
+  //           className="basicInput"
+  //           type="text"
+  //           maxLength={16}
+  //           onChange={handleChangeDescription}
+  //         />
+  //       </span>
+  //       <span>
+  //         <select
+  //           className="basicInput"
+  //           onChange={(e) => handleChange(e, 'status')}
+  //         >
+  //           <option>Enable</option>
+  //           <option>Disable</option>
+  //         </select>
+  //       </span>
+  //       <span>
+  //         <select
+  //           className="basicInput"
+  //           onChange={(e) => handleChange(e, 'speed')}
+  //         >
+  //           <option>Auto</option>
+  //           <option>10MHD</option>
+  //         </select>
+  //       </span>
+  //       <span>
+  //         <select
+  //           className="basicInput"
+  //           onChange={(e) => handleChange(e, 'flow')}
+  //         >
+  //           <option>Enable</option>
+  //           <option>Disable</option>
+  //         </select>
+  //       </span>
+  //       <span></span>
+  //     </div>
+  //     {portConf.map((item, index) => (
+  //       <div className="rowUser" key={index}>
+  //         <span>
+  //           <input
+  //             type="checkbox"
+  //             checked={portChecked[index]}
+  //             onChange={() => handleSelectPort(index)}
+  //           />
+  //         </span>
+  //         <span>{index + 1}</span>
+  //         <span>{item.description}</span>
+  //         <span>{item.status}</span>
+  //         <span>{item.speed}</span>
+  //         <span>{item.flow}</span>
+  //         <span>{item.lag}</span>
+  //       </div>
+  //     ))}
+  //   </div>
+  // );
+};
+
 const Section = ({ children, width }) => {
   return (
     <div className="pageSection" style={{ width: `${width}px` }}>

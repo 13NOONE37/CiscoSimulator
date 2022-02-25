@@ -19,7 +19,7 @@
   margin-top: 10px;
 }
 .buttonDefault,
-.inputDefault {
+.buttonSpecial {
   cursor: pointer;
 }
 .buttonSpecial,
@@ -54,7 +54,14 @@
   align-items: center;
   padding: 6px 0 6px 0;
 }
+.elementsLineNoButton {
+  grid-template-columns: 1fr !important;
+}
 .subElementLine {
   display: grid;
   grid-template-columns: 120px 1fr;
+}
+.alignVerticaly {
+  display: flex;
+  align-items: center;
 }
