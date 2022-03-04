@@ -5,20 +5,22 @@ export default function AddressTable() {
     <MultiPage.Wizard>
       <MultiPage.Section width={650}>
         <MultiPage.Title>hello</MultiPage.Title>
-        <MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => <MultiPage.Button>Apply</MultiPage.Button>}
+        >
           <MultiPage.SubElementsLine>
             <span>Type szczur marcin: </span>
             <MultiPage.Input inputProps={{ placeholder: 'test' }} />
           </MultiPage.SubElementsLine>
-          <MultiPage.Button>Apply</MultiPage.Button>
         </MultiPage.ElementsLine>
 
-        <MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+        // actionButton={() => <MultiPage.Button>Apply</MultiPage.Button>}
+        >
           <MultiPage.SubElementsLine>
             <span>Type rat value</span>
             <MultiPage.Input afterText="VLAN ID: 1-4094" />
           </MultiPage.SubElementsLine>
-          <MultiPage.Button>Apply</MultiPage.Button>
         </MultiPage.ElementsLine>
 
         <MultiPage.ButtonsRow>
@@ -30,7 +32,7 @@ export default function AddressTable() {
       </MultiPage.Section>
       <MultiPage.Section>
         <MultiPage.Title>Sample Table</MultiPage.Title>
-        <MultiPage.DefaultTable />
+        <MultiPage.EditableTable />
       </MultiPage.Section>
       <MultiPage.Note>
         The maximum of the displayed entries is 100 by default, please click the
