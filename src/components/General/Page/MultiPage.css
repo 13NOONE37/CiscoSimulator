@@ -88,25 +88,32 @@
   place-items: center;
   font-size: 14px;
   border-bottom: 2px solid var(--tplink-grey1);
-  grid-template-columns: repeat(var(--columnsCount), 1fr);
-  padding: 4px;
+  grid-template-columns: var(--columnsCount);
+  /* padding: 4px; */
+}
+.row span {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 2px !important; /*TODO:delete imortant*/
 }
 .editableTable .portSelect {
   display: flex;
   justify-content: flex-end;
 }
 .tableNav {
-  padding: 4px;
+  padding: 0 !important; /*TODO:delete*/
   background-color: var(--tplink-grey1);
   color: var(--tplink-blue1);
   font-size: 14px;
   border-bottom: 1px solid var(--tplink-grey2);
 }
+
 .tableNav span {
   border-right: 1px solid var(--tplink-grey2);
-  width: 100%;
-  text-align: center;
 }
+
 .tableNav span:last-child {
   border-right: 1px solid transparent;
 }

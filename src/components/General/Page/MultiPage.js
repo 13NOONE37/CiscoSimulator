@@ -105,17 +105,19 @@ const DefaultTable = ({}) => {
 const EditableTable = ({
   isPortSelect,
   ourData = {
+    names: ['Select', 'Some Text', 'Type select'],
     fields: [
       { type: 'disable' },
       { type: 'text' },
       { type: 'select', options: [1, 2, 3, 4, 5] },
     ],
     data: [
-      { name1: '1', name2: '2', name3: '3' },
-      { name1: '11', name2: '22', name3: '33' },
-      { name1: '111', name2: '222', name3: '333' },
+      ['1', '2', '3'],
+      ['11', '22', '33'],
+      ['111', '222', '333'],
     ],
   },
+  gridTemp,
 }) => {
   const { t } = useContext(WizardContext);
 
@@ -129,13 +131,18 @@ const EditableTable = ({
     false,
     false,
   ]);
-  const navItems = Object.keys(ourData.data[0]);
+  const navItems = ourData.names;
 
   const handleSelectOne = () => {};
+
   return (
     <div
       className="editableTable"
-      style={{ '--columnsCount': navItems.length }}
+      style={{
+        '--columnsCount': `${
+          gridTemp ? gridTemp : `65px repeat(${navItems.length},1fr)`
+        }`,
+      }}
     >
       <Title className="rowToLeft">Usertable</Title>
       {isPortSelect && (
@@ -157,11 +164,15 @@ const EditableTable = ({
         </div>
       )}
       <div className="row tableNav">
+        <span>{t('Select')}</span>
         {navItems.map((item) => (
           <span>{t(item)}</span>
         ))}
       </div>
       <div className="row">
+        <span>
+          <input type="checkbox" />
+        </span>
         {ourData.fields.map((field, index) => (
           <span>
             {field.type === 'text' && <Input inputProps />}
@@ -175,6 +186,16 @@ const EditableTable = ({
           </span>
         ))}
       </div>
+      {ourData.data.map((dataRow) => (
+        <div className="row">
+          <span>
+            <input type="checkbox" />
+          </span>
+          {dataRow.map((dataElement) => (
+            <span>{dataElement}</span>
+          ))}
+        </div>
+      ))}
       {/* 
       <div className="rowUser controlRow">
         <span>
