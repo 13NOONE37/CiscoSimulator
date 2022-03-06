@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import './MultiPage.css';
 
+const deepCopy = (object) => JSON.parse(JSON.stringify(object));
+
 const WizardContext = createContext({
   t: undefined,
 });
@@ -99,18 +101,43 @@ Input.defaultProps = {
     onChange: () => {},
   },
 };
+const Select = ({ isSpecial, options, onChangeCallback }) => {
+  return (
+    <div className="alignVerticaly">
+      <select
+        className={isSpecial ? 'inputSpecial' : 'inputDefault'}
+        onChange={onChangeCallback}
+      >
+        {options.map((item) => (
+          <option>{item}</option>
+        ))}
+      </select>
+    </div>
+  );
+};
+Select.propTypes = {
+  isSpecial: PropTypes.bool,
+  options: PropTypes.array,
+  onChangeCallback: PropTypes.func,
+};
+Select.defaultProps = {
+  isSpecial: true,
+  options: [],
+  onChangeCallback: () => {},
+};
+
 const DefaultTable = ({}) => {
   return <div>Table</div>;
 };
-const EditableTable = ({ isPortSelect, ourData, gridTemp }) => {
+
+const EditableTable = ({ ourData, gridTemp }) => {
   const { t } = useContext(WizardContext);
   const [tableStates, setTableStates] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
       currentPortValue: 1,
       checkedPorts: [false, false, false, false, false, false, false, false],
-      stateOne: '',
-      stateTwo: '',
+      ourData: deepCopy(ourData),
     },
   );
   const navItems = ourData.names;
@@ -143,11 +170,20 @@ const EditableTable = ({ isPortSelect, ourData, gridTemp }) => {
       checkedPorts: temp,
     });
   };
-  const handleChangeValue = () => {
-    console.table(ourData);
-    ourData.data[0][0] = 'UPO';
+  const handleChangeValue = (e, editIndex) => {
+    let temp = tableStates.ourData;
+
+    temp.data = temp.data.map((item, index) => {
+      if (tableStates.checkedPorts[index]) {
+        item[editIndex] = e.target.value;
+      }
+      return item;
+    });
+
+    setTableStates({
+      ourData: temp,
+    });
   };
-  handleChangeValue();
 
   return (
     <div
@@ -159,28 +195,28 @@ const EditableTable = ({ isPortSelect, ourData, gridTemp }) => {
       }}
     >
       <Title className="rowToLeft">Usertable</Title>
-      {isPortSelect && (
-        <div className="row portSelect">
-          Port
-          <Input
-            inputProps={{
-              type: 'number',
-              min: 1,
-              max: 8,
-              value: tableStates.currentPortValue,
-              name: 'currentPortValue',
-              onChange: handleChange,
-            }}
-          />
-          <Button
-            action={() =>
-              handleSelectPort(parseInt(tableStates.currentPortValue) - 1)
-            }
-          >
-            Select
-          </Button>
-        </div>
-      )}
+
+      <div className="row portSelect">
+        Port
+        <Input
+          inputProps={{
+            type: 'number',
+            min: 1,
+            max: 8,
+            value: tableStates.currentPortValue,
+            name: 'currentPortValue',
+            onChange: handleChange,
+          }}
+        />
+        <Button
+          action={() =>
+            handleSelectPort(parseInt(tableStates.currentPortValue) - 1)
+          }
+        >
+          Select
+        </Button>
+      </div>
+
       <div className="row tableNav">
         <span>{t('Select')}</span>
         {navItems.map((item) => (
@@ -195,20 +231,23 @@ const EditableTable = ({ isPortSelect, ourData, gridTemp }) => {
             checked={!tableStates.checkedPorts.includes(false)}
           />
         </span>
-        {ourData.fields.map((field, index) => (
+        {tableStates.ourData.fields.map((field, index) => (
           <span>
-            {field.type === 'text' && <Input inputProps />}
+            {field.type === 'text' && (
+              <Input
+                inputProps={{ onChange: (e) => handleChangeValue(e, index) }}
+              />
+            )}
             {field.type === 'select' && (
-              <select>
-                {field.options.map((option, optionIndex) => (
-                  <option>{option}</option>
-                ))}
-              </select>
+              <Select
+                options={field.options}
+                onChangeCallback={(e) => handleChangeValue(e, index)}
+              />
             )}
           </span>
         ))}
       </div>
-      {ourData.data.map((dataRow, dataIndex) => (
+      {tableStates.ourData.data.map((dataRow, dataIndex) => (
         <div className="row">
           <span>
             <input
@@ -218,70 +257,10 @@ const EditableTable = ({ isPortSelect, ourData, gridTemp }) => {
             />
           </span>
           {dataRow.map((dataElement) => (
-            <span>{dataElement}</span>
+            <span>{dataElement ?? '---'}</span>
           ))}
         </div>
       ))}
-      {/* 
-      <div className="rowUser controlRow">
-        <span>
-          <input type="checkbox" onChange={handleSelectAllPorts} />
-        </span>
-        <span></span>
-        <span>
-          <input
-            className="basicInput"
-            type="text"
-            maxLength={16}
-            onChange={handleChangeDescription}
-          />
-        </span>
-        <span>
-          <select
-            className="basicInput"
-            onChange={(e) => handleChange(e, 'status')}
-          >
-            <option>Enable</option>
-            <option>Disable</option>
-          </select>
-        </span>
-        <span>
-          <select
-            className="basicInput"
-            onChange={(e) => handleChange(e, 'speed')}
-          >
-            <option>Auto</option>
-            <option>10MHD</option>
-          </select>
-        </span>
-        <span>
-          <select
-            className="basicInput"
-            onChange={(e) => handleChange(e, 'flow')}
-          >
-            <option>Enable</option>
-            <option>Disable</option>
-          </select>
-        </span>
-        <span></span>
-      </div>
-      {portConf.map((item, index) => (
-        <div className="rowUser" key={index}>
-          <span>
-            <input
-              type="checkbox"
-              checked={portChecked[index]}
-              onChange={() => handleSelectPort(index)}
-            />
-          </span>
-          <span>{index + 1}</span>
-          <span>{item.description}</span>
-          <span>{item.status}</span>
-          <span>{item.speed}</span>
-          <span>{item.flow}</span>
-          <span>{item.lag}</span>
-        </div>
-      ))} */}
     </div>
   );
 };
