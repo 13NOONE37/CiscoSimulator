@@ -101,6 +101,7 @@
 .editableTable .portSelect {
   display: flex;
   justify-content: flex-end;
+  color: var(--tplink-blue1);
 }
 .tableNav {
   padding: 0 !important; /*TODO:delete*/

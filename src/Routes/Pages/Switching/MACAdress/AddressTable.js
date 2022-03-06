@@ -32,7 +32,21 @@ export default function AddressTable() {
       </MultiPage.Section>
       <MultiPage.Section>
         <MultiPage.Title>Sample Table</MultiPage.Title>
-        <MultiPage.EditableTable />
+        <MultiPage.EditableTable
+          ourData={{
+            names: ['Select', 'Some Text', 'Type select'],
+            fields: [
+              { type: 'disable' },
+              { type: 'text' },
+              { type: 'select', options: [1, 2, 3, 4, 5] },
+            ],
+            data: [
+              ['1', '2', '3'],
+              ['11', '22', '33'],
+              ['111', '222', '333'],
+            ],
+          }}
+        />
       </MultiPage.Section>
       <MultiPage.Note>
         The maximum of the displayed entries is 100 by default, please click the

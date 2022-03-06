@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import './MultiPage.css';
@@ -102,38 +102,52 @@ Input.defaultProps = {
 const DefaultTable = ({}) => {
   return <div>Table</div>;
 };
-const EditableTable = ({
-  isPortSelect,
-  ourData = {
-    names: ['Select', 'Some Text', 'Type select'],
-    fields: [
-      { type: 'disable' },
-      { type: 'text' },
-      { type: 'select', options: [1, 2, 3, 4, 5] },
-    ],
-    data: [
-      ['1', '2', '3'],
-      ['11', '22', '33'],
-      ['111', '222', '333'],
-    ],
-  },
-  gridTemp,
-}) => {
+const EditableTable = ({ isPortSelect, ourData, gridTemp }) => {
   const { t } = useContext(WizardContext);
-
-  const [portChecked, setportChecked] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [tableStates, setTableStates] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      currentPortValue: 1,
+      checkedPorts: [false, false, false, false, false, false, false, false],
+      stateOne: '',
+      stateTwo: '',
+    },
+  );
   const navItems = ourData.names;
 
-  const handleSelectOne = () => {};
+  const handleChange = (e) => {
+    setTableStates({
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSelectPort = (index) => {
+    let temp = tableStates.checkedPorts;
+    temp[index] = !temp[index];
+
+    setTableStates({
+      checkedPorts: temp,
+    });
+  };
+  const handleSelectAllPorts = () => {
+    let temp = tableStates.checkedPorts;
+    if (temp.includes(false)) {
+      //here was tableStates.checkedPorts
+      temp = temp.map((item) => {
+        if (!item) item = true;
+        return item;
+      });
+    } else {
+      temp = temp.map((item) => (item = false));
+    }
+    setTableStates({
+      checkedPorts: temp,
+    });
+  };
+  const handleChangeValue = () => {
+    console.table(ourData);
+    ourData.data[0][0] = 'UPO';
+  };
+  handleChangeValue();
 
   return (
     <div
@@ -153,14 +167,18 @@ const EditableTable = ({
               type: 'number',
               min: 1,
               max: 8,
-              // value: currentSelect,
-              // onChange: (e) =>
-              //   setcurrentSelect(
-              //     Math.max(1, Math.min(e.target.valueAsNumber, 8)),
-              //   ),
+              value: tableStates.currentPortValue,
+              name: 'currentPortValue',
+              onChange: handleChange,
             }}
           />
-          <Button action={handleSelectOne}>Select</Button>
+          <Button
+            action={() =>
+              handleSelectPort(parseInt(tableStates.currentPortValue) - 1)
+            }
+          >
+            Select
+          </Button>
         </div>
       )}
       <div className="row tableNav">
@@ -171,7 +189,11 @@ const EditableTable = ({
       </div>
       <div className="row">
         <span>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={handleSelectAllPorts}
+            checked={!tableStates.checkedPorts.includes(false)}
+          />
         </span>
         {ourData.fields.map((field, index) => (
           <span>
@@ -186,10 +208,14 @@ const EditableTable = ({
           </span>
         ))}
       </div>
-      {ourData.data.map((dataRow) => (
+      {ourData.data.map((dataRow, dataIndex) => (
         <div className="row">
           <span>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={tableStates.checkedPorts[dataIndex]}
+              onChange={() => handleSelectPort(dataIndex)}
+            />
           </span>
           {dataRow.map((dataElement) => (
             <span>{dataElement}</span>
