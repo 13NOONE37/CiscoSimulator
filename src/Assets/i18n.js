@@ -23,6 +23,8 @@ i18n.init({
         Edit: 'Edit',
         userID: 'User ID',
         AccessLevel: 'Access Level',
+        Enable: 'Enable',
+        Disable: 'Disable',
 
         //Sidebar
         SideSystem: 'System',
@@ -87,6 +89,8 @@ i18n.init({
         Edit: 'Edytuj',
         userID: 'ID użytkownika',
         AccessLevel: 'Poziom dostępu',
+        Enable: 'Włączony',
+        Disable: 'Wyłączony',
 
         //Sidebar
         SideSystem: 'System',
