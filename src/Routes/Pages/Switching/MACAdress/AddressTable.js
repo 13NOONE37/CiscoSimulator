@@ -61,18 +61,19 @@ export default function AddressTable() {
       <MultiPage.Section width={750}>
         <MultiPage.Title>Sample Table</MultiPage.Title>
         <MultiPage.EditableTable
+          title={'hello Marcin'}
           ourData={myData}
           gridTemp={'65px 65px repeat(4,1fr) 65px'}
         />
         <MultiPage.DefaultTable
+          navItems={['a', 'b', 'c', 'd', 'e', 'f']}
           ourData={myData.data}
-          gridTemp={'65px 65px repeat(4,1fr) 65px'}
         />
+        <MultiPage.Note>
+          The maximum of the displayed entries is 100 by default, please click
+          the Search btton to get the complete address entries.
+        </MultiPage.Note>
       </MultiPage.Section>
-      <MultiPage.Note>
-        The maximum of the displayed entries is 100 by default, please click the
-        Search btton to get the complete address entries.
-      </MultiPage.Note>
     </MultiPage.Wizard>
   );
 }

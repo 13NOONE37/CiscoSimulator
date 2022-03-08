@@ -127,86 +127,34 @@ Select.defaultProps = {
   onChangeCallback: () => {},
 };
 
-const DefaultTable = ({ ourData, gridTemp }) => {
+const DefaultTable = ({ ourData, navItems, gridTemp }) => {
   const { t } = useContext(WizardContext);
-  // return (
-  //   <div
-  //     className="editableTable"
-  //     style={{
-  //       '--columnsCount': `${
-  //         gridTemp ? gridTemp : `65px repeat(${navItems.length},1fr)`
-  //       }`,
-  //     }}
-  //   >
-  //     <Title className="rowToLeft">Usertable</Title>
+  return (
+    <div
+      className="editableTable"
+      style={{
+        '--columnsCount': `${
+          gridTemp ? gridTemp : `repeat(${navItems.length},1fr)`
+        }`,
+      }}
+    >
+      <Title className="rowToLeft">Usertable</Title>
 
-  //     <div className="row portSelect">
-  //       Port
-  //       <Input
-  //         inputProps={{
-  //           type: 'number',
-  //           min: 1,
-  //           max: 8,
-  //           value: tableStates.currentPortValue,
-  //           name: 'currentPortValue',
-  //           onChange: handleChange,
-  //         }}
-  //       />
-  //       <Button
-  //         action={() =>
-  //           handleSelectPort(parseInt(tableStates.currentPortValue) - 1)
-  //         }
-  //       >
-  //         Select
-  //       </Button>
-  //     </div>
+      <div className="row tableNav">
+        {navItems.map((item) => (
+          <span>{t(item)}</span>
+        ))}
+      </div>
 
-  //     <div className="row tableNav">
-  //       <span>{t('Select')}</span>
-  //       {navItems.map((item) => (
-  //         <span>{t(item)}</span>
-  //       ))}
-  //     </div>
-  //     <div className="row">
-  //       <span>
-  //         <input
-  //           type="checkbox"
-  //           onChange={handleSelectAllPorts}
-  //           checked={!tableStates.checkedPorts.includes(false)}
-  //         />
-  //       </span>
-  //       {tableStates.ourData.fields.map((field, index) => (
-  //         <span>
-  //           {field.type === 'text' && (
-  //             <Input
-  //               inputProps={{ onChange: (e) => handleChangeValue(e, index) }}
-  //             />
-  //           )}
-  //           {field.type === 'select' && (
-  //             <Select
-  //               options={field.options}
-  //               onChangeCallback={(e) => handleChangeValue(e, index)}
-  //             />
-  //           )}
-  //         </span>
-  //       ))}
-  //     </div>
-  //     {tableStates.ourData.data.map((dataRow, dataIndex) => (
-  //       <div className="row">
-  //         <span>
-  //           <input
-  //             type="checkbox"
-  //             checked={tableStates.checkedPorts[dataIndex]}
-  //             onChange={() => handleSelectPort(dataIndex)}
-  //           />
-  //         </span>
-  //         {dataRow.map((dataElement) => (
-  //           <span>{dataElement ?? '---'}</span>
-  //         ))}
-  //       </div>
-  //     ))}
-  //   </div>
-  // );
+      {ourData.map((dataRow, dataIndex) => (
+        <div className="row">
+          {dataRow.map((dataElement) => (
+            <span>{dataElement ? t(dataElement) : '---'}</span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 const EditableTable = ({ title, ourData, gridTemp }) => {
