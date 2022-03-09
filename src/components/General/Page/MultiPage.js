@@ -76,9 +76,14 @@ SubElementsLine.defaultProps = {
   FirstColumnWidth: 120,
 };
 const Input = ({ isSpecial, afterText, inputProps }) => {
+  const handleMask = (e) => {
+    console.log(e.target.value, e.key);
+    console.log(/^[0-9]+$/.test(e.target.value));
+  };
   return (
     <div className="alignVerticaly">
       <input
+        onKeyDown={handleMask}
         {...inputProps}
         className={isSpecial ? 'inputSpecial' : 'inputDefault'}
       />
