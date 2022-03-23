@@ -4,12 +4,12 @@ import { Redirect, Route } from 'react-router';
 import AppContext from 'store/AppContext';
 
 export default function AuthRoute(props) {
-   const [loggedIn] = useContext(AppContext);
+  const { loggedIn } = useContext(AppContext);
 
-   if (loggedIn == null) {
-      return <Loading />;
-   }
-   if (loggedIn) return <Route {...props} />;
+  if (loggedIn == null) {
+    return <Loading />;
+  }
+  if (loggedIn) return <Route {...props} />;
 
-   return <Redirect to='/auth' />;
+  return <Redirect to="/auth" />;
 }

@@ -1,13 +1,23 @@
-import React, { createContext, useContext, useState, useReducer } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useReducer,
+  useRef,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import './MultiPage.css';
 
 const deepCopy = (object) => JSON.parse(JSON.stringify(object));
+const handleApplyToConfig = (conf, localConf, name) => {
+  conf[name] = localConf[name];
+};
 
 const WizardContext = createContext({
   t: undefined,
 });
+
 const Title = ({ children, className }) => {
   const { t } = useContext(WizardContext);
   const classes = ['BasicTitle', className].join(' ');
@@ -76,14 +86,9 @@ SubElementsLine.defaultProps = {
   FirstColumnWidth: 120,
 };
 const Input = ({ isSpecial, afterText, inputProps }) => {
-  const handleMask = (e) => {
-    console.log(e.target.value, e.key);
-    console.log(/^[0-9]+$/.test(e.target.value));
-  };
   return (
     <div className="alignVerticaly">
       <input
-        onKeyDown={handleMask}
         {...inputProps}
         className={isSpecial ? 'inputSpecial' : 'inputDefault'}
       />
@@ -105,6 +110,60 @@ Input.defaultProps = {
     value: '',
     onChange: () => {},
   },
+};
+const MaskedInput = ({ isSpecial, mask, inputProps }) => {
+  const inputsRef = useRef(null);
+  const [address, setAddress] = useState([null, null, null, null]);
+  const [currentFocus, setcurrentFocus] = useState(0);
+  const handleFocusNext = () => {
+    let newFocus = currentFocus === 3 ? 0 : currentFocus + 1;
+    inputsRef.current.children[newFocus].focus();
+    setcurrentFocus(newFocus);
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === ' ') return handleFocusNext();
+    if (e.key === '.') {
+      e.preventDefault();
+      e.stopPropagation();
+      return handleFocusNext();
+    }
+    if (e.key === ',') {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+  };
+  const handleChange = (e, index) => {
+    const validateValue = (value) => {
+      if (value.length > 3) return 255;
+      return parseInt(Math.max(0, Math.min(255, parseInt(e.target.value))), 10);
+    };
+    let value = validateValue(e.target.value);
+
+    //Apply value
+    let newAddress = [...address];
+    newAddress[index] = value;
+    setAddress(newAddress);
+    if (e.target.value.length == 3) handleFocusNext();
+  };
+  return (
+    <div class="fakeInput inputSpecial" ref={inputsRef}>
+      {address &&
+        address.map((octet, index) => (
+          <>
+            <input
+              type="number"
+              value={octet}
+              onFocus={(e) => setcurrentFocus(index)}
+              onChange={(e) => handleChange(e, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+            />
+            {index < 3 && '.'}
+          </>
+        ))}
+    </div>
+  );
 };
 const Select = ({ isSpecial, options, onChangeCallback }) => {
   const { t } = useContext(WizardContext);
@@ -132,7 +191,7 @@ Select.defaultProps = {
   onChangeCallback: () => {},
 };
 
-const DefaultTable = ({ ourData, navItems, gridTemp }) => {
+const DefaultTable = ({ data, navItems, gridTemp }) => {
   const { t } = useContext(WizardContext);
   return (
     <div
@@ -151,7 +210,7 @@ const DefaultTable = ({ ourData, navItems, gridTemp }) => {
         ))}
       </div>
 
-      {ourData.map((dataRow, dataIndex) => (
+      {data.map((dataRow, dataIndex) => (
         <div className="row">
           {dataRow.map((dataElement) => (
             <span>{dataElement ? t(dataElement) : '---'}</span>
@@ -162,17 +221,16 @@ const DefaultTable = ({ ourData, navItems, gridTemp }) => {
   );
 };
 
-const EditableTable = ({ title, ourData, gridTemp }) => {
+const EditableTable = ({ title, data, gridTemp, saveTable }) => {
   const { t } = useContext(WizardContext);
   const [tableStates, setTableStates] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
       currentPortValue: 1,
       checkedPorts: [false, false, false, false, false, false, false, false],
-      ourData: ourData,
     },
   );
-  const navItems = ourData.names;
+  const navItems = data.names;
 
   const handleChange = (e) => {
     setTableStates({
@@ -203,7 +261,7 @@ const EditableTable = ({ title, ourData, gridTemp }) => {
     });
   };
   const handleChangeValue = (e, editIndex) => {
-    let temp = tableStates.ourData;
+    let temp = data;
 
     temp.data = temp.data.map((item, index) => {
       if (tableStates.checkedPorts[index]) {
@@ -212,9 +270,7 @@ const EditableTable = ({ title, ourData, gridTemp }) => {
       return item;
     });
 
-    setTableStates({
-      ourData: temp,
-    });
+    saveTable(temp);
   };
 
   return (
@@ -263,7 +319,7 @@ const EditableTable = ({ title, ourData, gridTemp }) => {
             checked={!tableStates.checkedPorts.includes(false)}
           />
         </span>
-        {tableStates.ourData.fields.map((field, index) => (
+        {data.fields.map((field, index) => (
           <span>
             {field.type === 'text' && (
               <Input
@@ -282,7 +338,7 @@ const EditableTable = ({ title, ourData, gridTemp }) => {
           </span>
         ))}
       </div>
-      {tableStates.ourData.data.map((dataRow, dataIndex) => (
+      {data.data.map((dataRow, dataIndex) => (
         <div className="row">
           <span>
             <input
@@ -339,6 +395,9 @@ export {
   ElementsLine,
   SubElementsLine,
   Input,
+  MaskedInput,
   DefaultTable,
   EditableTable,
+  deepCopy,
+  handleApplyToConfig,
 };

@@ -33,7 +33,9 @@ export default function App() {
     <MemoryRouter>
       <div className="App">
         <Header />
-        <AppContext.Provider value={[loggedIn, setLoggedIn, config, setConfig]}>
+        <AppContext.Provider
+          value={{ loggedIn, setLoggedIn, config, setConfig }}
+        >
           <Switch>
             {Routes.map((route, index) => {
               if (route.protected == 'guest') {

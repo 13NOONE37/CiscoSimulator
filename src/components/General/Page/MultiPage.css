@@ -120,6 +120,25 @@
 .tableNav span:last-child {
   border-right: 1px solid transparent;
 }
+.fakeInput {
+  display: flex;
+  flex-direction: row;
+  height: 18px;
+  width: fit-content;
+}
+.fakeInput input {
+  width: 30px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  position: relative;
+}
+.fakeInput input::-webkit-outer-spin-button,
+.fakeInput input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* .editableTable .rowUser {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

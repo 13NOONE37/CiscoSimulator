@@ -273,6 +273,37 @@ const defaultConfig = {
       LAG: '---',
     },
   ],
+  addressTableConfig: {
+    firstEdit: '123',
+    table: {
+      names: [
+        'Port',
+        'Description',
+        'Status',
+        'SpeedAndDuplex',
+        'FlowControl',
+        'LAG',
+      ],
+      fields: [
+        { type: 'disable' },
+        { type: 'text' },
+        { type: 'select', options: ['Enable', 'Disable'] },
+        { type: 'select', options: ['Auto', '10MHD'] },
+        { type: 'select', options: ['Enable', 'Disable'] },
+        { type: 'disable' },
+      ],
+      data: [
+        ['1', 'Szczur1', 'Disable', 'Auto', 'Enable', 'LAG1'],
+        ['2', 'Szczur2', 'Enable', 'Auto', 'Disable', 'LAG1'],
+        ['3', 'Szczur3', 'Disable', 'Auto', 'Enable', undefined],
+        ['4', 'Szczur4', 'Enable', 'Auto', 'Disable', undefined],
+        ['5', 'Szczur5', 'Disable', 'Auto', 'Enable', undefined],
+        ['6', 'Szczur6', 'Enable', 'Auto', 'Disable', undefined],
+        ['7', 'Szczur7', 'Enable', 'Auto', 'Disable', 'LAG1'],
+        ['8', 'Szczur8', 'Enable', 'Auto', 'Disable', 'LAG1'],
+      ],
+    },
+  },
 };
 
 export default defaultConfig;

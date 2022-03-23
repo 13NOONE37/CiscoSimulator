@@ -4,7 +4,7 @@ import AppContext from 'store/AppContext';
 import { useTranslation } from 'react-i18next';
 
 export default function Container() {
-  const [loggedIn, setLoggedIn, config, setConfig] = useContext(AppContext);
+  const {loggedIn, setLoggedIn, config, setConfig} = useContext(AppContext);
   const { t } = useTranslation();
 
   return (

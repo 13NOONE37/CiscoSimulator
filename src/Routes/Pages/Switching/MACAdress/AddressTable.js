@@ -1,58 +1,59 @@
-import React from 'react';
+import React, { useState, useContext, useReducer } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
+import AppContext from 'store/AppContext';
+
 export default function AddressTable() {
-  const myData = {
-    names: [
-      'Port',
-      'Description',
-      'Status',
-      'SpeedAndDuplex',
-      'FlowControl',
-      'LAG',
-    ],
-    fields: [
-      { type: 'disable' },
-      { type: 'text' },
-      { type: 'select', options: ['Enable', 'Disable'] },
-      { type: 'select', options: ['Auto', '10MHD'] },
-      { type: 'select', options: ['Enable', 'Disable'] },
-      { type: 'disable' },
-    ],
-    data: [
-      ['1', 'Szczur bartol_=>|1', 'Disable', 'Auto', 'Enable', 'LAG1'],
-      ['2', 'Szczur bartol_=>|2', 'Enable', 'Auto', 'Disable', 'LAG1'],
-      ['3', 'Szczur bartol_=>|3', 'Disable', 'Auto', 'Enable', undefined],
-      ['4', 'Szczur bartol_=>|4', 'Enable', 'Auto', 'Disable', undefined],
-      ['5', 'Szczur bartol_=>|5', 'Disable', 'Auto', 'Enable', undefined],
-      ['6', 'Szczur bartol_=>|6', 'Enable', 'Auto', 'Disable', undefined],
-      ['7', 'Szczur bartol_=>|7', 'Enable', 'Auto', 'Disable', 'LAG1'],
-      ['8', 'Szczur bartol_=>|8', 'Enable', 'Auto', 'Disable', 'LAG1'],
-    ],
-  };
+  //here will global config
+  const { config } = useContext(AppContext);
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      ...MultiPage.deepCopy(config.addressTableConfig),
+    },
+  );
+
   return (
     <MultiPage.Wizard>
       <MultiPage.Section width={600}>
         <MultiPage.Title>hello</MultiPage.Title>
         <MultiPage.ElementsLine
-          actionButton={() => <MultiPage.Button>Apply</MultiPage.Button>}
+          actionButton={() => (
+            <MultiPage.Button
+              action={() =>
+                MultiPage.handleApplyToConfig(
+                  config.addressTableConfig,
+                  localConfig,
+                  'firstEdit',
+                )
+              }
+            >
+              Apply
+            </MultiPage.Button>
+          )}
         >
           <MultiPage.SubElementsLine>
             <span>Type szczur marcin: </span>
-            <MultiPage.Input inputProps={{ placeholder: 'test' }} />
-          </MultiPage.SubElementsLine>
-        </MultiPage.ElementsLine>
-
-        <MultiPage.ElementsLine
-        // actionButton={() => <MultiPage.Button>Apply</MultiPage.Button>}
-        >
-          <MultiPage.SubElementsLine>
-            <span>Type rat value</span>
-            <MultiPage.Input afterText="VLAN ID: 1-4094" />
+            <MultiPage.Input
+              inputProps={{
+                placeholder: 'test',
+                value: localConfig.firstEdit,
+                onChange: (e) =>
+                  setLocalConfig({ ['firstEdit']: e.target.value }),
+              }}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>Apply</MultiPage.Button>
+          <MultiPage.Button
+            isSpecial
+            action={() => {
+              console.table(localConfig);
+              console.table(config.addressTableConfig);
+            }}
+          >
+            Apply
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>Delete</MultiPage.Button>
           <MultiPage.Button isSpecial>Bind</MultiPage.Button>
           <MultiPage.Button isSpecial>Help</MultiPage.Button>
@@ -62,12 +63,25 @@ export default function AddressTable() {
         <MultiPage.Title>Sample Table</MultiPage.Title>
         <MultiPage.EditableTable
           title={'hello Marcin'}
-          ourData={myData}
+          data={localConfig.table}
+          saveTable={(data) => setLocalConfig({ ['table']: data })}
           gridTemp={'65px 65px repeat(4,1fr) 65px'}
         />
+        <MultiPage.Button
+          action={() =>
+            MultiPage.handleApplyToConfig(
+              config.addressTableConfig,
+              localConfig,
+              'table',
+            )
+          }
+        >
+          Apply this data
+        </MultiPage.Button>
+        <MultiPage.MaskedInput />
         <MultiPage.DefaultTable
           navItems={['a', 'b', 'c', 'd', 'e', 'f']}
-          ourData={myData.data}
+          data={localConfig.table.data}
         />
         <MultiPage.Note>
           The maximum of the displayed entries is 100 by default, please click
