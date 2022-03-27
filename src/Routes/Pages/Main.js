@@ -8,6 +8,7 @@ import {
   useParams,
   useRouteMatch,
 } from 'react-router-dom';
+import AppContext from 'store/AppContext';
 
 import 'css/ContentContainer.css';
 import 'css/Variables.css';
@@ -17,8 +18,6 @@ import 'css/System/AccessSecurity.css';
 import 'css/Switching/Port.css';
 
 import Sidebar from 'components/Sidebar';
-import AppContext from 'store/AppContext';
-import { useTranslation } from 'react-i18next';
 import SystemSummary from 'Routes/Pages/System/Info/SystemSummary';
 import DeviceDescription from 'Routes/Pages/System/Info/DeviceDescription';
 import SystemTime from 'Routes/Pages/System/Info/SystemTime';
@@ -46,10 +45,14 @@ import FilteringAddress from './Switching/MACAdress/FilteringAddress';
 import DynamicAddress from './Switching/MACAdress/DynamicAddress';
 import StaticAddress from './Switching/MACAdress/StaticAddress';
 import AddressTable from './Switching/MACAdress/AddressTable';
+import LAGTable from './Switching/LAG/LAGTable';
+import StaticLAG from './Switching/LAG/StaticLAG';
+import LACPConfig from './Switching/LAG/LACPConfig';
+import { useTranslation } from 'react-i18next';
 
 export default function Main() {
-  const { loggedIn, setLoggedIn, config, setConfig } = useContext(AppContext);
   const { t } = useTranslation();
+  const { setConfig } = useContext(AppContext);
   const pageRoutes = [
     {
       path: '/systeminfo',
@@ -57,27 +60,27 @@ export default function Main() {
         {
           path: '/systemsummary',
           name: t('SystemSummary'),
-          content: () => <SystemSummary t={t} config={config} />,
+          content: () => <SystemSummary />,
         },
         {
           path: '/devicedescription',
           name: t('DeviceDescription'),
-          content: () => <DeviceDescription t={t} config={config} />,
+          content: () => <DeviceDescription />,
         },
         {
           path: '/systemtime',
           name: t('SystemTime'),
-          content: () => <SystemTime t={t} config={config} />,
+          content: () => <SystemTime />,
         },
         {
           path: '/daylightsavingtime',
           name: t('DaylightSavingTime'),
-          content: () => <DayglightSavingTime t={t} config={config} />,
+          content: () => <DayglightSavingTime />,
         },
         {
           path: '/systemip',
           name: t('SystemIP'),
-          content: () => <SystemIp t={t} config={config} />,
+          content: () => <SystemIp />,
         },
       ],
     },
@@ -87,14 +90,12 @@ export default function Main() {
         {
           path: '/usertable',
           name: t('UserTable'),
-          content: () => <Usertable t={t} config={config} />,
+          content: () => <Usertable />,
         },
         {
           path: '/userconfig',
           name: t('UserConfig'),
-          content: () => (
-            <Userconfig t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <Userconfig setConfig={setConfig} />,
         },
       ],
     },
@@ -104,29 +105,27 @@ export default function Main() {
         {
           path: '/configrestore',
           name: t('ConfigRestore'),
-          content: () => (
-            <ConfigRestore t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <ConfigRestore setConfig={setConfig} />,
         },
         {
           path: '/configbackup',
           name: t('ConfigBackup'),
-          content: () => <ConfigBackup t={t} config={config} />,
+          content: () => <ConfigBackup />,
         },
         {
           path: '/firmwareupgrade',
           name: t('FirmwareUpgrade'),
-          content: () => <FirmwareUpgrade t={t} config={config} />,
+          content: () => <FirmwareUpgrade />,
         },
         {
           path: '/systemreboot',
           name: t('SystemReboot'),
-          content: () => <SystemReboot t={t} setLoggedIn={setLoggedIn} />,
+          content: () => <SystemReboot />,
         },
         {
           path: '/systemreset',
           name: t('SystemReset'),
-          content: () => <SystemReset t={t} setConfig={setConfig} />,
+          content: () => <SystemReset />,
         },
       ],
     },
@@ -136,33 +135,27 @@ export default function Main() {
         {
           path: '/accesscontrol',
           name: t('AccessControl'),
-          content: () => (
-            <AccessControl t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <AccessControl setConfig={setConfig} />,
         },
         {
           path: '/HTTPConfig',
           name: t('HTTPConfig'),
-          content: () => (
-            <HTTPConfig t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <HTTPConfig setConfig={setConfig} />,
         },
         {
           path: '/HTTPSConfig',
           name: t('HTTPSConfig'),
-          content: () => (
-            <HTTPSConfig t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <HTTPSConfig setConfig={setConfig} />,
         },
         {
           path: '/SSHConfig',
           name: t('SSHConfig'),
-          content: () => <SSHConfig t={t} config={config} />,
+          content: () => <SSHConfig />,
         },
         {
           path: '/TelnetConfig',
           name: t('TelnetConfig'),
-          content: () => <Telnet t={t} config={config} />,
+          content: () => <Telnet />,
         },
       ],
     },
@@ -172,31 +165,47 @@ export default function Main() {
         {
           path: '/portconfig',
           name: t('PortConfig'),
-          content: () => <PortConfig t={t} config={config} />,
+          content: () => <PortConfig />,
         },
         {
           path: '/portmirror',
           name: t('PortMirror'),
-          content: () => (
-            <PortMirror t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <PortMirror setConfig={setConfig} />,
         },
         {
           path: '/portsecurity',
           name: t('PortSecurity'),
-          content: () => (
-            <PortSecurity t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <PortSecurity setConfig={setConfig} />,
         },
         {
           path: '/portisolation',
           name: t('PortIsolation'),
-          content: () => <PortIsolation t={t} config={config} />,
+          content: () => <PortIsolation />,
         },
         {
           path: '/loopbackdetection',
           name: t('LoopbackDetection'),
-          content: () => <LoopbackDetection t={t} config={config} />,
+          content: () => <LoopbackDetection />,
+        },
+      ],
+    },
+    {
+      path: '/lag',
+      navItems: [
+        {
+          path: '/lagtable',
+          name: t('LAGTable'),
+          content: () => <LAGTable />,
+        },
+        {
+          path: '/staticlag',
+          name: t('StaticLAG'),
+          content: () => <StaticLAG />,
+        },
+        {
+          path: '/lacpconfig',
+          name: t('LACPConfig'),
+          content: () => <LACPConfig />,
         },
       ],
     },
@@ -206,26 +215,22 @@ export default function Main() {
         {
           path: '/AddressTable',
           name: t('AdressTable'),
-          content: () => <AddressTable t={t} config={config} />,
+          content: () => <AddressTable />,
         },
         {
           path: '/StaticAddress',
           name: t('StaticAddress'),
-          content: () => (
-            <StaticAddress t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <StaticAddress />,
         },
         {
           path: '/DynamicAddress',
           name: t('DynamicAddress'),
-          content: () => (
-            <DynamicAddress t={t} config={config} setConfig={setConfig} />
-          ),
+          content: () => <DynamicAddress />,
         },
         {
           path: '/FilteringAddress',
           name: t('FilteringAddress'),
-          content: () => <FilteringAddress t={t} config={config} />,
+          content: () => <FilteringAddress />,
         },
       ],
     },
@@ -233,7 +238,7 @@ export default function Main() {
   return (
     <div className="ContentContainer">
       <Router>
-        <Sidebar setLoggedIn={setLoggedIn} config={config} />
+        <Sidebar />
 
         <Switch>
           {pageRoutes.map((route1, index1) => (

@@ -191,7 +191,7 @@ Select.defaultProps = {
   onChangeCallback: () => {},
 };
 
-const DefaultTable = ({ data, navItems, gridTemp }) => {
+const DefaultTable = ({ data, navItems, gridTemp, title }) => {
   const { t } = useContext(WizardContext);
   return (
     <div
@@ -202,7 +202,7 @@ const DefaultTable = ({ data, navItems, gridTemp }) => {
         }`,
       }}
     >
-      <Title className="rowToLeft">Usertable</Title>
+      <Title className="rowToLeft">{t(title)}</Title>
 
       <div className="row tableNav">
         {navItems.map((item) => (
@@ -282,7 +282,7 @@ const EditableTable = ({ title, data, gridTemp, saveTable }) => {
         }`,
       }}
     >
-      <Title className="rowToLeft">{t(title)}</Title>
+      <Title className="rowToLeft">{title}</Title>
 
       <div className="row portSelect">
         Port
@@ -304,7 +304,6 @@ const EditableTable = ({ title, data, gridTemp, saveTable }) => {
           {t('Select')}
         </Button>
       </div>
-
       <div className="row tableNav">
         <span>{t('Select')}</span>
         {navItems.map((item) => (

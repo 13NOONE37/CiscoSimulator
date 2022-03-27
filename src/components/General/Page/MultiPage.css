@@ -89,7 +89,7 @@
   font-size: 14px;
   border-bottom: 2px solid var(--tplink-grey1);
   grid-template-columns: var(--columnsCount);
-  /* padding: 4px; */
+  padding: 2px;
 }
 .row span {
   width: 100%;

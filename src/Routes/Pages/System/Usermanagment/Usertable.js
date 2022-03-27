@@ -1,5 +1,4 @@
 import React from 'react';
-import 'css/System/InfoTable.css';
 
 export default function Usertable({ t, config }) {
   return (
