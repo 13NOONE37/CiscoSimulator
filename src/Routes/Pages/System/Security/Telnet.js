@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
@@ -44,7 +43,7 @@ export default function Telnet({ t, config }) {
           </button>
         </div>
 
-        <Note />
+        {/* <Note /> */}
       </div>
     </article>
   );

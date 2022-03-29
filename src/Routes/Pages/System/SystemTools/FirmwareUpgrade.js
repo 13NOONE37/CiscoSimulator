@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import React from 'react';
 
 export default function FirmwareUpgrade({ t, config }) {
@@ -38,7 +37,7 @@ export default function FirmwareUpgrade({ t, config }) {
             </span>
           </span>
         </span>
-        <Note
+        {/* <Note
           content={
             <>
               <br />
@@ -53,7 +52,7 @@ export default function FirmwareUpgrade({ t, config }) {
               4. You are suggested to backup the configuration before upgrading.
             </>
           }
-        />
+        /> */}
       </div>
     </article>
   );

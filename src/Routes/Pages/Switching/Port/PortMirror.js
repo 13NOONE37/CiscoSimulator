@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import React, { useState } from 'react';
 
 export default function PortMirror({ t, config }) {
@@ -44,7 +43,7 @@ export default function PortMirror({ t, config }) {
           <button class="basicInput actionButton">Help</button>
         </div>
       </div>
-      <Note />
+      {/* <Note /> */}
     </article>
   );
 }

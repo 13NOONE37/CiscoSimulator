@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function SystemSummary() {
   const { t } = useTranslation();
-  const { config, setConfig } = useContext(AppContext);
+  const { config } = useContext(AppContext);
 
   return (
     <MultiPage.Wizard>
@@ -20,16 +20,11 @@ export default function SystemSummary() {
             [t('SystemContact'), config.systemContact],
             [t('HardwareVersion'), config.hardware],
             [t('FirmwareVersion'), config.firmware],
-            [t('IPAddress'), config.ip],
-            [t('SubnetMask'), config.mask],
-            [t('DefaultGateway'), config.gateway],
+            [t('IPAddress'), config.ip.join('.')],
+            [t('SubnetMask'), config.mask.join('.')],
+            [t('DefaultGateway'), config.gateway.join('.')],
             [t('MACAddress'), config.mac],
-            [
-              t('SystemTime'),
-              `${new Date(config.currentTime).toDateString()} ${new Date(
-                config.currentTime,
-              ).toLocaleTimeString()}`,
-            ],
+            [t('SystemTime'), `${config.currentDate}  ${config.currentTime}`],
           ]}
           navItems={['', '']}
           title={t('SystemInfo')}

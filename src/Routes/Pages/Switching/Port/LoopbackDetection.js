@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
@@ -286,7 +285,7 @@ export default function LoopbackDetection({ t, config }) {
           <button class="basicInput actionButton">Help</button>
         </div>
       </div>
-      <Note
+      {/* <Note
         content={
           <>
             <br />
@@ -295,7 +294,7 @@ export default function LoopbackDetection({ t, config }) {
             Loopback Detection must coordinate with storm control.
           </>
         }
-      />
+      /> */}
     </article>
   );
 }

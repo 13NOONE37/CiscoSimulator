@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 
@@ -151,7 +150,7 @@ export default function PortIsolation({ t, config }) {
           ))}
         </div>
       </div>
-      <Note />
+      {/* <Note /> */}
     </article>
   );
 }

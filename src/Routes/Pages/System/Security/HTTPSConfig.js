@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
@@ -367,7 +366,7 @@ export default function HTTPSConfig({ t, config }) {
             </span>
           </div>
         </div>
-        <Note />
+        {/* <Note /> */}
       </div>
     </article>
   );

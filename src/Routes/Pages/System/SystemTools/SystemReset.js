@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import React from 'react';
 import defaultConfig from 'store/defaultConfig';
 
@@ -18,7 +17,7 @@ export default function SystemReset({ t, setConfig }) {
           </span>
         </div>
 
-        <Note
+        {/* <Note
           content={
             <>
               <br />
@@ -26,7 +25,7 @@ export default function SystemReset({ t, setConfig }) {
               and your current settings will be lost.
             </>
           }
-        />
+        /> */}
       </div>
     </article>
   );

@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 
@@ -171,14 +170,14 @@ export default function PortConfig({ t, config }) {
           <button class="basicInput actionButton">Help</button>
         </div>
       </div>
-      <Note
+      {/* <Note
         content={
           <>
             <br />
             The Port Description should not be more than 16 characters.
           </>
         }
-      />
+      /> */}
     </article>
   );
 }

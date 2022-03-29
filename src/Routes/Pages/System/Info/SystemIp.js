@@ -1,141 +1,152 @@
-import React, { useRef, useState } from 'react';
-import ReactInputMask from 'react-input-mask';
-import 'css/System/SystemIp.css';
-import Note from 'components/General/Note/Note';
+import React, { useContext, useReducer } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
 
-export default function SystemIp({ t, config }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    config.ip = currentIP;
-    config.mask = currentSubnetMask;
-    config.gateway = currentDefaultGateway;
-    config.addressMode = currentAdressMode;
-    config.managmentVlan = currentVlanManagment;
-  };
-  const handleChange = (e, setvalue) => {
-    setvalue(e.currentTarget.value);
-  };
-
-  const [currentIP, setcurrentIP] = useState(config.ip || '');
-  const [currentSubnetMask, setcurrentSubnetMask] = useState(config.mask || '');
-  const [currentDefaultGateway, setcurrentDefaultGateway] = useState(
-    config.gateway || '',
+export default function SystemIp() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      ip: config.ip,
+      mask: config.mask,
+      gateway: config.gateway,
+      addressMode: config.addressMode,
+      managmentVlan: config.managmentVlan,
+    },
   );
-  const [currentAdressMode, setcurrentAdressMode] = useState(
-    config.addressMode || 'Static IP',
-  );
-  const [currentVlanManagment, setcurrentVlanManagment] = useState(
-    config.managmentVlan || 1,
-  );
-
-  //TODO: Zrobić przycinanie zer wiodących w adresach IP
 
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('SystemIP')}</div>
-        <form onSubmit={handleSubmit} className="tplinkFormBase1">
-          <span>
-            {t('Info_MACAddress')}:
-            <span className="spanText">{config.mac}</span>
-          </span>
-          <span>
-            {t('Info_IPAdressMode')}
-            <div className="radioForm">
-              <label>
-                <input
-                  type="radio"
-                  name="addresMode"
-                  value="Static IP"
-                  defaultChecked={currentAdressMode == 'Static IP'}
-                  onChange={(e) => setcurrentAdressMode(e.currentTarget.name)}
-                />
-                Static IP
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="addresMode"
-                  value="DHCP"
-                  defaultChecked={currentAdressMode == 'DHCP'}
-                  onChange={(e) => setcurrentAdressMode(e.currentTarget.name)}
-                />
-                DHCP
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="addresMode"
-                  value="BOOTP"
-                  defaultChecked={currentAdressMode == 'BOOTP'}
-                  onChange={(e) => setcurrentAdressMode(e.currentTarget.name)}
-                />
-                BOOTP
-              </label>
-            </div>
-          </span>
-          <span style={{ gridTemplateColumns: 'repeat(4, auto)' }}>
-            {t('Info_ManagmentValue')}:
-            <input
-              className="basicInput"
-              type="number"
-              min={1}
-              max={4094}
-              style={{ width: '50px' }}
-              value={currentVlanManagment}
-              onChange={(e) => handleChange(e, setcurrentVlanManagment)}
-            />
-            <span className="spanText">(VLAN ID: 1-4094)</span>
-            <input
-              type="submit"
-              className="moveRight buttonPointer"
-              value={'Apply'}
-            />
-          </span>
+    <MultiPage.Wizard>
+      <MultiPage.Section>
+        <MultiPage.Title>{t('IPConfig')}</MultiPage.Title>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine>
+            <span>{t('MACAddress')}:</span>
+            <span>{config.mac}</span>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
 
-          <span>
-            {t('Info_IPAddress')}:
-            <ReactInputMask
-              className="basicInput"
-              mask="999.999.999.999"
-              maskChar={' '}
-              value={currentIP}
-              onChange={(e) => handleChange(e, setcurrentIP)}
-            ></ReactInputMask>
-            <input type="submit" className="moveRight" value={t('Help')} />
-          </span>
-          <span>
-            {t('Info_SubnetMask')}:
-            <ReactInputMask
-              className="basicInput"
-              mask="999.999.999.999"
-              maskChar={' '}
-              value={currentSubnetMask}
-              onChange={(e) => handleChange(e, setcurrentSubnetMask)}
-            ></ReactInputMask>
-          </span>
-          <span>
-            {t('Info_DefaultGateway')}:
-            <ReactInputMask
-              className="basicInput"
-              mask="00?0?.00?0?.00?0?.00?0?"
-              maskChar="0"
-              value={currentDefaultGateway}
-              onChange={(e) => handleChange(e, setcurrentDefaultGateway)}
-            ></ReactInputMask>
-          </span>
-        </form>
-        <Note
-          content={
-            <>
-              <br />
-              Changing IP address to a different IP segment will interrupt the
-              network communication, so please keep the new IP address in the
-              same IP segment with the local network.
-            </>
-          }
-        />
-      </div>
-    </article>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine>
+            <span>{t('IPAddressMode')}:</span>
+            <MultiPage.Row style={{ gap: '30px' }}>
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  value: 'Static IP',
+                  name: 'ipAddressMode',
+                  defaultChecked: localConfig.addressMode === 'Static IP',
+                  onChange: (e) =>
+                    setLocalConfig({ ['addressMode']: e.target.value }),
+                }}
+                afterText={t('Static IP')}
+              />
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  value: 'DHCP',
+                  name: 'ipAddressMode',
+                  defaultChecked: localConfig.addressMode === 'DHCP',
+                  onChange: (e) =>
+                    setLocalConfig({ ['addressMode']: e.target.value }),
+                }}
+                afterText={t('DHCP')}
+              />
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  value: 'BOOTP',
+                  name: 'ipAddressMode',
+                  defaultChecked: localConfig.addressMode === 'BOOTP',
+                  onChange: (e) =>
+                    setLocalConfig({ ['addressMode']: e.target.value }),
+                }}
+                afterText={t('BOOTP')}
+              />
+            </MultiPage.Row>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine>
+            <span>{t('ManagmentVlan')}:</span>
+            <MultiPage.Input
+              inputProps={{
+                type: 'number',
+                min: 1,
+                max: 4094,
+                value: localConfig.managmentVlan,
+                onChange: (e) =>
+                  setLocalConfig({
+                    ['managmentVlan']: e.target.value,
+                  }),
+              }}
+              afterText="(VLAN ID: 1-4094)"
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button
+              action={() => {
+                MultiPage.handleApplyToConfig(config, localConfig, 'ip');
+                MultiPage.handleApplyToConfig(config, localConfig, 'mask');
+                MultiPage.handleApplyToConfig(config, localConfig, 'gateway');
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'addressMode',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'managmentVlan',
+                );
+              }}
+            >
+              {t('Apply')}
+            </MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine>
+            <span>{t('IPAddress')}:</span>
+            <MultiPage.MaskedInput
+              isDisabled={localConfig.addressMode !== 'Static IP'}
+              value={localConfig.ip}
+              changeCallback={(data) => setLocalConfig({ ['ip']: data })}
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => <MultiPage.Button>{t('Help')}</MultiPage.Button>}
+        >
+          <MultiPage.SubElementsLine>
+            <span>{t('SubnetMask')}:</span>
+            <MultiPage.MaskedInput
+              isDisabled={localConfig.addressMode !== 'Static IP'}
+              value={localConfig.mask}
+              changeCallback={(data) => setLocalConfig({ ['mask']: data })}
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine>
+            <span>{t('DefaultGateway')}:</span>
+            <MultiPage.MaskedInput
+              isDisabled={localConfig.addressMode !== 'Static IP'}
+              value={localConfig.gateway}
+              changeCallback={(data) => setLocalConfig({ ['gateway']: data })}
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.Note>
+          Changing IP address to a different IP segment will interrupt the
+          network communication, so please keep the new IP address in the same
+          IP segment with the local network.
+        </MultiPage.Note>
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }

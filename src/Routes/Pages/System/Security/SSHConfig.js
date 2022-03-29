@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
@@ -273,7 +272,7 @@ export default function SSHConfig({ t, config }) {
             </span>
           </div>
         </div>{' '}
-        <Note
+        {/* <Note
           content={
             <>
               <br />
@@ -286,7 +285,7 @@ export default function SSHConfig({ t, config }) {
               authentication.
             </>
           }
-        />
+        /> */}
       </div>
     </article>
   );

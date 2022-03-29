@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import React from 'react';
 
 export default function SystemReboot({ t, setLoggedIn }) {
@@ -23,14 +22,14 @@ export default function SystemReboot({ t, setLoggedIn }) {
           </span>
         </div>
 
-        <Note
+        {/* <Note
           content={
             <>
               <br />
               To avoid damage, please don't turn off the device while rebooting.
             </>
           }
-        />
+        /> */}
       </div>
     </article>
   );

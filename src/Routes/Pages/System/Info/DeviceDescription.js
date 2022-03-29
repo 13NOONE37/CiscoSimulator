@@ -1,26 +1,20 @@
-import Note from 'components/General/Note/Note';
-import Title from 'components/General/Title/Title';
-import React, { useState, useContext } from 'react';
+import React, { useReducer, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as MultiPage from 'components/General/Page/MultiPage';
-
 import AppContext from 'store/AppContext';
-import handleGlobalChange from 'Utils/handleGlobalChange';
 
 export default function DeviceDescription() {
   const { t } = useTranslation();
-  const { config, setConfig } = useContext(AppContext);
+  const { config } = useContext(AppContext);
 
-  const [deviceName, setdeviceName] = useState(config.deviceName);
-  const [deviceLocation, setdeviceLocation] = useState(config.deviceLocation);
-  const [systemContact, setsystemContact] = useState(config.systemContact);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    config.deviceName = deviceName;
-    config.deviceLocation = deviceLocation;
-    config.systemContact = systemContact;
-  };
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      deviceName: config.deviceName,
+      deviceLocation: config.deviceLocation,
+      systemContact: config.systemContact,
+    },
+  );
 
   return (
     <MultiPage.Wizard>
@@ -29,76 +23,73 @@ export default function DeviceDescription() {
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine FirstColumnWidth={180}>
             {t('DeviceName')}:
-            <MultiPage.Input />
+            <MultiPage.Input
+              inputProps={{
+                type: 'text',
+                value: localConfig.deviceName,
+                maxLength: 32,
+                onChange: (e) =>
+                  setLocalConfig({ ['deviceName']: e.target.value }),
+              }}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine
-          actionButton={() => <MultiPage.Button>Apply</MultiPage.Button>}
+          actionButton={() => (
+            <MultiPage.Button
+              action={() => {
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'deviceName',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'deviceLocation',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'systemContact',
+                );
+              }}
+            >
+              Apply
+            </MultiPage.Button>
+          )}
         >
           <MultiPage.SubElementsLine FirstColumnWidth={180}>
             {t('DeviceLocation')}:
-            <MultiPage.Input />
+            <MultiPage.Input
+              inputProps={{
+                type: 'text',
+                maxLength: 32,
+                value: localConfig.deviceLocation,
+                onChange: (e) =>
+                  setLocalConfig({ ['deviceLocation']: e.target.value }),
+              }}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine FirstColumnWidth={180}>
             {t('SystemContact')}:
-            <MultiPage.Input inputProps={{ type: 'email' }} />
+            <MultiPage.Input
+              inputProps={{
+                type: 'email',
+                value: localConfig.systemContact,
+                maxLength: 32,
+                onChange: (e) =>
+                  setLocalConfig({ ['systemContact']: e.target.value }),
+              }}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.Note>
           The Device Name, Location and Contact should not be more than 32
           characters.
         </MultiPage.Note>
-        {/* <article>
-          <div className="tplinkBoxBase1">
-            <Title content="DeviceDescription" />
-            <form onSubmit={handleSubmit} className="tplinkFormBase1">
-              <span>
-                {t('DeviceName')}:{' '}
-                <input
-                  className="basicInput"
-                  type="text"
-                  maxLength={32}
-                  value={deviceName}
-                  onChange={(e) => handleGlobalChange(e, setdeviceName)}
-                />
-              </span>
-              <span>
-                {t('DeviceLocation')}:{' '}
-                <input
-                  className="basicInput"
-                  type="text"
-                  maxLength={32}
-                  value={deviceLocation}
-                  onChange={(e) => handleGlobalChange(e, setdeviceLocation)}
-                />
-                <input
-                  type="submit"
-                  className="moveRight buttonPointer"
-                  value={t('Apply')}
-                />
-              </span>
-              <span>
-                {t('SystemContact')}:{' '}
-                <input
-                  className="basicInput"
-                  type="text"
-                  maxLength={32}
-                  value={systemContact}
-                  onChange={(e) => handleGlobalChange(e, setsystemContact)}
-                />
-              </span>
-            </form>
-            <Note
-              content={
-                <>
-                  <br />
-                </>
-              }
-            />
-          </div>
-        </article> */}
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

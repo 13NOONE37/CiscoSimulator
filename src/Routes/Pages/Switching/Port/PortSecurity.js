@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import React, { useState } from 'react';
 
 export default function PortSecurity({ t, config }) {
@@ -151,7 +150,7 @@ export default function PortSecurity({ t, config }) {
           <button class="basicInput actionButton">Help</button>
         </div>
       </div>
-      <Note
+      {/* <Note
         content={
           <>
             <br />
@@ -159,7 +158,7 @@ export default function PortSecurity({ t, config }) {
             be set to 64.
           </>
         }
-      />
+      /> */}
     </article>
   );
 }

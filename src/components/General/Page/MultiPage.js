@@ -27,7 +27,7 @@ const Note = ({ children }) => {
   const { t } = useContext(WizardContext);
   return (
     <div className="note">
-      <strong>{t('Note')}:</strong>
+      {children && <strong>{t('Note')}:</strong>}
       <br />
       {t(children)}
     </div>
@@ -55,6 +55,13 @@ Button.defaultProps = {
 
 const ButtonsRow = ({ children }) => {
   return <div className="buttonsRow">{children}</div>;
+};
+const Row = ({ children, style }) => {
+  return (
+    <div className="elementsRow" style={style}>
+      {children}
+    </div>
+  );
 };
 const ElementsLine = ({ children, actionButton }) => {
   return (
@@ -111,16 +118,15 @@ Input.defaultProps = {
     onChange: () => {},
   },
 };
-const MaskedInput = ({ isSpecial, mask, inputProps }) => {
+const MaskedInput = ({ isSpecial, changeCallback, value, isDisabled }) => {
   const inputsRef = useRef(null);
-  const [address, setAddress] = useState([null, null, null, null]);
+  const [address, setAddress] = useState(value || [null, null, null, null]);
   const [currentFocus, setcurrentFocus] = useState(0);
   const handleFocusNext = () => {
     let newFocus = currentFocus === 3 ? 0 : currentFocus + 1;
     inputsRef.current.children[newFocus].focus();
     setcurrentFocus(newFocus);
   };
-
   const handleKeyDown = (e, index) => {
     if (e.key === ' ') return handleFocusNext();
     if (e.key === '.') {
@@ -145,10 +151,14 @@ const MaskedInput = ({ isSpecial, mask, inputProps }) => {
     let newAddress = [...address];
     newAddress[index] = value;
     setAddress(newAddress);
+    changeCallback(newAddress);
     if (e.target.value.length == 3) handleFocusNext();
   };
   return (
-    <div class="fakeInput inputSpecial" ref={inputsRef}>
+    <div
+      className={`fakeInput inputSpecial ${isDisabled && 'disabledInput'}`}
+      ref={inputsRef}
+    >
       {address &&
         address.map((octet, index) => (
           <>
@@ -158,6 +168,7 @@ const MaskedInput = ({ isSpecial, mask, inputProps }) => {
               onFocus={(e) => setcurrentFocus(index)}
               onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
+              disabled={isDisabled}
             />
             {index < 3 && '.'}
           </>
@@ -165,16 +176,17 @@ const MaskedInput = ({ isSpecial, mask, inputProps }) => {
     </div>
   );
 };
-const Select = ({ isSpecial, options, onChangeCallback }) => {
-  const { t } = useContext(WizardContext);
+
+const Select = ({ isSpecial, options, onChangeCallback, selectProps }) => {
   return (
     <div className="alignVerticaly">
       <select
         className={isSpecial ? 'inputSpecial' : 'inputDefault'}
         onChange={onChangeCallback}
+        {...selectProps}
       >
         {options.map((item) => (
-          <option>{t(item)}</option>
+          <option value={item}>{item}</option>
         ))}
       </select>
     </div>
@@ -393,7 +405,9 @@ export {
   ButtonsRow,
   ElementsLine,
   SubElementsLine,
+  Row,
   Input,
+  Select,
   MaskedInput,
   DefaultTable,
   EditableTable,

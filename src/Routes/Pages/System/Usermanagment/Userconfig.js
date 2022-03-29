@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import React, { useRef, useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
@@ -207,7 +206,7 @@ export default function Userconfig({ t, config, setConfig }) {
             </button>
           </div>
         </div>
-        <Note
+        {/* <Note
           content={
             <>
               <br />
@@ -216,7 +215,7 @@ export default function Userconfig({ t, config, setConfig }) {
               more than 31 characters
             </>
           }
-        />
+        /> */}
       </div>
     </article>
   );

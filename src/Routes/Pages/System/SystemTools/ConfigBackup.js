@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function ConfigBackup({ t, config }) {
@@ -47,7 +46,7 @@ export default function ConfigBackup({ t, config }) {
             </div>
           </span>
         </div>
-        <Note
+        {/* <Note
           content={
             <>
               <br />
@@ -55,7 +54,7 @@ export default function ConfigBackup({ t, config }) {
               without any operation.
             </>
           }
-        />
+        /> */}
       </div>
     </article>
   );

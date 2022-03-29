@@ -1,4 +1,3 @@
-import Note from 'components/General/Note/Note';
 import React, { useState } from 'react';
 
 export default function ConfigRestore({ t, config, setConfig }) {
@@ -66,7 +65,7 @@ export default function ConfigRestore({ t, config, setConfig }) {
             </div>
           </span>
         </div>
-        <Note
+        {/* <Note
           content={
             <>
               <br />
@@ -74,7 +73,7 @@ export default function ConfigRestore({ t, config, setConfig }) {
               wihout any operation.
             </>
           }
-        />
+        /> */}
       </div>
     </article>
   );
