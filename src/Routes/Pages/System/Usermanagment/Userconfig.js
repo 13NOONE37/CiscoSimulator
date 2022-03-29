@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
-export default function Userconfig({ t, config, setConfig }) {
+export default function Userconfig() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
   const [username, setusername] = useState('');
   const [password1, setpassword1] = useState('');
   const [password2, setpassword2] = useState('');

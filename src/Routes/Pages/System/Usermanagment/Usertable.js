@@ -1,26 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
 
-export default function Usertable({ t, config }) {
+export default function Usertable() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
+
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <div className="InfoTable">
-          <div className="row InfoTableTitle">{t('Usertable')}</div>
-          <div className="rowUser tableNav">
-            <span>{t('userID')}</span>
-            <span>{t('Username')}</span>
-            <span>{t('AccessLevel')}</span>
-          </div>
-          {config.users.map((item, index) => (
-            <div className="rowUser" key={index}>
-              <span>{index + 1}</span>
-              <span>{item.username}</span>
-              <span>{item.permission}</span>
-            </div>
-          ))}
-        </div>
-        <button className="basicInput bottomButton ">{t('Refresh')}</button>
-      </div>
-    </article>
+    <MultiPage.Wizard>
+      <MultiPage.Section>
+        <MultiPage.DefaultTable
+          title={t('UserTable')}
+          navItems={[t('UserID'), t('Username'), t('AccessLevel')]}
+          gridTemp={'150px 150px 1fr'}
+          data={config.users.map((item, index) => [
+            index + 1,
+            item.username,
+            item.permission,
+          ])}
+        />
+        <MultiPage.ButtonsRow>
+          <MultiPage.Button isSpecial>{t('Refresh')}</MultiPage.Button>
+        </MultiPage.ButtonsRow>
+        <MultiPage.Note />
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }
