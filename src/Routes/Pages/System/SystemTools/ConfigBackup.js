@@ -1,6 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
 
-export default function ConfigBackup({ t, config }) {
+export default function ConfigBackup() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
+
   const downloadRef = useRef(null);
   const [downloadHref, setdownloadHref] = useState('');
 
@@ -16,46 +22,37 @@ export default function ConfigBackup({ t, config }) {
   }, []);
 
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('ConfigBackup')}</div>
-
-        <div className="configRestoreBox">
-          <span>
+    <MultiPage.Wizard>
+      <MultiPage.Section width={700}>
+        <MultiPage.Title>{t('ConfigBackup')}</MultiPage.Title>
+        <MultiPage.ElementsLine>
+          <MultiPage.Text>
             Backup System Config
-            <br />
-            <br />
-            Click the Backup Config button to save the config to your computer.
-          </span>
-          <span className="buttonRowSpan">
-            <div>
-              <button
-                className="basicInput bottomButton"
-                onClick={() => downloadRef.current.click()}
-              >
-                {t('BackupConfig')}
-              </button>
-              <a
-                ref={downloadRef}
-                href={downloadHref}
-                download="Config.json"
-                style={{ display: 'none' }}
-              ></a>
+            <br /> Click the Backup Config button to save the config to your
+            computer.
+          </MultiPage.Text>
+        </MultiPage.ElementsLine>
 
-              <button className="basicInput bottomButton">{t('Help')}</button>
-            </div>
-          </span>
-        </div>
-        {/* <Note
-          content={
-            <>
-              <br />
-              It will take a long time to backup the config file. Please wait
-              without any operation.
-            </>
-          }
-        /> */}
-      </div>
-    </article>
+        <MultiPage.ButtonsRow>
+          <MultiPage.Button
+            isSpecial
+            action={() => downloadRef.current.click()}
+          >
+            {t('BackupConfig')}
+          </MultiPage.Button>
+          <a
+            ref={downloadRef}
+            href={downloadHref}
+            download="Config.json"
+            style={{ display: 'none' }}
+          ></a>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
+        </MultiPage.ButtonsRow>
+        <MultiPage.Note>
+          It will take a long time to backup the config file. Please wait
+          without any operation.
+        </MultiPage.Note>
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }

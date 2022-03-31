@@ -1,9 +1,19 @@
-import React, { useRef, useState } from 'react';
-import handleGlobalChange from 'Utils/handleGlobalChange';
-
+import React, { useRef, useState, useContext, useReducer } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
 export default function Userconfig() {
   const { t } = useTranslation();
   const { config } = useContext(AppContext);
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      username: '',
+      password1: '',
+      password2: '',
+      permission: 'Guest',
+    },
+  );
   const [username, setusername] = useState('');
   const [password1, setpassword1] = useState('');
   const [password2, setpassword2] = useState('');
@@ -105,120 +115,205 @@ export default function Userconfig() {
   };
 
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('Info_UserInfo')}</div>
-        <form onSubmit={handleSubmit} className="tplinkFormBase1">
-          <span>
-            {t('Username')}:
-            <input
-              className="basicInput"
-              type="text"
-              maxLength={16}
-              value={username}
-              onChange={(e) => handleGlobalChange(e, setusername)}
-              required
+    <MultiPage.Wizard>
+      <MultiPage.Section>
+        <MultiPage.Title>{t('UserInfo')}</MultiPage.Title>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine FirstColumnWidth={160}>
+            <span>{t('Username')}:</span>
+            <MultiPage.Input
+              inputProps={{
+                type: 'text',
+                value: localConfig.username,
+                maxLength: 16,
+                onChange: (e) =>
+                  setLocalConfig({ ['username']: e.target.value }),
+              }}
             />
-          </span>
-          <span>
-            {t('AccessLevel')}:
-            <select
-              className="basicInput"
-              onChange={(e) => handleGlobalChange(e, setpermission)}
-              value={permission}
-            >
-              <option value="Guest">{t('Guest')}</option>
-              <option value="Admin">{t('Admin')}</option>
-            </select>
-            <input
-              type="submit"
-              className="moveRight buttonPointer"
-              value={currentEdit == undefined ? t('Create') : t('Apply')}
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button>{t('Create')}</MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine FirstColumnWidth={160}>
+            <span>{t('AccessLevel')}:</span>
+            <MultiPage.Select
+              options={['Guest', 'Admin']}
+              selectProps={{
+                value: localConfig.permisson,
+                onChange: (e) =>
+                  setLocalConfig({ ['permission']: e.target.value }),
+              }}
             />
-          </span>
-          <span>
-            {t('Password')}:
-            <input
-              className="basicInput"
-              type="password"
-              maxLength={31}
-              value={password1}
-              onChange={(e) => handleGlobalChange(e, setpassword1)}
-              required
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => <MultiPage.Button>{t('Clear')}</MultiPage.Button>}
+        >
+          <MultiPage.SubElementsLine FirstColumnWidth={160}>
+            <span>{t('Password')}:</span>
+            <MultiPage.Input
+              inputProps={{
+                value: localConfig.password1,
+                onChange: (e) =>
+                  setLocalConfig({ ['password1']: e.target.value }),
+              }}
             />
-            <input
-              type="button"
-              className="moveRight buttonPointer"
-              value={currentEdit == undefined ? t('Clear') : t('Cancel')}
-              onClick={handleClear}
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine FirstColumnWidth={160}>
+            <span>{t('ConfirmPassword')}:</span>
+            <MultiPage.Input
+              inputProps={{
+                value: localConfig.password2,
+                onChange: (e) =>
+                  setLocalConfig({ ['password2']: e.target.value }),
+              }}
             />
-          </span>
-          <span>
-            {t('ConfirmPassword')}:
-            <input
-              className="basicInput"
-              type="password"
-              maxLength={31}
-              value={password2}
-              onChange={(e) => handleGlobalChange(e, setpassword2)}
-              required
-            />
-          </span>
-        </form>
-        <div className="tplinkBoxBase1">
-          <div className="InfoTable" ref={usersRef}>
-            <div className="row InfoTableTitle">{t('Usertable')}</div>
-            <div className="rowUser rowUserSpecial tableNav ">
-              <span>{t('Select')}</span>
-              <span>{t('userID')}</span>
-              <span>{t('Username')}</span>
-              <span>{t('AccessLevel')}</span>
-              <span>{t('Operation')}</span>
-            </div>
-            {tempUsers.map((item, index) => (
-              <div className="rowUser rowUserSpecial" id="userRow" key={index}>
-                <span>
-                  <input
-                    type="checkbox"
-                    name="user"
-                    defaultChecked={false}
-                    onChange={() => handleSelectUser(item)}
-                  />
-                </span>
-                <span>{index + 1}</span>
-                <span>{item.username}</span>
-                <span>{item.permission}</span>
-                <span>
-                  <button
-                    className="buttonClear"
-                    onClick={() => handleEdit(item)}
-                  >
-                    {t('Edit')}
-                  </button>
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="buttonsRow">
-            <button className="basicInput actionButton" onClick={handleDelete}>
-              {t('Delete')}
-            </button>
-            <button className="basicInput actionButton buttonPointer">
-              {t('Help')}
-            </button>
-          </div>
-        </div>
-        {/* <Note
-          content={
-            <>
-              <br />
-              The user name should not be more than 16 characters using digits,
-              English letters and underlines only and password should not be
-              more than 31 characters
-            </>
-          }
-        /> */}
-      </div>
-    </article>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+      </MultiPage.Section>
+      <MultiPage.Section>
+        <MultiPage.EditableTable
+          title={t('UserTable')}
+          data={{
+            names: ['UserID', 'UserName', 'AccessLevel', 'Operation'],
+            fields: undefined,
+            data: config.users.map((user) => [
+              ...Object.values(user),
+              <MultiPage.Button isBlank>Edit</MultiPage.Button>,
+            ]),
+          }}
+          isPortSelect={false}
+        />
+        <MultiPage.ButtonsRow>
+          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
+        </MultiPage.ButtonsRow>
+        <MultiPage.Note>
+          The user name should not be more than 16 characters using digits,
+          English letters and underlines only and password should not be more
+          than 31 characters
+        </MultiPage.Note>
+      </MultiPage.Section>
+    </MultiPage.Wizard>
+    // <article>
+    //   <div className="tplinkBoxBase1">
+    //     <div className="InfoTableTitle">{t('Info_UserInfo')}</div>
+    //     <form onSubmit={handleSubmit} className="tplinkFormBase1">
+    //       <span>
+    //         {t('Username')}:
+    //         <input
+    //           className="basicInput"
+    //           type="text"
+    //           maxLength={16}
+    //           value={username}
+    //           onChange={(e) => handleGlobalChange(e, setusername)}
+    //           required
+    //         />
+    //       </span>
+    //       <span>
+    //         {t('AccessLevel')}:
+    //         <select
+    //           className="basicInput"
+    //           onChange={(e) => handleGlobalChange(e, setpermission)}
+    //           value={permission}
+    //         >
+    //           <option value="Guest">{t('Guest')}</option>
+    //           <option value="Admin">{t('Admin')}</option>
+    //         </select>
+    //         <input
+    //           type="submit"
+    //           className="moveRight buttonPointer"
+    //           value={currentEdit == undefined ? t('Create') : t('Apply')}
+    //         />
+    //       </span>
+    //       <span>
+    //         {t('Password')}:
+    //         <input
+    //           className="basicInput"
+    //           type="password"
+    //           maxLength={31}
+    //           value={password1}
+    //           onChange={(e) => handleGlobalChange(e, setpassword1)}
+    //           required
+    //         />
+    //         <input
+    //           type="button"
+    //           className="moveRight buttonPointer"
+    //           value={currentEdit == undefined ? t('Clear') : t('Cancel')}
+    //           onClick={handleClear}
+    //         />
+    //       </span>
+    //       <span>
+    //         {t('ConfirmPassword')}:
+    //         <input
+    //           className="basicInput"
+    //           type="password"
+    //           maxLength={31}
+    //           value={password2}
+    //           onChange={(e) => handleGlobalChange(e, setpassword2)}
+    //           required
+    //         />
+    //       </span>
+    //     </form>
+    //     <div className="tplinkBoxBase1">
+    //       <div className="InfoTable" ref={usersRef}>
+    //         <div className="row InfoTableTitle">{t('Usertable')}</div>
+    //         <div className="rowUser rowUserSpecial tableNav ">
+    //           <span>{t('Select')}</span>
+    //           <span>{t('userID')}</span>
+    //           <span>{t('Username')}</span>
+    //           <span>{t('AccessLevel')}</span>
+    //           <span>{t('Operation')}</span>
+    //         </div>
+    //         {tempUsers.map((item, index) => (
+    //           <div className="rowUser rowUserSpecial" id="userRow" key={index}>
+    //             <span>
+    //               <input
+    //                 type="checkbox"
+    //                 name="user"
+    //                 defaultChecked={false}
+    //                 onChange={() => handleSelectUser(item)}
+    //               />
+    //             </span>
+    //             <span>{index + 1}</span>
+    //             <span>{item.username}</span>
+    //             <span>{item.permission}</span>
+    //             <span>
+    //               <button
+    //                 className="buttonClear"
+    //                 onClick={() => handleEdit(item)}
+    //               >
+    //                 {t('Edit')}
+    //               </button>
+    //             </span>
+    //           </div>
+    //         ))}
+    //       </div>
+    //       <div className="buttonsRow">
+    //         <button className="basicInput actionButton" onClick={handleDelete}>
+    //           {t('Delete')}
+    //         </button>
+    //         <button className="basicInput actionButton buttonPointer">
+    //           {t('Help')}
+    //         </button>
+    //       </div>
+    //     </div>
+    //     {/* <Note
+    //       content={
+    //         <>
+    //           <br />
+    //           The user name should not be more than 16 characters using digits,
+    //           English letters and underlines only and password should not be
+    //           more than 31 characters
+    //         </>
+    //       }
+    //     /> */}
+    //   </div>
+    // </article>
   );
 }

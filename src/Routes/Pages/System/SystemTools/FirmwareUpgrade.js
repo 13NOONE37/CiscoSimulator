@@ -1,59 +1,56 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import * as MultiPage from 'components/General/Page/MultiPage';
+import AppContext from 'store/AppContext';
 
-export default function FirmwareUpgrade({ t, config }) {
+export default function FirmwareUpgrade() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
+
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('FirmwareUpgrade')}</div>
-        <span className="firmwareBox">
-          <span>
-            <span className="spanText">
-              You will get the new function after upgrading the firmware.
-            </span>
-          </span>
-          <span>
-            <span className="spanText">
-              Firmware File: <input type="file" />
-            </span>
-            <input
-              type="submit"
-              className="moveRight buttonPointer"
-              value={t('Apply')}
-            />
-          </span>
-          <span>
-            <span className="spanText">
-              Firmware Version: {config.firmware}
-            </span>
-            <input
-              type="submit"
-              className="moveRight buttonPointer"
-              value={t('Help')}
-            />
-          </span>
-          <span>
-            <span className="spanText">
-              Hardware Version: {config.hardware}
-            </span>
-          </span>
-        </span>
-        {/* <Note
-          content={
-            <>
-              <br />
-              1. Please select the proper software version matching with your
-              hardware to upgrade.
-              <br />
-              2. To avoid damage, please don't turn off the device while
-              upgrading.
-              <br />
-              3. After upgrading, the device will reboot automatically.
-              <br />
-              4. You are suggested to backup the configuration before upgrading.
-            </>
-          }
-        /> */}
-      </div>
-    </article>
+    <MultiPage.Wizard>
+      <MultiPage.Section width={700}>
+        <MultiPage.Title>{t('FirmwareUpgrade')}</MultiPage.Title>
+        <MultiPage.ElementsLine>
+          <MultiPage.Text>
+            You will get the new function after upgrading the firmware.
+          </MultiPage.Text>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button>{t('Upgrade')}</MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine>
+            <span>{t('FirmwareFile')}:</span>
+            <input type="file" />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => <MultiPage.Button>{t('Help')}</MultiPage.Button>}
+        >
+          <MultiPage.SubElementsLine>
+            <span>{t('FirmwareVersion')}:</span>
+            <span>{config.firmware}</span>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine>
+            <span>{t('HardwareVersion')}:</span>
+            <span>{config.hardware}</span>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.Note>
+          1. Please select the proper software version matching with your
+          hardware to upgrade.
+          <br />
+          2. To avoid damage, please don't turn off the device while upgrading.
+          <br />
+          3. After upgrading, the device will reboot automatically.
+          <br />
+          4. You are suggested to backup the configuration before upgrading.
+        </MultiPage.Note>
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }

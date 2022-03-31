@@ -1,158 +1,202 @@
-import Title from 'components/General/Title/Title';
-import React, { useState } from 'react';
-import handleGlobalChange from 'Utils/handleGlobalChange';
+import React, { useContext, useReducer } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
 
-export default function HTTPConfig({ t, config }) {
-  const [httpState, sethttpState] = useState(config.httpEnabled);
-  const [sessionTime, setsessionTime] = useState(config.sessionTimeoutHTTP);
-  const [numberControl, setnumberControl] = useState(config.numberControlHTTP);
-  const [adminNumber, setadminNumber] = useState(config.adminNumberHTTP);
-  const [guestNumber, setguestNumber] = useState(config.guestNumberHTTP);
+export default function HTTPConfig() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
 
-  const handleSubmit1 = () => {
-    config.httpEnabled = httpState;
-  };
-  const handleSubmit2 = () => {
-    config.sessionTimeout = sessionTime;
-  };
-  const handleSubmit3 = () => {
-    config.numberControl = numberControl;
-    config.adminNumber = adminNumber;
-    config.guestNumber = guestNumber;
-  };
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      httpStatus: config.httpStatus,
+      sessionTimeoutHTTP: config.sessionTimeoutHTTP,
+      numberControlHTTP: config.numberControlHTTP,
+      adminNumberHTTP: config.adminNumberHTTP,
+      guestNumberHTTP: config.guestNumberHTTP,
+    },
+  );
 
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <Title content="GlobalConfig" />
-        <div className="subCategoryBox">
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>HTTP:</span>
-              <span className="moveRight">
-                <input
-                  type="radio"
-                  name="httpState"
-                  value="enabled"
-                  defaultChecked={httpState == 'enabled'}
-                  onChange={(e) => handleGlobalChange(e, sethttpState)}
-                />
-                <label>Enable</label>
-                <input
-                  type="radio"
-                  name="httpState"
-                  value="disabled"
-                  defaultChecked={httpState == 'disabled'}
-                  onChange={(e) => handleGlobalChange(e, sethttpState)}
-                />
-                <label>Disable</label>
-              </span>
-            </span>
-            <span>
-              <input
-                value={t('Apply')}
-                className="buttonPointer"
-                type="button"
-                onClick={handleSubmit1}
+    <MultiPage.Wizard>
+      <MultiPage.Section>
+        <MultiPage.Title>{t('GlobalConfig')}</MultiPage.Title>
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button
+              action={() =>
+                MultiPage.handleApplyToConfig(config, localConfig, 'httpStatus')
+              }
+            >
+              {t('Apply')}
+            </MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine FirstColumnWidth={150}>
+            <span>{t('HTTP')}:</span>
+            <MultiPage.SubElementsLine>
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'HTTPStatus',
+                  defaultChecked: localConfig.httpStatus === 'Enable',
+                  value: 'Enable',
+                  onChange: (e) =>
+                    setLocalConfig({ ['httpStatus']: e.target.value }),
+                }}
+                afterText={t('Enable')}
               />
-            </span>
-          </div>
-        </div>
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'HTTPStatus',
+                  defaultChecked: localConfig.httpStatus === 'Disable',
+                  value: 'Disable',
+                  onChange: (e) =>
+                    setLocalConfig({ ['httpStatus']: e.target.value }),
+                }}
+                afterText={t('Disable')}
+              />
+            </MultiPage.SubElementsLine>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => <MultiPage.Button>{t('Help')}</MultiPage.Button>}
+        >
+          <MultiPage.SubElementsLine
+            FirstColumnWidth={150}
+          ></MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+      </MultiPage.Section>
+      <MultiPage.Section>
+        <MultiPage.Title>{t('SessionConfig')}</MultiPage.Title>
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button
+              action={() =>
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'sessionTimeoutHTTP',
+                )
+              }
+            >
+              {t('Apply')}
+            </MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine FirstColumnWidth={150}>
+            <span>{t('SessionTimeout')}:</span>
 
-        <div className="InfoTableTitle">{t('SessionConfig')}</div>
-        <div className="subCategoryBox">
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>Session Timeout:</span>
-              <span className="moveRight">
-                <input
-                  type="number"
-                  min={5}
-                  max={30}
-                  value={sessionTime}
-                  onChange={(e) => handleGlobalChange(e, setsessionTime)}
-                />
-                <label> min(5-30)</label>
-              </span>
-            </span>
-            <span>
-              <input
-                value={t('Apply')}
-                className="buttonPointer"
-                type="button"
-                onClick={handleSubmit2}
+            <MultiPage.Input
+              inputProps={{
+                type: 'number',
+                min: 5,
+                max: 30,
+                value: localConfig.sessionTimeoutHTTP,
+                onChange: (e) =>
+                  setLocalConfig({ ['sessionTimeoutHTTP']: e.target.value }),
+              }}
+              afterText="min(5-30)"
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+      </MultiPage.Section>
+      <MultiPage.Section>
+        <MultiPage.Title>{t('AccessUserNumber')}</MultiPage.Title>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine FirstColumnWidth={150}>
+            <span>{t('NumberControl')}:</span>
+            <MultiPage.SubElementsLine>
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'numberControlHTTP',
+                  defaultChecked: localConfig.numberControlHTTP === 'Enable',
+                  value: 'Enable',
+                  onChange: (e) =>
+                    setLocalConfig({ ['numberControlHTTP']: e.target.value }),
+                }}
+                afterText={t('Enable')}
               />
-            </span>
-          </div>
-        </div>
-        <Title content="AccessUserNumber" />
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'numberControlHTTP',
+                  defaultChecked: localConfig.numberControlHTTP === 'Disable',
+                  value: 'Disable',
+                  onChange: (e) =>
+                    setLocalConfig({ ['numberControlHTTP']: e.target.value }),
+                }}
+                afterText={t('Disable')}
+              />
+            </MultiPage.SubElementsLine>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
 
-        <div className="subCategoryBox">
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>Number Control:</span>
-              <span className="moveRight">
-                <input
-                  type="radio"
-                  name="numberControl"
-                  value="enabled"
-                  defaultChecked={numberControl == 'enabled'}
-                  onChange={(e) => handleGlobalChange(e, setnumberControl)}
-                />
-                <label>Enable</label>
-                <input
-                  type="radio"
-                  name="numberControl"
-                  value="disabled"
-                  defaultChecked={numberControl == 'disabled'}
-                  onChange={(e) => handleGlobalChange(e, setnumberControl)}
-                />
-                <label>Disable</label>
-              </span>
-            </span>
-          </div>
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>Admin Number:</span>
-              <span className="moveRight">
-                <input
-                  type="number"
-                  min={1}
-                  max={16}
-                  name="adminNumber"
-                  value={adminNumber}
-                  onChange={(e) => handleGlobalChange(e, setadminNumber)}
-                />
-                <label>(1-16)</label>
-              </span>
-            </span>
-            <span>
-              <input
-                value={t('Apply')}
-                className="buttonPointer"
-                type="button"
-                onClick={handleSubmit3}
-              />
-            </span>
-          </div>
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>Guest Number:</span>
-              <span className="moveRight">
-                <input
-                  type="number"
-                  min={0}
-                  max={15}
-                  value={guestNumber}
-                  onChange={(e) => handleGlobalChange(e, setguestNumber)}
-                />
-                <label>(0-15)</label>
-              </span>
-            </span>
-          </div>
-        </div>
-        {/* <Note /> */}
-      </div>
-    </article>
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button
+              action={() => {
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'numberControlHTTP',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'adminNumberHTTP',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'guestNumberHTTP',
+                );
+              }}
+            >
+              {t('Apply')}
+            </MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine FirstColumnWidth={150}>
+            <span>{t('AdminNumber')}:</span>
+
+            <MultiPage.Input
+              inputProps={{
+                disabled: localConfig.numberControlHTTP === 'Disable',
+                type: 'number',
+                min: 1,
+                max: 16,
+                value: localConfig.adminNumberHTTP,
+                onChange: (e) =>
+                  setLocalConfig({ ['adminNumberHTTP']: e.target.value }),
+              }}
+              afterText="(1-16)"
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine FirstColumnWidth={150}>
+            <span>{t('GuestNumber')}:</span>
+
+            <MultiPage.Input
+              inputProps={{
+                disabled: localConfig.numberControlHTTP === 'Disable',
+                type: 'number',
+                min: 0,
+                max: 15,
+                value: localConfig.guestNumberHTTP,
+                onChange: (e) =>
+                  setLocalConfig({ ['guestNumberHTTP']: e.target.value }),
+              }}
+              afterText="(0-16)"
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.Note />
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }

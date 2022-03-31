@@ -29,17 +29,19 @@ const Note = ({ children }) => {
     <div className="note">
       {children && <strong>{t('Note')}:</strong>}
       <br />
-      {t(children)}
+      {children}
     </div>
   );
 };
 
-const Button = ({ children, action, isSpecial }) => {
+const Button = ({ children, action, isSpecial, isBlank }) => {
   const { t } = useContext(WizardContext);
   return (
     <button
       onClick={action}
-      className={isSpecial ? 'buttonSpecial' : 'buttonDefault'}
+      className={
+        isBlank ? 'blankButton' : isSpecial ? 'buttonSpecial' : 'buttonDefault'
+      }
     >
       {t(children)}
     </button>
@@ -51,6 +53,7 @@ Button.propTypes = {
 Button.defaultProps = {
   action: () => {},
   isSpecial: false,
+  isBlank: false,
 };
 
 const ButtonsRow = ({ children }) => {
@@ -61,6 +64,13 @@ const Row = ({ children, style }) => {
     <div className="elementsRow" style={style}>
       {children}
     </div>
+  );
+};
+const Text = ({ children, style }) => {
+  return (
+    <span className="textSpan" style={style}>
+      {children}
+    </span>
   );
 };
 const ElementsLine = ({ children, actionButton }) => {
@@ -93,13 +103,17 @@ SubElementsLine.defaultProps = {
   FirstColumnWidth: 120,
 };
 const Input = ({ isSpecial, afterText, inputProps }) => {
+  const randomId = `input_
+    ${Math.round((new Date().getTime() * Math.random() * 100) / 100)}
+  `;
   return (
     <div className="alignVerticaly">
       <input
         {...inputProps}
+        id={randomId}
         className={isSpecial ? 'inputSpecial' : 'inputDefault'}
       />
-      {afterText.length > 0 && <span>{afterText}</span>}
+      {afterText.length > 0 && <label htmlFor={randomId}>{afterText}</label>}
     </div>
   );
 };
@@ -233,7 +247,7 @@ const DefaultTable = ({ data, navItems, gridTemp, title }) => {
   );
 };
 
-const EditableTable = ({ title, data, gridTemp, saveTable }) => {
+const EditableTable = ({ title, data, gridTemp, saveTable, isPortSelect }) => {
   const { t } = useContext(WizardContext);
   const [tableStates, setTableStates] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -296,59 +310,64 @@ const EditableTable = ({ title, data, gridTemp, saveTable }) => {
     >
       <Title className="rowToLeft">{title}</Title>
 
-      <div className="row portSelect">
-        Port
-        <Input
-          inputProps={{
-            type: 'number',
-            min: 1,
-            max: 8,
-            value: tableStates.currentPortValue,
-            name: 'currentPortValue',
-            onChange: handleChange,
-          }}
-        />
-        <Button
-          action={() =>
-            handleSelectPort(parseInt(tableStates.currentPortValue) - 1)
-          }
-        >
-          {t('Select')}
-        </Button>
-      </div>
+      {isPortSelect && (
+        <div className="row portSelect">
+          Port
+          <Input
+            inputProps={{
+              type: 'number',
+              min: 1,
+              max: 8,
+              value: tableStates.currentPortValue,
+              name: 'currentPortValue',
+              onChange: handleChange,
+            }}
+          />
+          <Button
+            action={() =>
+              handleSelectPort(parseInt(tableStates.currentPortValue) - 1)
+            }
+          >
+            {t('Select')}
+          </Button>
+        </div>
+      )}
       <div className="row tableNav">
         <span>{t('Select')}</span>
         {navItems.map((item) => (
           <span>{t(item)}</span>
         ))}
       </div>
-      <div className="row">
-        <span>
-          <input
-            type="checkbox"
-            onChange={handleSelectAllPorts}
-            checked={!tableStates.checkedPorts.includes(false)}
-          />
-        </span>
-        {data.fields.map((field, index) => (
+      {data.fields !== undefined && (
+        <div className="row">
           <span>
-            {field.type === 'text' && (
-              <Input
-                inputProps={{
-                  onChange: (e) => handleChangeValue(e, index),
-                  style: { width: '100%' },
-                }}
-              />
-            )}
-            {field.type === 'select' && (
-              <Select
-                options={field.options}
-                onChangeCallback={(e) => handleChangeValue(e, index)}
-              />
-            )}
+            <input
+              type="checkbox"
+              onChange={handleSelectAllPorts}
+              checked={!tableStates.checkedPorts.includes(false)}
+            />
           </span>
-        ))}
-      </div>
+          {data.fields.map((field, index) => (
+            <span>
+              {field.type === 'text' && (
+                <Input
+                  inputProps={{
+                    onChange: (e) => handleChangeValue(e, index),
+                    style: { width: '100%' },
+                  }}
+                />
+              )}
+              {field.type === 'select' && (
+                <Select
+                  options={field.options}
+                  onChangeCallback={(e) => handleChangeValue(e, index)}
+                />
+              )}
+            </span>
+          ))}
+        </div>
+      )}
+
       {data.data.map((dataRow, dataIndex) => (
         <div className="row">
           <span>
@@ -359,7 +378,7 @@ const EditableTable = ({ title, data, gridTemp, saveTable }) => {
             />
           </span>
           {dataRow.map((dataElement) => (
-            <span>{dataElement ? t(dataElement) : '---'}</span>
+            <span>{dataElement ? dataElement : '---'}</span>
           ))}
         </div>
       ))}
@@ -406,6 +425,7 @@ export {
   ElementsLine,
   SubElementsLine,
   Row,
+  Text,
   Input,
   Select,
   MaskedInput,

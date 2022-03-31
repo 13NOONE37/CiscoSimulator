@@ -1,32 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
+
 import defaultConfig from 'store/defaultConfig';
 
-export default function SystemReset({ t, setConfig }) {
+export default function SystemReset() {
+  const { t } = useTranslation();
+  const { setConfig } = useContext(AppContext);
+
   const handleReset = () => setConfig({ ...defaultConfig });
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <div className="InfoTableTitle">{t('SystemReset')}</div>
+    <MultiPage.Wizard>
+      <MultiPage.Section width={700}>
+        <MultiPage.Title>{t('SystemReset')}</MultiPage.Title>
 
-        <div className="configRestoreBox resetBox">
-          <span>
-            Reset:
-            <button className="basicInput bottomButton" onClick={handleReset}>
-              Reset
-            </button>
-          </span>
-        </div>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine>
+            <MultiPage.Text>Reset:</MultiPage.Text>
+            <div style={{ width: '60px' }}>
+              <MultiPage.Button isSpecial action={handleReset}>
+                {t('Reset')}
+              </MultiPage.Button>
+            </div>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
 
-        {/* <Note
-          content={
-            <>
-              <br />
-              The System Reset option will restore the configuration to default
-              and your current settings will be lost.
-            </>
-          }
-        /> */}
-      </div>
-    </article>
+        <MultiPage.Note>
+          The System Reset option will restore the configuration to default and
+          your current settings will be lost.
+        </MultiPage.Note>
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }
