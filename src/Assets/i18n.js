@@ -25,6 +25,7 @@ i18n.init({
         AccessLevel: 'Access Level',
         Enable: 'Enable',
         Disable: 'Disable',
+        Note: 'Note',
 
         //Sidebar
         SideSystem: 'System',
@@ -91,6 +92,7 @@ i18n.init({
         AccessLevel: 'Poziom dostępu',
         Enable: 'Włączony',
         Disable: 'Wyłączony',
+        Note: 'Uwagi',
 
         //Sidebar
         SideSystem: 'System',

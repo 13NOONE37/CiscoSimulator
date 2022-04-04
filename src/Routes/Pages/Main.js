@@ -10,12 +10,8 @@ import {
 } from 'react-router-dom';
 import AppContext from 'store/AppContext';
 
-import 'css/ContentContainer.css';
 import 'css/Variables.css';
 import 'css/App.css';
-import 'css/System/SystemTools.css';
-import 'css/System/AccessSecurity.css';
-import 'css/Switching/Port.css';
 
 import Sidebar from 'components/Sidebar';
 import SystemSummary from 'Routes/Pages/System/Info/SystemSummary';

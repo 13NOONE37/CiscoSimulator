@@ -1,50 +1,62 @@
-import Title from 'components/General/Title/Title';
-import React, { useState } from 'react';
-import handleGlobalChange from 'Utils/handleGlobalChange';
+import React, { useContext, useReducer } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
 
-export default function Telnet({ t, config }) {
-  const [telnetState, settelnetState] = useState(config.telnetEnabled);
-  const handleApply = () => (config.telnetEnabled = telnetState);
+export default function Telnet() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      telnetStatus: config.telnetStatus,
+    },
+  );
+
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <Title content="GlobalConfig" />
-
-        <div className="boxSpaceBetween">
-          <span className="boxEqualSpaceBetween">
+    <MultiPage.Wizard>
+      <MultiPage.Section>
+        <MultiPage.Title>{t('GlobalConfig')}</MultiPage.Title>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine>
             <span>Telnet:</span>
-            <span>
-              <input
-                type="radio"
-                name="telnetState"
-                value="enabled"
-                onChange={(e) => handleGlobalChange(e, settelnetState)}
-                defaultChecked={telnetState == 'enabled'}
+            <MultiPage.SubElementsLine>
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'telnetStatus',
+                  defaultChecked: localConfig.telnetStatus === 'Enable',
+                  value: 'Enable',
+                  onChange: (e) =>
+                    setLocalConfig({ ['telnetStatus']: e.target.value }),
+                }}
+                afterText={t('Enable')}
               />
-              <label>Enable</label>
-              <input
-                type="radio"
-                name="telnetState"
-                value="disabled"
-                onChange={(e) => handleGlobalChange(e, settelnetState)}
-                defaultChecked={telnetState == 'disabled'}
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'telnetStatus',
+                  defaultChecked: localConfig.telnetStatus === 'Disable',
+                  value: 'Disable',
+                  onChange: (e) =>
+                    setLocalConfig({ ['telnetStatus']: e.target.value }),
+                }}
+                afterText={t('Disable')}
               />
-              <label>Disable</label>
-              {telnetState == false && ' true'}
-            </span>
-          </span>
-        </div>
-        <div className="buttonsRow">
-          <button className="basicInput actionButton" onClick={handleApply}>
+            </MultiPage.SubElementsLine>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ButtonsRow>
+          <MultiPage.Button
+            isSpecial
+            action={() => setLocalConfig(config, localConfig, 'telnetStatus')}
+          >
             {t('Apply')}
-          </button>
-          <button className="basicInput actionButton buttonPointer">
-            {t('Help')}
-          </button>
-        </div>
-
-        {/* <Note /> */}
-      </div>
-    </article>
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
+        </MultiPage.ButtonsRow>
+        <MultiPage.Note />
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }

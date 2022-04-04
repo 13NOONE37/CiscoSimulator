@@ -34,14 +34,14 @@ const defaultConfig = {
       permission: 'Guest',
     },
   ],
-  telnetEnabled: 'disabled',
+
   //SSH-START
   sshStatus: 'Disable',
   protocolv2SSH: 'Disable',
   protocolv1SSH: 'Disable',
   idleTimeoutSSH: undefined,
   maxConnectSSH: undefined,
-  encryptionAlgorithm: [
+  encryptionAlgorithmSSH: [
     'AES128-CBC',
     'AES192-CBC',
     'AES256-CBC',
@@ -49,14 +49,23 @@ const defaultConfig = {
     'Cast128-CBC',
     '3DES-CBC',
   ],
-  dataIntegrityAlgorithm: ['HMAC-SHA1', 'HMAC-MD5'],
-  keyType: '',
+  dataIntegrityAlgorithmSSH: ['HMAC-SHA1', 'HMAC-MD5'],
+  keyTypeSSH: '',
   //SSH-END
+
+  //Telnet-START
+  telnetStatus: 'Enable',
+  //Telnet-END
+
+  //HTTP-START
   httpStatus: 'Enable',
   sessionTimeoutHTTP: '30',
   numberControlHTTP: 'Disable',
   adminNumberHTTP: undefined,
   guestNumberHTTP: undefined,
+  //HTTP-END
+
+  //HTTPS-START
   httpsStatus: 'Enable',
   sslVersionHTTPS: 'Enable',
   tlsVersionHTTPS: 'Enable',
@@ -68,64 +77,36 @@ const defaultConfig = {
   numberControlHTTPS: undefined,
   adminNumberHTTPS: undefined,
   guestNumberHTTPS: undefined,
-  portConfig: [
-    {
-      description: '',
-      status: 'Enable',
-      speed: 'Auto',
-      flow: 'Disable',
-      lag: 'LAG1',
-    },
-    {
-      description: '',
-      status: 'Enable',
-      speed: 'Auto',
-      flow: 'Disable',
-      lag: 'LAG1',
-    },
-    {
-      description: '',
-      status: 'Enable',
-      speed: 'Auto',
-      flow: 'Disable',
-      lag: '---',
-    },
-    {
-      description: '',
-      status: 'Enable',
-      speed: 'Auto',
-      flow: 'Disable',
-      lag: '---',
-    },
-    {
-      description: '',
-      status: 'Enable',
-      speed: 'Auto',
-      flow: 'Disable',
-      lag: '---',
-    },
-    {
-      description: '',
-      status: 'Enable',
-      speed: 'Auto',
-      flow: 'Disable',
-      lag: '---',
-    },
-    {
-      description: '',
-      status: 'Enable',
-      speed: 'Auto',
-      flow: 'Disable',
-      lag: '---',
-    },
-    {
-      description: '',
-      status: 'Enable',
-      speed: 'Auto',
-      flow: 'Disable',
-      lag: '---',
-    },
-  ],
+  //HTTPS-END
+
+  portConfig: {
+    names: [
+      'Port',
+      'Description',
+      'Status',
+      'SpeedAndDuplex',
+      'FlowControl',
+      'LAG',
+    ],
+    fields: [
+      { type: 'disable' },
+      { type: 'input', options: { type: 'text' } },
+      { type: 'select', options: ['Enable', 'Disable'] },
+      { type: 'select', options: ['Auto', '10MHD'] },
+      { type: 'select', options: ['Enable', 'Disable'] },
+      { type: 'disable' },
+    ],
+    data: [
+      ['1', '', 'Enable', 'Auto', 'Disable', 'LAG1'],
+      ['2', '', 'Enable', 'Auto', 'Disable', 'LAG1'],
+      ['3', '', 'Enable', 'Auto', 'Disable', undefined],
+      ['4', '', 'Enable', 'Auto', 'Disable', undefined],
+      ['5', '', 'Enable', 'Auto', 'Disable', undefined],
+      ['6', '', 'Enable', 'Auto', 'Disable', undefined],
+      ['7', '', 'Enable', 'Auto', 'Disable', undefined],
+      ['8', '', 'Enable', 'Auto', 'Disable', undefined],
+    ],
+  },
   mirrorList: [
     {
       group: 1,
@@ -152,65 +133,35 @@ const defaultConfig = {
       mirroredPortEgress: [],
     },
   ],
-  portSecurityConfig: [
-    {
-      maxLearnedMAC: 64,
-      learnedNum: 0,
-      learnMode: 'Dynamic',
-      status: 'Disable',
-    },
-    {
-      maxLearnedMAC: 64,
-      learnedNum: 0,
-      learnMode: 'Dynamic',
-      status: 'Disable',
-    },
-    {
-      maxLearnedMAC: 64,
-      learnedNum: 0,
-      learnMode: 'Dynamic',
-      status: 'Disable',
-    },
-    {
-      maxLearnedMAC: 64,
-      learnedNum: 0,
-      learnMode: 'Dynamic',
-      status: 'Disable',
-    },
-    {
-      maxLearnedMAC: 64,
-      learnedNum: 0,
-      learnMode: 'Dynamic',
-      status: 'Disable',
-    },
-    {
-      maxLearnedMAC: 64,
-      learnedNum: 0,
-      learnMode: 'Dynamic',
-      status: 'Disable',
-    },
-    {
-      maxLearnedMAC: 64,
-      learnedNum: 0,
-      learnMode: 'Dynamic',
-      status: 'Disable',
-    },
-    {
-      maxLearnedMAC: 64,
-      learnedNum: 0,
-      learnMode: 'Dynamic',
-      status: 'Disable',
-    },
-  ],
+  portSecurity: {
+    names: ['Port', 'Max Learned MAC', 'Learned Num', 'Learn Mode', 'Status'],
+    fields: [
+      { type: 'disable' },
+      { type: 'input', options: { type: 'number', max: 64, min: 0 } },
+      { type: 'disable' },
+      { type: 'select', options: ['Dynamic', 'Static'] },
+      { type: 'select', options: ['Enable', 'Disable'] },
+    ],
+    data: [
+      ['1', 64, '0', 'Dynamic', 'Disable'],
+      ['2', 64, '0', 'Dynamic', 'Disable'],
+      ['3', 64, '0', 'Dynamic', 'Disable'],
+      ['4', 64, '0', 'Dynamic', 'Disable'],
+      ['5', 64, '0', 'Dynamic', 'Disable'],
+      ['6', 64, '0', 'Dynamic', 'Disable'],
+      ['7', 64, '0', 'Dynamic', 'Disable'],
+      ['8', 64, '0', 'Dynamic', 'Disable'],
+    ],
+  },
   portIsolationConfig: [
-    { forwardList: [false, false, false, false, false, false, false, false] },
-    { forwardList: [false, false, false, false, false, false, false, false] },
-    { forwardList: [false, false, false, false, false, false, false, false] },
-    { forwardList: [false, false, false, false, false, false, false, false] },
-    { forwardList: [false, false, false, false, false, false, false, false] },
-    { forwardList: [false, false, false, false, false, false, false, false] },
-    { forwardList: [false, false, false, false, false, false, false, false] },
-    { forwardList: [false, false, false, true, false, false, false, false] },
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, true, false, false, false, false],
   ],
   portLoopbackGlobal: {
     detection: 'enabled',

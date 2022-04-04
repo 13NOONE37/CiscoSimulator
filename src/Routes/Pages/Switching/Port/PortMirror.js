@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
 
-export default function PortMirror({ t, config }) {
+export default function PortMirror() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
+
   const [mirrorGroupList, setmirrorGroupList] = useState(config.mirrorList);
 
   return (

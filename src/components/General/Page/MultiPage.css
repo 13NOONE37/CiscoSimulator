@@ -12,86 +12,10 @@
   display: flex;
   flex-direction: column;
 }
-.buttonsRow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-}
-.blankButton {
-  cursor: pointer;
-  background-color: transparent;
-  border: 0;
-  outline: 0;
-  color: var(--tplink-blue1);
-}
-.buttonDefault,
-.buttonSpecial {
-  cursor: pointer;
-}
 
-.buttonSpecial,
-.inputSpecial {
-  border: none;
-  outline: none;
-  transition: all 0.1s ease-in;
-  margin: 4px;
-  padding: 2px 4px;
-  box-shadow: 0px 0px 0px 1px var(--tplink-grey1);
-}
-.buttonSpecial {
-  border: 1px solid var(--tplink-blue1);
-}
-.buttonSpecial:hover,
-.inputSpecial:hover,
-.fakeInput:hover {
-  box-shadow: inset 0px 0px 30px rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 0px 0px 1px var(--tplink-blue2),
-    0px 0px 4px 0px var(--tplink-blue2);
-}
-.buttonSpecial:focus,
-.inputSpecial:focus,
-.fakeInput:focus-within {
-  box-shadow: 0px 0px 0px 1px var(--tplink-blue1),
-    0px 0px 1px 0px var(--tplink-blue1);
-}
-
-input[type='checkbox'],
-input[type='checkbox']:focus,
-input[type='checkbox']:hover,
-input[type='radio'],
-input[type='radio']:hover,
-input[type='radio']:focus {
-  box-shadow: unset;
-}
-.inputDefault,
-.inputSpecial {
-  height: 18px;
-  width: fit-content;
-}
-.elementsLine {
-  display: grid;
-  grid-template-columns: 1fr 80px;
-  align-items: center;
-  padding: 6px 0 6px 0;
-  margin-left: 25px;
-}
-.elementsLineNoButton {
-  grid-template-columns: 1fr !important;
-}
-.subElementLine {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  align-items: center;
-}
 .alignVerticaly {
   display: flex;
   align-items: center;
-}
-.elementsRow {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
 }
 
 /*Tables*/
@@ -143,45 +67,7 @@ input[type='radio']:focus {
 .tableNav span:last-child {
   border-right: 1px solid transparent;
 }
-.fakeInput {
-  display: flex;
-  flex-direction: row;
-  height: 18px;
-  width: fit-content;
-  background-color: white;
-}
 
-.fakeInput input {
-  width: 30px;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  position: relative;
-}
-.fakeInput input::-webkit-outer-spin-button,
-.fakeInput input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.disabledInput {
-  opacity: 0.5;
-}
-.note {
-  margin-top: 8px;
-  border-top: 3px solid var(--tplink-blue1);
-  padding: 4px;
-  font-size: 14px;
-  color: var(--tplink-grey3);
-  line-height: 20px;
-}
-.BasicTitle {
-  background-color: var(--tplink-blue4);
-  color: var(--tplink-blue1);
-  padding: 4px;
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-}
 .textSpan {
   font-size: 16px;
   line-height: 32px;

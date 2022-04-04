@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import AppContext from 'store/AppContext';
 import 'css/Auth.css';
-import 'css/ContentContainer.css';
 
 import Loading from 'components/Loading';
 import { useTranslation } from 'react-i18next';

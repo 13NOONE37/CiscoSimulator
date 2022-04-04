@@ -1,0 +1,8 @@
+.note {
+    margin-top: 8px;
+    border-top: 3px solid var(--tplink-blue1);
+    padding: 4px;
+    font-size: 14px;
+    color: var(--tplink-grey3);
+    line-height: 20px;
+  }

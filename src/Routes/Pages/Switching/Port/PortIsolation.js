@@ -1,7 +1,12 @@
-import Title from 'components/General/Title/Title';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
 
-export default function PortIsolation({ t, config }) {
+export default function PortIsolation() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
+
   const [currentPort, setcurrentPort] = useState(1);
   const [forwardPortChecked, setforwardPortChecked] = useState([
     false,
@@ -13,13 +18,12 @@ export default function PortIsolation({ t, config }) {
     false,
     false,
   ]);
-
   const [forceUpdate, setforceUpdate] = useState(1);
 
   const handleSelectMainPort = (e) => {
     const value = parseInt(e.target.value);
     setcurrentPort(value);
-    setforwardPortChecked(config.portIsolationConfig[value - 1].forwardList);
+    setforwardPortChecked(config.portIsolationConfig[value - 1]);
   };
   const handleSelectPort = (index) => {
     setforwardPortChecked(
@@ -44,11 +48,9 @@ export default function PortIsolation({ t, config }) {
     setforwardPortChecked(temp);
   };
   const handleApply = () => {
-    config.portIsolationConfig[currentPort - 1].forwardList =
-      forwardPortChecked;
+    config.portIsolationConfig[currentPort - 1] = forwardPortChecked;
     setforceUpdate(forceUpdate + 1);
   };
-
   const getForwardList = (list) => {
     //#TODO: better ranges
     for (let i = 0; i < 8; i++) {
@@ -62,95 +64,105 @@ export default function PortIsolation({ t, config }) {
   };
 
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        <Title content="PortIsolationConfig" />
-        <div className="subCategoryBox">
-          <div class="boxSpaceBetween">
-            <span class="boxEqualSpaceBetween">
-              <span>Port:</span>
-              <span className="moveRight">
-                <select className="basicInput" onChange={handleSelectMainPort}>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                </select>
-              </span>
-            </span>
-          </div>
-          <div className="boxSpaceBetween ">
-            <span className="boxColumn">
-              <span>{t('ForwardPortlist')}:</span>
-              <span class="devideSquare portList">
-                <span className="checkboxContainer">
-                  {forwardPortChecked.map(
-                    (item, index) =>
-                      index + 1 <= 6 && (
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={item}
-                            onChange={() => handleSelectPort(index)}
-                          />
-                          {index + 1}
-                          {index < 2 && ' (LAG1)'}
-                        </label>
-                      ),
-                  )}
-                </span>
-                <span class="devider"></span>
-                <span className="checkboxContainer">
-                  {forwardPortChecked.map(
-                    (item, index) =>
-                      index + 1 > 6 && (
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={item}
-                            onChange={() => handleSelectPort(index)}
-                          />
-                          {index + 1}
-                        </label>
-                      ),
-                  )}
-                </span>
-              </span>
-            </span>
-          </div>
-        </div>
-        <div class="buttonsRow">
-          <button
-            class="basicInput actionButton"
-            onClick={handleSelectAllPorts}
-          >
-            All
-          </button>
-          <button class="basicInput actionButton" onClick={handleApply}>
-            Apply
-          </button>
-          <button class="basicInput actionButton">Help</button>
-        </div>
+    <MultiPage.Wizard>
+      <MultiPage.Section>
+        <MultiPage.Select
+          onChangeCallback={handleSelectMainPort}
+          options={[1, 2, 3, 4, 5, 6, 7, 8]}
+        />
+        <MultiPage.ElementsLine>
+          <MultiPage.Text>{t('ForwardPortlist')}:</MultiPage.Text>
+          <MultiPage.Row style={{ gap: '25px' }}>
+            {forceUpdate &&
+              forwardPortChecked.map((item, index) => (
+                <MultiPage.Input
+                  inputProps={{
+                    type: 'checkbox',
+                    checked: item,
+                    onChange: () => handleSelectPort(index),
+                  }}
+                  afterText={`${index + 1}${index < 2 ? '(LAG1)' : ''}`}
+                />
+              ))}
+          </MultiPage.Row>
+        </MultiPage.ElementsLine>
+        <MultiPage.ButtonsRow>
+          <MultiPage.Button action={handleSelectAllPorts} isSpecial>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button action={handleApply} isSpecial>
+            {t('Apply')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
+        </MultiPage.ButtonsRow>
+      </MultiPage.Section>
+      <MultiPage.Section>
+        <MultiPage.DefaultTable
+          title={t('PortIsolationList')}
+          navItems={[t('Port'), t('ForwardPortList')]}
+          data={[
+            ...config.portIsolationConfig.map((item, index) => [
+              index + 1,
+              getForwardList(item),
+            ]),
+          ]}
+        />
+        {currentPort}
+        <MultiPage.Note />
+      </MultiPage.Section>
+    </MultiPage.Wizard>
 
-        <div className="InfoTable portIsolationTable">
-          <div className="row InfoTableTitle">{t('PortIsolationList')}</div>
-          <div className="rowUser tableNav">
-            <span>{t('Port')}</span>
-            <span>{t('ForwardPortlist')}</span>
-          </div>
-          {config.portIsolationConfig.map((item, index) => (
-            <div className="rowUser" key={index}>
-              <span>{index + 1}</span>
-              <span>{getForwardList(item.forwardList)}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* <Note /> */}
-    </article>
+    //       <div className="boxSpaceBetween ">
+    //         <span className="boxColumn">
+    //           <span>{t('ForwardPortlist')}:</span>
+    //           <span class="devideSquare portList">
+    //             <span className="checkboxContainer">
+    //               {forwardPortChecked.map(
+    //                 (item, index) =>
+    //                   index + 1 <= 6 && (
+    //                     <label>
+    //                       <input
+    //                         type="checkbox"
+    //                         checked={item}
+    //                         onChange={() => handleSelectPort(index)}
+    //                       />
+    //                       {index + 1}
+    //                       {index < 2 && ' (LAG1)'}
+    //                     </label>
+    //                   ),
+    //               )}
+    //             </span>
+    //             <span class="devider"></span>
+    //             <span className="checkboxContainer">
+    //               {forwardPortChecked.map(
+    //                 (item, index) =>
+    //                   index + 1 > 6 && (
+    //                     <label>
+    //                       <input
+    //                         type="checkbox"
+    //                         checked={item}
+    //                         onChange={() => handleSelectPort(index)}
+    //                       />
+    //                       {index + 1}
+    //                     </label>
+    //                   ),
+    //               )}
+    //             </span>
+    //           </span>
+    //         </span>
+    //       </div>
+    //     </div>
+    //     <div class="buttonsRow">
+    //       <button
+    //         class="basicInput actionButton"
+    //         onClick={handleSelectAllPorts}
+    //       >
+    //         All
+    //       </button>
+    //       <button class="basicInput actionButton" onClick={handleApply}>
+    //         Apply
+    //       </button>
+    //       <button class="basicInput actionButton">Help</button>
+    //     </div>
   );
 }

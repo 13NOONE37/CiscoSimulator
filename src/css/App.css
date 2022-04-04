@@ -1,19 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
-
+body {
+  margin: 0;
+}
 .App {
-   font-family: 'Lato', sans-serif;
-   display: flex;
-   flex-direction: column;
-   height: 100vh;
-   background-color: var(--tplink-grey1);
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--tplink-grey1);
 }
 .ContentContainer {
-   display: grid;
-   grid-template-columns: 200px 1fr;
-   height: 100%;
-   overflow-x: scroll;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  height: 100%;
+  overflow-x: scroll;
 }
-.container {
-   width: 100%;
-   display: flex;
+.InfoContainer {
+  padding: 10px 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+}
+.InfoContainer nav {
+  display: flex;
+}
+.navOption {
+  cursor: pointer;
+  background-color: var(--tplink-blue1);
+  color: var(--tplink-grey1);
+
+  padding: 4px 10px;
+  font-size: 14px;
+  text-decoration: none;
+  outline: none;
+}
+.navOption:focus {
+  background-color: #eee;
+  color: var(--tplink-blue1);
+}
+.navOption:hover {
+  filter: brightness(1.1);
+}
+.navOption:nth-child(1) {
+  border-radius: 4px 0 0 0;
+  box-shadow: unset;
+}
+.navOption:last-child {
+  border-radius: 0 4px 0 0;
 }

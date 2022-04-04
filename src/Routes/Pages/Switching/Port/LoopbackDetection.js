@@ -1,4 +1,4 @@
-import Title from 'components/General/Title/Title';
+// import Title from 'components/General/Title/Title';
 import React, { useState } from 'react';
 import handleGlobalChange from 'Utils/handleGlobalChange';
 
@@ -84,7 +84,7 @@ export default function LoopbackDetection({ t, config }) {
   return (
     <article>
       <div className="tplinkBoxBase1">
-        <Title content="GlobalConfig" addClass="row" />
+        {/* <Title content="GlobalConfig" addClass="row" /> */}
 
         <div className="subCategoryBox">
           <div className="boxSpaceBetween">

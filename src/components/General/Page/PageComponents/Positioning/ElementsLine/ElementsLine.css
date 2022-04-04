@@ -1,0 +1,10 @@
+.elementsLine {
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    align-items: center;
+    padding: 6px 0 6px 0;
+    margin-left: 25px;
+  }
+.elementsLineNoButton {
+    grid-template-columns: 1fr !important;
+}
