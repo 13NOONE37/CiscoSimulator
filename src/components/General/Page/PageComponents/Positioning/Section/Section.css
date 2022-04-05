@@ -1,0 +1,4 @@
+.pageSection {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,300 +1,217 @@
-// import Title from 'components/General/Title/Title';
-import React, { useState } from 'react';
-import handleGlobalChange from 'Utils/handleGlobalChange';
+import React, { useReducer, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
 
-export default function LoopbackDetection({ t, config }) {
-  //TODO: przenieść komponent tablicy do zewnętrznego pliku i zrobić go na propsach bo powtarza się w wielu plikach
-  const [loopbackDetection, setloopbackDetection] = useState(
-    config.portLoopbackGlobal.detection,
-  );
-  const [interval, setinterval] = useState(config.portLoopbackGlobal.interval);
-  const [automaticRecovery, setautomaticRecovery] = useState(
-    config.portLoopbackGlobal.automaticRecovery,
-  );
-  const [webRefresh, setwebRefresh] = useState(
-    config.portLoopbackGlobal.webRefresh,
-  );
-  const [webInterval, setwebInterval] = useState(
-    config.portLoopbackGlobal.webInterval,
-  );
+export default function LoopbackDetection() {
+  const { t } = useTranslation();
+  const { config } = useContext(AppContext);
 
-  const [portConf, setportConf] = useState(
-    JSON.parse(JSON.stringify(config.portLoopback)),
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      loopbackDetectionStatus: config.loopbackDetectionStatus,
+      detectionIntervalLoopback: config.detectionIntervalLoopback,
+      automaticRecoveryTimeLoopback: config.automaticRecoveryTimeLoopback,
+      webRefreshStatusLoopback: config.webRefreshStatusLoopback,
+      webRefreshIntervalLoopback: config.webRefreshIntervalLoopback,
+      portLoopback: config.portLoopback,
+    },
   );
-
-  const [portChecked, setportChecked] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [currentSelect, setcurrentSelect] = useState(undefined);
-  const [forceUpdate, setforceUpdate] = useState(1);
-
-  const handleSelectOne = () => {
-    if (!isNaN(currentSelect)) {
-      let temp = portChecked;
-      temp[currentSelect - 1] = true;
-      setportChecked(temp);
-      setcurrentSelect(undefined);
-    }
-  };
-  const handleSelectPort = (index) => {
-    let temp = portChecked;
-    temp[index] = !temp[index];
-    setportChecked(temp);
-    setforceUpdate(forceUpdate + 1);
-  };
-  const handleSelectAllPorts = () => {
-    let temp = portChecked;
-    if (portChecked.includes(false)) {
-      temp = temp.map((item) => {
-        if (!item) item = true;
-        return item;
-      });
-    } else {
-      temp = temp.map((item) => (item = false));
-    }
-    setportChecked(temp);
-  };
-
-  const handleChange = (e, param) =>
-    setportConf(
-      portConf.map((item, index) => {
-        if (portChecked[index] == true) {
-          item[param] = e.target.value;
-        }
-        return item;
-      }),
-    );
-  const handleApply = () => {
-    config.portLoopback = portConf;
-  };
-  const handleSubmit = () => {
-    config.portLoopbackGlobal.detection = loopbackDetection;
-    config.portLoopbackGlobal.interval = interval;
-    config.portLoopbackGlobal.automaticRecovery = automaticRecovery;
-    config.portLoopbackGlobal.webRefresh = webRefresh;
-    config.portLoopbackGlobal.webInterval = webInterval;
-  };
   return (
-    <article>
-      <div className="tplinkBoxBase1">
-        {/* <Title content="GlobalConfig" addClass="row" /> */}
-
-        <div className="subCategoryBox">
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>{t('LoopbackDetection\nStatus')}: </span>
-              <span className="moveRight">
-                <input
-                  type="radio"
-                  name="loopbackDetectionStatus"
-                  value="enabled"
-                  defaultChecked={loopbackDetection == 'enabled'}
-                  onChange={(e) => handleGlobalChange(e, setloopbackDetection)}
-                />
-                <label>Enable</label>
-                <input
-                  type="radio"
-                  name="loopbackDetectionStatus"
-                  value="disabled"
-                  defaultChecked={loopbackDetection == 'disabled'}
-                  onChange={(e) => handleGlobalChange(e, setloopbackDetection)}
-                />
-                <label>Disable</label>
-              </span>
-            </span>
-          </div>
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>{t('DetectionInterval')}:</span>
-              <span className="moveRight">
-                <input
-                  type="number"
-                  min={1}
-                  max={1000}
-                  value={interval}
-                  onChange={(e) => handleGlobalChange(e, setinterval)}
-                />
-                <label> seconds(1-1000)</label>
-              </span>
-            </span>
-          </div>
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>{t('AutomaticRecovery\nTime')}:</span>
-              <span className="moveRight">
-                <input
-                  type="number"
-                  min={1}
-                  max={100}
-                  value={automaticRecovery}
-                  onChange={(e) => handleGlobalChange(e, setautomaticRecovery)}
-                />
-                <label> detection times(1-100)</label>
-              </span>
-            </span>
-            <span>
-              <input
-                value={t('Apply')}
-                className="buttonPointer"
-                type="button"
-                onClick={handleSubmit}
+    <MultiPage.Wizard>
+      <MultiPage.Section>
+        <MultiPage.Title>{t('GlobalConfig')}</MultiPage.Title>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine FirstColumnWidth={200}>
+            <span>{t('LoopbackDetectionStatus')}:</span>
+            <MultiPage.SubElementsLine>
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'loopbackStatus',
+                  defaultChecked:
+                    localConfig.loopbackDetectionStatus === 'Enable',
+                  value: 'Enable',
+                  onChange: (e) =>
+                    setLocalConfig({
+                      ['loopbackDetectionStatus']: e.target.value,
+                    }),
+                }}
+                afterText={t('Enable')}
               />
-            </span>
-          </div>
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>{t('WebRefreshStatus')}: </span>
-              <span className="moveRight">
-                <input
-                  type="radio"
-                  name="webRefreshStatus"
-                  value="enabled"
-                  defaultChecked={webRefresh == 'enabled'}
-                  onChange={(e) => handleGlobalChange(e, setwebRefresh)}
-                />
-                <label>Enable</label>
-                <input
-                  type="radio"
-                  name="webRefreshStatus"
-                  value="disabled"
-                  defaultChecked={webRefresh == 'disabled'}
-                  onChange={(e) => handleGlobalChange(e, setwebRefresh)}
-                />
-                <label>Disable</label>
-              </span>
-            </span>
-          </div>
-
-          <div className="boxSpaceBetween">
-            <span className="boxEqualSpaceBetween">
-              <span>{t('WebRefreshInterval')}: </span>
-              <span className="moveRight">
-                <input
-                  type="number"
-                  min={3}
-                  max={100}
-                  value={webInterval}
-                  onChange={(e) => handleGlobalChange(e, setwebInterval)}
-                />
-                <label> seconds(3-100)</label>
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="tplinkBoxBase1">
-        <div className="InfoTable isolationTable">
-          <div className="row InfoTableTitle">{t('Usertable')}</div>
-          <div className="rowUser portSelect">
-            <span>
-              Port
-              <input
-                className="basicInput"
-                type="number"
-                min={1}
-                max={8}
-                value={currentSelect}
-                onChange={(e) =>
-                  setcurrentSelect(
-                    Math.max(1, Math.min(e.target.valueAsNumber, 8)),
-                  )
-                }
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'loopbackStatus',
+                  defaultChecked:
+                    localConfig.loopbackDetectionStatus === 'Disable',
+                  value: 'Disable',
+                  onChange: (e) =>
+                    setLocalConfig({
+                      ['loopbackDetectionStatus']: e.target.value,
+                    }),
+                }}
+                afterText={t('Disable')}
               />
-              <button className="buttonPointer" onClick={handleSelectOne}>
-                {t('Select')}
-              </button>
-            </span>
-          </div>
-          <div className="rowUser tableNav">
-            <span>{t('Select')}</span>
-            <span>{t('Port')}</span>
-            <span>{t('Status')}</span>
-            <span>{t('OperationMode')}</span>
-            <span>{t('RecoveryMode')}</span>
-            <span>{t('LoopStatus')}</span>
-            <span>{t('BlockStatus')}</span>
-            <span>{t('LAG')}</span>
-          </div>
-          <div className="rowUser controlRow">
-            <span>
-              <input type="checkbox" onChange={handleSelectAllPorts} />
-            </span>
-            <span></span>
-            <span>
-              <select
-                className="basicInput"
-                onChange={(e) => handleChange(e, 'status')}
-              >
-                <option>Enable</option>
-                <option>Disable</option>
-              </select>
-            </span>
-            <span>
-              <select
-                className="basicInput"
-                onChange={(e) => handleChange(e, 'operationMode')}
-              >
-                <option>PortBased</option>
-                <option>Alert</option>
-              </select>
-            </span>
-            <span>
-              <select
-                className="basicInput"
-                onChange={(e) => handleChange(e, 'recoveryMode')}
-              >
-                <option>Auto</option>
-                <option>Manual</option>
-              </select>
-            </span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          {portConf.map((item, index) => (
-            <div className="rowUser" key={index}>
-              <span>
-                <input
-                  type="checkbox"
-                  checked={portChecked[index]}
-                  onChange={() => handleSelectPort(index)}
-                />
-              </span>
-              <span>{index + 1}</span>
-              <span>{item.status}</span>
-              <span>{item.operationMode}</span>
-              <span>{item.recoveryMode}</span>
-              <span>{item.loopStatus}</span>
-              <span>{item.blockStatus}</span>
-              <span>{item.LAG}</span>
-            </div>
-          ))}
-        </div>
-        <div class="buttonsRow">
-          <button class="basicInput actionButton" onClick={handleApply}>
-            Apply
-          </button>
-          <button class="basicInput actionButton">Manual Recovery</button>
-          <button class="basicInput actionButton">Help</button>
-        </div>
-      </div>
-      {/* <Note
-        content={
-          <>
-            <br />
-            Recovery mode is just useful to process not in Alrt process mode.
-            <br />
-            Loopback Detection must coordinate with storm control.
-          </>
-        }
-      /> */}
-    </article>
+            </MultiPage.SubElementsLine>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine FirstColumnWidth={200}>
+            <span>{t('DetectionInterval')}:</span>
+            <MultiPage.Input
+              inputProps={{
+                type: 'number',
+                min: 1,
+                max: 1000,
+                value: localConfig.detectionIntervalLoopback,
+                onChange: (e) =>
+                  setLocalConfig({
+                    ['detectionIntervalLoopback']: e.target.value,
+                  }),
+              }}
+              afterText="seconds(1-1000)"
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button
+              action={() => {
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'loopbackDetectionStatus',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'detectionIntervalLoopback',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'automaticRecoveryTimeLoopback',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'webRefreshStatusLoopback',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'webRefreshIntervalLoopback',
+                );
+              }}
+            >
+              {t('Apply')}
+            </MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine FirstColumnWidth={200}>
+            <span>{t('AutomaticRecoveryTime')}:</span>
+            <MultiPage.Input
+              inputProps={{
+                type: 'number',
+                min: 1,
+                max: 100,
+                value: localConfig.automaticRecoveryTimeLoopback,
+                onChange: (e) =>
+                  setLocalConfig({
+                    ['automaticRecoveryTimeLoopback']: e.target.value,
+                  }),
+              }}
+              afterText={t('detection times(1-100)')}
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine FirstColumnWidth={200}>
+            <span>{t('WebRefreshStatus')}:</span>
+            <MultiPage.SubElementsLine>
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'webRefreshStatus',
+                  defaultChecked:
+                    localConfig.webRefreshStatusLoopback === 'Enable',
+                  value: 'Enable',
+                  onChange: (e) =>
+                    setLocalConfig({
+                      ['webRefreshStatusLoopback']: e.target.value,
+                    }),
+                }}
+                afterText={t('Enable')}
+              />
+              <MultiPage.Input
+                inputProps={{
+                  type: 'radio',
+                  name: 'webRefreshStatus',
+                  defaultChecked:
+                    localConfig.webRefreshStatusLoopback === 'Disable',
+                  value: 'Disable',
+                  onChange: (e) =>
+                    setLocalConfig({
+                      ['webRefreshStatusLoopback']: e.target.value,
+                    }),
+                }}
+                afterText={t('Disable')}
+              />
+            </MultiPage.SubElementsLine>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine FirstColumnWidth={200}>
+            <span>{t('WebRefreshInterval')}:</span>
+            <MultiPage.Input
+              inputProps={{
+                type: 'number',
+                min: 3,
+                max: 100,
+                value: localConfig.webRefreshIntervalLoopback,
+                onChange: (e) =>
+                  setLocalConfig({
+                    ['webRefreshIntervalLoopback']: e.target.value,
+                  }),
+              }}
+              afterText="sec(3-100)"
+            />
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+      </MultiPage.Section>
+
+      <MultiPage.Section width={750}>
+        <MultiPage.EditableTable
+          title={t('PortConfig')}
+          data={localConfig.portLoopback}
+          gridTemp={'65px 65px repeat(3,1fr) repeat(3,95px)'}
+          saveTable={(data) => setLocalConfig({ ['portLoopback']: data })}
+          isPortSelect
+        />
+        <MultiPage.ButtonsRow>
+          <MultiPage.Button
+            isSpecial
+            action={() =>
+              MultiPage.handleApplyToConfig(config, localConfig, 'portLoopback')
+            }
+          >
+            {t('Apply')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('ManualRecover')}</MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
+        </MultiPage.ButtonsRow>
+        <MultiPage.Note>
+          Recovery mode is just useful to process not in Alrt process mode.
+          <br />
+          Loopback Detection must coordinate with storm control.
+        </MultiPage.Note>
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }

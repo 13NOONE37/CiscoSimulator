@@ -107,62 +107,8 @@ export default function PortIsolation() {
             ]),
           ]}
         />
-        {currentPort}
         <MultiPage.Note />
       </MultiPage.Section>
     </MultiPage.Wizard>
-
-    //       <div className="boxSpaceBetween ">
-    //         <span className="boxColumn">
-    //           <span>{t('ForwardPortlist')}:</span>
-    //           <span class="devideSquare portList">
-    //             <span className="checkboxContainer">
-    //               {forwardPortChecked.map(
-    //                 (item, index) =>
-    //                   index + 1 <= 6 && (
-    //                     <label>
-    //                       <input
-    //                         type="checkbox"
-    //                         checked={item}
-    //                         onChange={() => handleSelectPort(index)}
-    //                       />
-    //                       {index + 1}
-    //                       {index < 2 && ' (LAG1)'}
-    //                     </label>
-    //                   ),
-    //               )}
-    //             </span>
-    //             <span class="devider"></span>
-    //             <span className="checkboxContainer">
-    //               {forwardPortChecked.map(
-    //                 (item, index) =>
-    //                   index + 1 > 6 && (
-    //                     <label>
-    //                       <input
-    //                         type="checkbox"
-    //                         checked={item}
-    //                         onChange={() => handleSelectPort(index)}
-    //                       />
-    //                       {index + 1}
-    //                     </label>
-    //                   ),
-    //               )}
-    //             </span>
-    //           </span>
-    //         </span>
-    //       </div>
-    //     </div>
-    //     <div class="buttonsRow">
-    //       <button
-    //         class="basicInput actionButton"
-    //         onClick={handleSelectAllPorts}
-    //       >
-    //         All
-    //       </button>
-    //       <button class="basicInput actionButton" onClick={handleApply}>
-    //         Apply
-    //       </button>
-    //       <button class="basicInput actionButton">Help</button>
-    //     </div>
   );
 }
