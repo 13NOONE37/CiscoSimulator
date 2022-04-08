@@ -45,6 +45,8 @@ import LAGTable from './Switching/LAG/LAGTable';
 import StaticLAG from './Switching/LAG/StaticLAG';
 import LACPConfig from './Switching/LAG/LACPConfig';
 import { useTranslation } from 'react-i18next';
+import TrafficSummary from './Switching/TrafficMonitor/TrafficSummary';
+import TrafficStatistics from './Switching/TrafficMonitor/TrafficStatistics';
 
 export default function Main() {
   const { t } = useTranslation();
@@ -202,6 +204,21 @@ export default function Main() {
           path: '/lacpconfig',
           name: t('LACPConfig'),
           content: () => <LACPConfig />,
+        },
+      ],
+    },
+    {
+      path: '/trafficmonitor',
+      navItems: [
+        {
+          path: '/trafficsummary',
+          name: t('TrafficSummary'),
+          content: () => <TrafficSummary />,
+        },
+        {
+          path: '/trafficstatistics',
+          name: t('TrafficStatistics'),
+          content: () => <TrafficStatistics />,
         },
       ],
     },

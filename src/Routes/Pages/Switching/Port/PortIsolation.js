@@ -67,7 +67,7 @@ export default function PortIsolation() {
     <MultiPage.Wizard>
       <MultiPage.Section>
         <MultiPage.Select
-          onChangeCallback={handleSelectMainPort}
+          selectProps={{ onChange: handleSelectMainPort }}
           options={[1, 2, 3, 4, 5, 6, 7, 8]}
         />
         <MultiPage.ElementsLine>

@@ -8,67 +8,8 @@
   gap: 10px;
   padding: 20px;
 }
-.pageSection {
-  display: flex;
-  flex-direction: column;
-}
 
 .alignVerticaly {
   display: flex;
   align-items: center;
-}
-
-/*Tables*/
-.editableTable {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--tplink-grey2);
-  margin-top: 10px;
-}
-.editableTable .rowToLeft {
-  display: flex;
-  justify-content: flex-start;
-}
-.editableTable .row {
-  display: grid;
-  place-items: center;
-  font-size: 14px;
-  border-bottom: 2px solid var(--tplink-grey1);
-  grid-template-columns: var(--columnsCount);
-  padding: 2px;
-}
-.row span {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 0 2px !important; /*TODO:delete imortant*/
-  border-right: 1px solid var(--tplink-grey1);
-}
-.editableTable .portSelect {
-  display: flex;
-  justify-content: flex-end;
-  color: var(--tplink-blue1);
-}
-.tableNav {
-  padding: 2 !important; /*TODO:delete*/
-  background-color: var(--tplink-grey1);
-  color: var(--tplink-blue1);
-  font-size: 14px;
-  border-bottom: 1px solid var(--tplink-grey2);
-}
-
-.tableNav span {
-  border-right: 1px solid var(--tplink-grey2);
-}
-
-.tableNav span:last-child {
-  border-right: 1px solid transparent;
-}
-
-.textSpan {
-  font-size: 16px;
-  line-height: 32px;
 }

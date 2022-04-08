@@ -201,6 +201,11 @@ const defaultConfig = {
   },
   //LOOPBACK DETECTION-END
 
+  //LAG-START
+  hashAlgorithmLAG: 'SRC MAC+DST MAC',
+  lagTable: [['LAG1', 'Active LACP', '1,2']],
+
+  //LAG-END
   //Test
   addressTableConfig: {
     firstEdit: '123',

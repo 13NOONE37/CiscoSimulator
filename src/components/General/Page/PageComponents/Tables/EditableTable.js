@@ -122,8 +122,10 @@ export default function EditableTable({
               )}
               {field.type === 'select' && (
                 <Select
+                  selectProps={{
+                    onChange: (e) => handleChangeValue(e, index),
+                  }}
                   options={field.options}
-                  onChangeCallback={(e) => handleChangeValue(e, index)}
                 />
               )}
             </span>

@@ -50,11 +50,11 @@ export default function Sidebar() {
         },
         {
           name: 'LAG',
-          action: () => history.push('/switching/LAG'),
+          action: () => history.push('/lag/lagtable'),
         },
         {
           name: 'Traffic Monitor',
-          action: () => history.push('/switching/TrafficMonitor'),
+          action: () => history.push('/trafficmonitor/trafficsummary'),
         },
         {
           name: 'MAC Address',
