@@ -206,38 +206,38 @@ const defaultConfig = {
   lagTable: [['LAG1', 'Active LACP', '1,2']],
 
   //LAG-END
-  //Test
-  addressTableConfig: {
-    firstEdit: '123',
-    table: {
-      names: [
-        'Port',
-        'Description',
-        'Status',
-        'SpeedAndDuplex',
-        'FlowControl',
-        'LAG',
-      ],
-      fields: [
-        { type: 'disable' },
-        { type: 'text' },
-        { type: 'select', options: ['Enable', 'Disable'] },
-        { type: 'select', options: ['Auto', '10MHD'] },
-        { type: 'select', options: ['Enable', 'Disable'] },
-        { type: 'disable' },
-      ],
-      data: [
-        ['1', 'Szczur1', 'Disable', 'Auto', 'Enable', 'LAG1'],
-        ['2', 'Szczur2', 'Enable', 'Auto', 'Disable', 'LAG1'],
-        ['3', 'Szczur3', 'Disable', 'Auto', 'Enable', undefined],
-        ['4', 'Szczur4', 'Enable', 'Auto', 'Disable', undefined],
-        ['5', 'Szczur5', 'Disable', 'Auto', 'Enable', undefined],
-        ['6', 'Szczur6', 'Enable', 'Auto', 'Disable', undefined],
-        ['7', 'Szczur7', 'Enable', 'Auto', 'Disable', 'LAG1'],
-        ['8', 'Szczur8', 'Enable', 'Auto', 'Disable', 'LAG1'],
-      ],
-    },
+
+  //LACP-START
+  lacpPriority: 32768,
+  lacpConfig: {
+    names: [
+      'Port',
+      'Admin Key',
+      'PortPriority(0-65535)',
+      'Mode',
+      'Status',
+      'LAG',
+    ],
+    fields: [
+      { type: 'disable' },
+      { type: 'input', options: { type: 'text' } },
+      { type: 'input', options: { type: 'number', min: 0, max: 65535 } },
+      { type: 'select', options: ['Active', 'Passive'] },
+      { type: 'select', options: ['Enable', 'Disable'] },
+      { type: 'disable' },
+    ],
+    data: [
+      ['1', '1', 32768, 'Active', 'Enable', 'LAG1'],
+      ['2', '1', 32768, 'Active', 'Enable', 'LAG1'],
+      ['3', '1', 32768, 'Passive', 'Disable', undefined],
+      ['4', '1', 32768, 'Passive', 'Disable', undefined],
+      ['5', '1', 32768, 'Passive', 'Disable', undefined],
+      ['6', '1', 32768, 'Passive', 'Disable', undefined],
+      ['7', '1', 32768, 'Passive', 'Disable', undefined],
+      ['8', '1', 32768, 'Passive', 'Disable', undefined],
+    ],
   },
+  //LACP-END
 };
 
 export default defaultConfig;
