@@ -47,6 +47,44 @@ import LACPConfig from './Switching/LAG/LACPConfig';
 import { useTranslation } from 'react-i18next';
 import TrafficSummary from './Switching/TrafficMonitor/TrafficSummary';
 import TrafficStatistics from './Switching/TrafficMonitor/TrafficStatistics';
+import VLANConfig from './VLAN/VLANConfig';
+import STPConfig from './SpanningTree/STPConfig/STPConfig';
+import STPSummary from './SpanningTree/STPConfig/STPSummary';
+import STPPortConfig from './SpanningTree/PortConfig/STPPortConfig';
+import RegionConfig from './SpanningTree/MSTPInstance/RegionConfig';
+import InstanceConfig from './SpanningTree/MSTPInstance/InstanceConfig';
+import InstancePortConfig from './SpanningTree/MSTPInstance/InstancePortConfig';
+import PortProtect from './SpanningTree/STPSecurity/PortProtect';
+import TCProtect from './SpanningTree/STPSecurity/TCProtect';
+import SnoopingConfig from './Multicast/IGMPSnooping/SnoopingConfig';
+import MulticastPortConfig from './Multicast/IGMPSnooping/MulticastPortConfig';
+import MulticastVLANConfig from './Multicast/IGMPSnooping/MulticastVLANConfig';
+import MulticastVLAN from './Multicast/IGMPSnooping/MulticastVLAN';
+import MulticastIPTable from './Multicast/MulticastIP/MulticastIPTable';
+import StaticMulticastIP from './Multicast/MulticastIP/StaticMulticastIP';
+import IPRange from './Multicast/MulticastFilter/IPRange';
+import PortFilter from './Multicast/MulticastFilter/PortFilter';
+import PacketStatistics from './Multicast/PacketStatistics/PacketStatistics';
+import DiffPortPriority from './QoS/DiffServ/DiffPortPriority';
+import CosMapping from './QoS/DiffServ/CosMapping';
+import DSCPPriority from './QoS/DiffServ/DSCPPriority';
+import ScheduleMode from './QoS/DiffServ/ScheduleMode';
+import RateLimit from './QoS/BandwidthControl/RateLimit';
+import StormControl from './QoS/BandwidthControl/StormControl';
+import VoiceGlobalConfig from './QoS/VoiceVLAN/VoiceGlobalConfig';
+import VoicePortConfig from './QoS/VoiceVLAN/VoicePortConfig';
+import OUIConfig from './QoS/VoiceVLAN/OUIConfig';
+import ACLSummary from './ACL/ACLConfig/ACLSummary';
+import ACLCreate from './ACL/ACLConfig/ACLCreate';
+import MACACL from './ACL/ACLConfig/MACACL';
+import StandardIPACL from './ACL/ACLConfig/StandardIpACL';
+import ExtendIpACL from './ACL/ACLConfig/ExtendIpACL';
+import PolicySummary from './ACL/PolicyConfig/PolicySummary';
+import PolicyCreate from './ACL/PolicyConfig/PolicyCreate';
+import ActionCreate from './ACL/PolicyConfig/ActionCreate';
+import BindingTable from './ACL/PolicyBinding/BindingTable';
+import PortBinding from './ACL/PolicyBinding/PortBinding';
+import VLANBinding from './ACL/PolicyBinding/VLANBinding';
 
 export default function Main() {
   const { t } = useTranslation();
@@ -244,6 +282,291 @@ export default function Main() {
           path: '/FilteringAddress',
           name: t('FilteringAddress'),
           content: () => <FilteringAddress />,
+        },
+      ],
+    },
+    {
+      path: '/vlan',
+      navItems: [
+        {
+          path: '/vlanconfig',
+          name: t('VLANConfig'),
+          content: () => <VLANConfig />,
+        },
+      ],
+    },
+    {
+      path: '/stpconfig',
+      navItems: [
+        {
+          path: '/stpconfig',
+          name: t('STPConfig'),
+          content: () => <STPConfig />,
+        },
+        {
+          path: '/stpsummary',
+          name: t('STPSummary'),
+          content: () => <STPSummary />,
+        },
+      ],
+    },
+    {
+      path: '/stpportconfig',
+      navItems: [
+        {
+          path: '/portconfig',
+          name: t('PortConfig'),
+          content: () => <STPPortConfig />,
+        },
+      ],
+    },
+    {
+      path: '/mstpinstance',
+      navItems: [
+        {
+          path: '/regionconfig',
+          name: t('RegionConfig'),
+          content: () => <RegionConfig />,
+        },
+        {
+          path: '/instanceconfig',
+          name: t('InstanceConfig'),
+          content: () => <InstanceConfig />,
+        },
+        {
+          path: '/instanceportconfig',
+          name: t('InstancePortConfig'),
+          content: () => <InstancePortConfig />,
+        },
+      ],
+    },
+    {
+      path: '/stpsecurity',
+      navItems: [
+        {
+          path: '/portprotect',
+          name: t('PortProtect'),
+          content: () => <PortProtect />,
+        },
+        {
+          path: '/tcprotect',
+          name: t('TCProtect'),
+          content: () => <TCProtect />,
+        },
+      ],
+    },
+    {
+      path: '/igmpsnooping',
+      navItems: [
+        {
+          path: '/snoopingconfig',
+          name: t('SnoopingConfig'),
+          content: () => <SnoopingConfig />,
+        },
+        {
+          path: '/igmpportconfig',
+          name: t('PortConfig'),
+          content: () => <MulticastPortConfig />,
+        },
+        {
+          path: '/igmpvlanconfig',
+          name: t('VLANConfig'),
+          content: () => <MulticastVLANConfig />,
+        },
+        {
+          path: '/igmpmulticastvlan',
+          name: t('MulticastVLAN'),
+          content: () => <MulticastVLAN />,
+        },
+      ],
+    },
+    {
+      path: '/multicastip',
+      navItems: [
+        {
+          path: '/multicastiptable',
+          name: t('MulticastIPTable'),
+          content: () => <MulticastIPTable />,
+        },
+        {
+          path: '/multicaststaticip',
+          name: t('StaticMulticastIP'),
+          content: () => <StaticMulticastIP />,
+        },
+      ],
+    },
+    {
+      path: '/multicastfilter',
+      navItems: [
+        {
+          path: '/iprange',
+          name: t('IPRange'),
+          content: () => <IPRange />,
+        },
+        {
+          path: '/portfilter',
+          name: t('PortFilter'),
+          content: () => <PortFilter />,
+        },
+      ],
+    },
+    {
+      path: '/packetstatistics',
+      navItems: [
+        {
+          path: '/packetstatistics',
+          name: t('PacketStatistics'),
+          content: () => <PacketStatistics />,
+        },
+      ],
+    },
+    {
+      path: '/diffserv',
+      navItems: [
+        {
+          path: '/portpriority',
+          name: t('PortPriority'),
+          content: () => <DiffPortPriority />,
+        },
+        {
+          path: '/CoSMapping',
+          name: t('802.1P/CoSmapping'),
+          content: () => <CosMapping />,
+        },
+        {
+          path: '/dscppriority',
+          name: t('DSCPPriority'),
+          content: () => <DSCPPriority />,
+        },
+        {
+          path: '/schedulemode',
+          name: t('ScheduleMode'),
+          content: () => <ScheduleMode />,
+        },
+      ],
+    },
+    {
+      path: '/bandwidthcontrol',
+      navItems: [
+        {
+          path: '/ratelimig',
+          name: t('RateLimit'),
+          content: () => <RateLimit />,
+        },
+        {
+          path: '/StormControl',
+          name: t('StormControl'),
+          content: () => <StormControl />,
+        },
+      ],
+    },
+    {
+      path: '/voicevlan',
+      navItems: [
+        {
+          path: '/globalconfig',
+          name: t('GlobalConfig'),
+          content: () => <VoiceGlobalConfig />,
+        },
+        {
+          path: '/portconfig',
+          name: t('PortConfig'),
+          content: () => <VoicePortConfig />,
+        },
+        {
+          path: '/ouiconfig',
+          name: t('OUIConfig'),
+          content: () => <OUIConfig />,
+        },
+      ],
+    },
+    {
+      path: '/aclconfig',
+      navItems: [
+        {
+          path: '/ACLSummary',
+          name: t('ACLSummary'),
+          content: () => <ACLSummary />,
+        },
+        {
+          path: '/ACLCreate',
+          name: t('ACLCreate'),
+          content: () => <ACLCreate />,
+        },
+        {
+          path: '/MACACL',
+          name: t('MACACL'),
+          content: () => <MACACL />,
+        },
+        {
+          path: '/StandardIPACL',
+          name: t('StandardIPACL'),
+          content: () => <StandardIPACL />,
+        },
+        {
+          path: '/ExtendIPACL',
+          name: t('ExtendIPACL'),
+          content: () => <ExtendIpACL />,
+        },
+      ],
+    },
+    {
+      path: '/policyconfig',
+      navItems: [
+        {
+          path: '/PolicySummary',
+          name: t('PolicySummary'),
+          content: () => <PolicySummary />,
+        },
+        {
+          path: '/PolicyCreate',
+          name: t('PolicyCreate'),
+          content: () => <PolicyCreate />,
+        },
+        {
+          path: '/ActionCreate',
+          name: t('ActionCreate'),
+          content: () => <ActionCreate />,
+        },
+      ],
+    },
+    {
+      path: '/policybinding',
+      navItems: [
+        {
+          path: '/BindingTable',
+          name: t('BindingTable'),
+          content: () => <BindingTable />,
+        },
+        {
+          path: '/PortBinding',
+          name: t('PortBinding'),
+          content: () => <PortBinding />,
+        },
+        {
+          path: '/VLANBinding',
+          name: t('VLANBinding'),
+          content: () => <VLANBinding />,
+        },
+      ],
+    },
+    {
+      path: '/policybinding',
+      navItems: [
+        {
+          path: '/BindingTable',
+          name: t('BindingTable'),
+          content: () => <BindingTable />,
+        },
+        {
+          path: '/PortBinding',
+          name: t('PortBinding'),
+          content: () => <PortBinding />,
+        },
+        {
+          path: '/VLANBinding',
+          name: t('VLANBinding'),
+          content: () => <VLANBinding />,
         },
       ],
     },
