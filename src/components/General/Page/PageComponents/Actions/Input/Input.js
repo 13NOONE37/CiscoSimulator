@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import '../Actions.css';
 
 export default function Input({ isSpecial, afterText, inputProps }) {
-  const randomId = `input_
+  const  randomId = `input_
       ${Math.round((new Date().getTime() * Math.random() * 100) / 100)}
     `;
   return (

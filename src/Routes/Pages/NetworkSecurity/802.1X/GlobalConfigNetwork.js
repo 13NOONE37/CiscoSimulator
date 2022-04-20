@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function GlobalConfig() {
+export default function GlobalConfigNetwork() {
   return <div>GlobalConfig</div>;
 }

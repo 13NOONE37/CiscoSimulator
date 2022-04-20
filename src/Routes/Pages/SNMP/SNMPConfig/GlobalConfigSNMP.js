@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function GlobalConfig() {
+export default function GlobalConfigSNMP() {
   return <div>GlobalConfig</div>;
 }

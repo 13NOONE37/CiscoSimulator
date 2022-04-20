@@ -82,9 +82,39 @@ import ExtendIpACL from './ACL/ACLConfig/ExtendIpACL';
 import PolicySummary from './ACL/PolicyConfig/PolicySummary';
 import PolicyCreate from './ACL/PolicyConfig/PolicyCreate';
 import ActionCreate from './ACL/PolicyConfig/ActionCreate';
-import BindingTable from './ACL/PolicyBinding/BindingTable';
+import BindingTableACL from './ACL/PolicyBinding/BindingTableACL';
 import PortBinding from './ACL/PolicyBinding/PortBinding';
 import VLANBinding from './ACL/PolicyBinding/VLANBinding';
+import BindingTable from './NetworkSecurity/IPMACBinding/BindingTable';
+import ManualBinding from './NetworkSecurity/IPMACBinding/ManualBinding';
+import ARPScanning from './NetworkSecurity/IPMACBinding/ARPScanning';
+import DHCPSnooping from './NetworkSecurity/IPMACBinding/DHCPSnooping';
+import ARPDetect from './NetworkSecurity/ARPInspection/ARPDetect';
+import ARPDefend from './NetworkSecurity/ARPInspection/ARPDefend';
+import ARPStatistics from './NetworkSecurity/ARPInspection/ARPStatistics';
+import GlobalConfigNetwork from './NetworkSecurity/802.1X/GlobalConfigNetwork';
+import PortConfigNetwork from './NetworkSecurity/802.1X/PortConfigNetwork';
+import RadiusServer from './NetworkSecurity/802.1X/RadiusServer';
+import DosDefend from './NetworkSecurity/DoSDefend/DosDefend';
+import GlobalConfigSNMP from './SNMP/SNMPConfig/GlobalConfigSNMP';
+import SNMPView from './SNMP/SNMPConfig/SNMPView';
+import SNMPGroup from './SNMP/SNMPConfig/SNMPGroup';
+import SNMPUser from './SNMP/SNMPConfig/SNMPUser';
+import SNMPCommunity from './SNMP/SNMPConfig/SNMPCommunity';
+import NotificationConfig from './SNMP/Notification/NotificationConfig';
+import HistoryControl from './SNMP/RMON/HistoryControl';
+import EventConfig from './SNMP/RMON/EventConfig';
+import AlarmConfig from './SNMP/RMON/AlarmConfig';
+import MemoryMonitor from './Maintenance/SystemMonitor/MemoryMonitor';
+import CPUMonitor from './Maintenance/SystemMonitor/CPUMonitor';
+import LogTable from './Maintenance/Log/LogTable';
+import LocalLog from './Maintenance/Log/LocalLog';
+import RemoteLog from './Maintenance/Log/RemoteLog';
+import BackupLog from './Maintenance/Log/BackupLog';
+import CableTest from './Maintenance/DeviceDiagnostics/CableTest';
+import Loopback from './Maintenance/DeviceDiagnostics/Loopback';
+import Ping from './Maintenance/NetworkDiagnostics/Ping';
+import Tracert from './Maintenance/NetworkDiagnostics/Tracert';
 
 export default function Main() {
   const { t } = useTranslation();
@@ -534,9 +564,9 @@ export default function Main() {
       path: '/policybinding',
       navItems: [
         {
-          path: '/BindingTable',
+          path: '/BindingTableACL',
           name: t('BindingTable'),
-          content: () => <BindingTable />,
+          content: () => <BindingTableACL />,
         },
         {
           path: '/PortBinding',
@@ -551,7 +581,7 @@ export default function Main() {
       ],
     },
     {
-      path: '/policybinding',
+      path: '/ipmacbinding',
       navItems: [
         {
           path: '/BindingTable',
@@ -559,14 +589,199 @@ export default function Main() {
           content: () => <BindingTable />,
         },
         {
-          path: '/PortBinding',
-          name: t('PortBinding'),
-          content: () => <PortBinding />,
+          path: '/ManualBinding',
+          name: t('ManualBinding'),
+          content: () => <ManualBinding />,
         },
         {
-          path: '/VLANBinding',
-          name: t('VLANBinding'),
-          content: () => <VLANBinding />,
+          path: '/ARPScanning',
+          name: t('ARPScanning'),
+          content: () => <ARPScanning />,
+        },
+        {
+          path: '/DHCPSnooping',
+          name: t('DHCPSnooping'),
+          content: () => <DHCPSnooping />,
+        },
+      ],
+    },
+    {
+      path: '/arpinspection',
+      navItems: [
+        {
+          path: '/ARPDetect',
+          name: t('ARPDetect'),
+          content: () => <ARPDetect />,
+        },
+        {
+          path: '/ARPDefend',
+          name: t('ARPDefend'),
+          content: () => <ARPDefend />,
+        },
+        {
+          path: '/ARPStatistics',
+          name: t('ARPStatistics'),
+          content: () => <ARPStatistics />,
+        },
+      ],
+    },
+    {
+      path: '/dosdefend',
+      navItems: [
+        {
+          path: '/DOSDefend',
+          name: t('DOSDefend'),
+          content: () => <DosDefend />,
+        },
+      ],
+    },
+    {
+      path: '/802.1X',
+      navItems: [
+        {
+          path: '/GlobalConfigNetwork',
+          name: t('GlobalConfig'),
+          content: () => <GlobalConfigNetwork />,
+        },
+        {
+          path: '/PortConfigNetwork',
+          name: t('PortConfig'),
+          content: () => <PortConfigNetwork />,
+        },
+        {
+          path: '/RadiusServer',
+          name: t('RadiusServer'),
+          content: () => <RadiusServer />,
+        },
+      ],
+    },
+    {
+      path: '/snmpconfig',
+      navItems: [
+        {
+          path: '/GlobalConfig',
+          name: t('GlobalConfig'),
+          content: () => <GlobalConfigSNMP />,
+        },
+        {
+          path: '/SNMPView',
+          name: t('SNMPView'),
+          content: () => <SNMPView />,
+        },
+        {
+          path: '/SNMPGroup',
+          name: t('SNMPGroup'),
+          content: () => <SNMPGroup />,
+        },
+        {
+          path: '/SNMPUser',
+          name: t('SNMPUser'),
+          content: () => <SNMPUser />,
+        },
+        {
+          path: '/SNMPCommunity',
+          name: t('SNMPCommunity'),
+          content: () => <SNMPCommunity />,
+        },
+      ],
+    },
+    {
+      path: '/snmpnotification',
+      navItems: [
+        {
+          path: '/NotificationConfig',
+          name: t('NotificationConfig'),
+          content: () => <NotificationConfig />,
+        },
+      ],
+    },
+    {
+      path: '/rmon',
+      navItems: [
+        {
+          path: '/HistoryControl',
+          name: t('HistoryControl'),
+          content: () => <HistoryControl />,
+        },
+        {
+          path: '/EventConfig',
+          name: t('EventConfig'),
+          content: () => <EventConfig />,
+        },
+        {
+          path: '/AlarmConfig',
+          name: t('AlarmConfig'),
+          content: () => <AlarmConfig />,
+        },
+      ],
+    },
+    {
+      path: '/systemmonitor',
+      navItems: [
+        {
+          path: '/CPUMonitor',
+          name: t('CPUMonitor'),
+          content: () => <CPUMonitor />,
+        },
+        {
+          path: '/MemoryMonitor',
+          name: t('MemoryMonitor'),
+          content: () => <MemoryMonitor />,
+        },
+      ],
+    },
+    {
+      path: '/log',
+      navItems: [
+        {
+          path: '/LogTable',
+          name: t('LogTable'),
+          content: () => <LogTable />,
+        },
+        {
+          path: '/LocalLog',
+          name: t('LocalLog'),
+          content: () => <LocalLog />,
+        },
+        {
+          path: '/RemoteLog',
+          name: t('RemoteLog'),
+          content: () => <RemoteLog />,
+        },
+        {
+          path: '/BackupLog',
+          name: t('BackupLog'),
+          content: () => <BackupLog />,
+        },
+      ],
+    },
+    {
+      path: '/devicediagnostics',
+      navItems: [
+        {
+          path: '/CableTest',
+          name: t('CableTest'),
+          content: () => <CableTest />,
+        },
+        {
+          path: '/Loopback',
+          name: t('Loopback'),
+          content: () => <Loopback />,
+        },
+      ],
+    },
+    {
+      path: '/networkdiagnostics',
+      navItems: [
+        {
+          path: '/Ping',
+          name: t('Ping'),
+          content: () => <Ping />,
+        },
+        {
+          path: '/Tracert',
+          name: t('Tracert'),
+          content: () => <Tracert />,
         },
       ],
     },

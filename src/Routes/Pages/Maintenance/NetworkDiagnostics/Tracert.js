@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Tracer() {
+export default function Tracert() {
   return <div>Tracer</div>;
 }
