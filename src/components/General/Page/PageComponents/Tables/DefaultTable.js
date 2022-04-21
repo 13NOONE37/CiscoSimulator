@@ -14,12 +14,13 @@ export default function DefaultTable({ data, navItems, gridTemp, title }) {
       }}
     >
       <Title className="rowToLeft">{title}</Title>
-
-      <div className="row tableNav">
-        {navItems.map((item) => (
-          <span>{item}</span>
-        ))}
-      </div>
+      {navItems.join('').length > 0 && (
+        <div className="row tableNav">
+          {navItems.map((item) => (
+            <span>{item}</span>
+          ))}
+        </div>
+      )}
 
       {data.map((dataRow, dataIndex) => (
         <div className="row">

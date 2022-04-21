@@ -37,15 +37,26 @@ export default function StaticLAG() {
         <MultiPage.ElementsLine>
           <MultiPage.DevidedColumn
             data={[
-              <MultiPage.Row style={{ justifyContent: 'space-between' }}>
-                <span>1</span>
-                <span>1</span>
-                <span>1</span>
+              <MultiPage.Row style={{ justifyContent: 'flex-start' }}>
+                {['1(LAG1)', '2(LAG1)', 3, 4, 5, 6].map((num) => (
+                  <MultiPage.Input
+                    inputProps={{ type: 'checkbox' }}
+                    afterText={`${num}`}
+                  />
+                ))}
               </MultiPage.Row>,
-              <MultiPage.Row style={{ justifyContent: 'space-between' }}>
-                <span>3</span>
-                <span>1</span>
-                <span>1</span>
+              <MultiPage.Row
+                style={{
+                  borderBottom: '1px solid var(--tplink-grey1',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                {[7, 8].map((num) => (
+                  <MultiPage.Input
+                    inputProps={{ type: 'checkbox' }}
+                    afterText={`${num}`}
+                  />
+                ))}
               </MultiPage.Row>,
             ]}
           />

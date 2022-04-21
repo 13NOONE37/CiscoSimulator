@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import './Tables.css';
 import { useTranslation } from 'react-i18next';
-import { Title, Button, Input, Select } from '../../MultiPage';
+import { Title, Button, Input, Select, MaskedInput } from '../../MultiPage';
 
 export default function EditableTable({
   title,
@@ -9,6 +9,7 @@ export default function EditableTable({
   gridTemp,
   saveTable,
   isPortSelect,
+  isLeftPortSelect,
 }) {
   const { t } = useTranslation();
   const [tableStates, setTableStates] = useReducer(
@@ -66,7 +67,9 @@ export default function EditableTable({
       className="editableTable"
       style={{
         '--columnsCount': `${
-          gridTemp ? gridTemp : `65px repeat(${navItems.length},1fr)`
+          gridTemp
+            ? gridTemp
+            : `${isLeftPortSelect ? '65px' : ''} repeat(${navItems.length},1fr)`
         }`,
       }}
     >
@@ -95,20 +98,22 @@ export default function EditableTable({
         </div>
       )}
       <div className="row tableNav">
-        <span>{t('Select')}</span>
+        {isLeftPortSelect && <span>{t('Select')}</span>}
         {navItems.map((item) => (
           <span>{t(item)}</span>
         ))}
       </div>
-      {data.fields !== undefined && (
+      {data.fields !== undefined && data.fields.length > 0 && (
         <div className="row">
-          <span>
-            <input
-              type="checkbox"
-              onChange={handleSelectAllPorts}
-              checked={!tableStates.checkedPorts.includes(false)}
-            />
-          </span>
+          {isLeftPortSelect && (
+            <span>
+              <input
+                type="checkbox"
+                onChange={handleSelectAllPorts}
+                checked={!tableStates.checkedPorts.includes(false)}
+              />
+            </span>
+          )}
           {data.fields.map((field, index) => (
             <span>
               {field.type === 'input' && (
@@ -128,6 +133,22 @@ export default function EditableTable({
                   options={field.options}
                 />
               )}
+              {field.type === 'inputmasked' && (
+                <MaskedInput
+                  changeCallback={(newValue) => {
+                    let temp = data;
+
+                    temp.data = temp.data.map((item, index2) => {
+                      if (tableStates.checkedPorts[index2]) {
+                        item[index] = newValue;
+                      }
+                      return item;
+                    });
+
+                    saveTable(temp);
+                  }}
+                />
+              )}
             </span>
           ))}
         </div>
@@ -135,18 +156,31 @@ export default function EditableTable({
 
       {data.data.map((dataRow, dataIndex) => (
         <div className="row">
-          <span>
-            <input
-              type="checkbox"
-              checked={tableStates.checkedPorts[dataIndex]}
-              onChange={() => handleSelectPort(dataIndex)}
-            />
-          </span>
-          {dataRow.map((dataElement) => (
-            <span>{dataElement ? dataElement : '---'}</span>
+          {isLeftPortSelect && (
+            <span>
+              <input
+                type="checkbox"
+                checked={tableStates.checkedPorts[dataIndex]}
+                onChange={() => handleSelectPort(dataIndex)}
+              />
+            </span>
+          )}
+          {dataRow.map((dataElement, elementIndex) => (
+            <>
+              {data.fields[elementIndex].type === 'inputmasked' ? (
+                <span>{dataElement.join('.')}</span>
+              ) : (
+                <span>{dataElement ? dataElement : '---'} </span>
+              )}
+            </>
           ))}
         </div>
       ))}
     </div>
   );
 }
+
+EditableTable.defaultProps = {
+  isPortSelect: true,
+  isLeftPortSelect: true,
+};

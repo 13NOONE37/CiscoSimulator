@@ -238,6 +238,100 @@ const defaultConfig = {
     ],
   },
   //LACP-END
+
+  //LOG-Start
+  logTable: {
+    names: ['Index', 'Time', 'Module', 'Severity', 'Content'],
+    fields: [
+      { type: 'disable' },
+      { type: 'disable' },
+      { type: 'select', options: ['All Module', 'LAG', 'Link', 'User'] },
+
+      {
+        type: 'select',
+        options: [
+          'level_0',
+          'level_1',
+          'level_2',
+          'level_3',
+          'level_4',
+          'level_5',
+          'level_6',
+          'level_7',
+        ],
+      },
+      { type: 'disable' },
+    ],
+    data: [
+      [
+        1,
+        '2022-12-10 20:25:46',
+        'User',
+        'level_3',
+        'login the web by admin on web(192.168.0.10',
+      ],
+      [
+        2,
+        '2022-12-10 20:35:46',
+        'LAG',
+        'level_6',
+        'port 1, changed state to up',
+      ],
+    ],
+  },
+  remoteLogTable: {
+    names: ['Index', 'HostIP', 'UDPPort', 'Severity', 'Status'],
+    fields: [
+      { type: 'disable' },
+      { type: 'inputmasked', options: { type: 'ip' } },
+      { type: 'disable' },
+      {
+        type: 'select',
+        options: [
+          'level_0',
+          'level_1',
+          'level_2',
+          'level_3',
+          'level_4',
+          'level_5',
+          'level_6',
+          'level_7',
+        ],
+      },
+      { type: 'select', options: ['Enable', 'Disable'] },
+    ],
+    data: [
+      ['1', [0, 0, 0, 0], 514, 'level_6', 'Disable'],
+      ['2', [0, 0, 0, 0], 514, 'level_6', 'Disable'],
+      ['3', [0, 0, 0, 0], 514, 'level_6', 'Disable'],
+      ['4', [0, 0, 0, 0], 514, 'level_6', 'Disable'],
+    ],
+  },
+  localLogTable: {
+    names: ['Channel', 'Severity', 'Status'],
+    fields: [
+      { type: 'disable' },
+      {
+        type: 'select',
+        options: [
+          'level_0',
+          'level_1',
+          'level_2',
+          'level_3',
+          'level_4',
+          'level_5',
+          'level_6',
+          'level_7',
+        ],
+      },
+      { type: 'select', options: ['Enable', 'Disable'] },
+    ],
+    data: [
+      ['Log Buffer', 'level_6', 'Enable'],
+      ['Log File', 'level_2', 'Disable'],
+    ],
+  },
+  //LOG-End
 };
 
 export default defaultConfig;

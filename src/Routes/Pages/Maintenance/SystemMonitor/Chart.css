@@ -1,0 +1,15 @@
+.chartBox {
+  border: 2px solid var(--tplink-grey1);
+  padding: 15px;
+}
+.chartInfo {
+  width: 700px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.chartBox svg {
+  margin-top: 25px;
+}
+.chartInfo span {
+  text-align: center;
+}

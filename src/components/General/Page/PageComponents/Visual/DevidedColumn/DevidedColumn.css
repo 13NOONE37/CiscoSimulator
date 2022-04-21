@@ -4,6 +4,6 @@
   display: flex;
   flex-direction: column;
 }
-.DevidedColumn div:nth-child(2) {
+.DevidedColumn .elementsRow:nth-child(2) {
   border-top: 2px solid var(--tplink-grey1);
 }

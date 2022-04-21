@@ -182,7 +182,7 @@ export default function Sidebar() {
         },
         {
           name: '802.1X',
-          action: () => history.push('/802.1X/globalconfig'),
+          action: () => history.push('/802.1X/GlobalConfigNetwork'),
         },
       ],
     },
