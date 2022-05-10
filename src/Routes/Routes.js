@@ -1,6 +1,6 @@
 import React from 'react';
-import Auth from './Pages/Auth';
-import Main from './Pages/Main';
+import Auth from 'Routes/Pages/Auth';
+import Main from 'Routes/Pages/Main';
 
 export default [
   {
