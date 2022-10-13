@@ -35,12 +35,12 @@
     0px 0px 1px 0px var(--tplink-blue1);
 }
 
-input[type='checkbox'],
-input[type='checkbox']:focus,
-input[type='checkbox']:hover,
-input[type='radio'],
-input[type='radio']:hover,
-input[type='radio']:focus {
+input[type="checkbox"],
+input[type="checkbox"]:focus,
+input[type="checkbox"]:hover,
+input[type="radio"],
+input[type="radio"]:hover,
+input[type="radio"]:focus {
   box-shadow: unset;
 }
 .inputDefault,
@@ -54,6 +54,7 @@ input[type='radio']:focus {
   height: 18px;
   width: fit-content;
   background-color: white;
+  /* todo: kolor inputa ogólnie jest słaby */
 }
 
 .fakeInput input {
