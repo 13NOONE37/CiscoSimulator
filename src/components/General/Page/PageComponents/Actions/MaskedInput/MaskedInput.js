@@ -1,7 +1,12 @@
 import React, { useState, useRef } from 'react';
 import '../Actions.css';
 
-export default function MaskedInput({ changeCallback, value, isDisabled }) {
+export default function MaskedInput({
+  changeCallback,
+  value,
+  isDisabled,
+  afterText,
+}) {
   const inputsRef = useRef(null);
   const [address, setAddress] = useState(value || [null, null, null, null]);
   const [currentFocus, setcurrentFocus] = useState(0);
@@ -37,25 +42,33 @@ export default function MaskedInput({ changeCallback, value, isDisabled }) {
     changeCallback(newAddress);
     if (e.target.value.length == 3) handleFocusNext();
   };
+
+  const randomId = `input_
+  ${Math.round((new Date().getTime() * Math.random() * 100) / 100)}
+`;
+
   return (
-    <div
-      className={`fakeInput inputSpecial ${isDisabled && 'disabledInput'}`}
-      ref={inputsRef}
-    >
-      {address &&
-        address.map((octet, index) => (
-          <>
-            <input
-              type="number"
-              value={octet}
-              onFocus={(e) => setcurrentFocus(index)}
-              onChange={(e) => handleChange(e, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              disabled={isDisabled}
-            />
-            {index < 3 && '.'}
-          </>
-        ))}
+    <div className="alignVerticaly">
+      <div
+        className={`fakeInput inputSpecial ${isDisabled && 'disabledInput'}`}
+        ref={inputsRef}
+      >
+        {address &&
+          address.map((octet, index) => (
+            <>
+              <input
+                type="number"
+                value={octet}
+                onFocus={(e) => setcurrentFocus(index)}
+                onChange={(e) => handleChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                disabled={isDisabled}
+              />
+              {index < 3 && '.'}
+            </>
+          ))}
+      </div>
+      {afterText?.length > 0 && <label htmlFor={randomId}>{afterText}</label>}
     </div>
   );
 }

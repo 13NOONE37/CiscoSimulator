@@ -10,6 +10,7 @@ export default function EditableTable({
   saveTable,
   isPortSelect,
   isLeftPortSelect,
+  isAllSelect,
 }) {
   const { t } = useTranslation();
   const [tableStates, setTableStates] = useReducer(
@@ -105,7 +106,7 @@ export default function EditableTable({
       </div>
       {data.fields !== undefined && data.fields.length > 0 && (
         <div className="row">
-          {isLeftPortSelect && (
+          {isLeftPortSelect && isAllSelect && (
             <span>
               <input
                 type="checkbox"
@@ -183,4 +184,5 @@ export default function EditableTable({
 EditableTable.defaultProps = {
   isPortSelect: true,
   isLeftPortSelect: true,
+  isAllSelect: true,
 };

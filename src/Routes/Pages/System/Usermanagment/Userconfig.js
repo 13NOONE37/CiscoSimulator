@@ -181,13 +181,19 @@ export default function Userconfig() {
           title={t('UserTable')}
           data={{
             names: ['UserID', 'UserName', 'AccessLevel', 'Operation'],
-            fields: undefined,
+            fields: [
+              { type: 'disabled' },
+              { type: 'disabled' },
+              { type: 'disabledd' },
+              { type: 'disabled' },
+            ],
             data: config.users.map((user) => [
               ...Object.values(user),
               <MultiPage.Button isBlank>Edit</MultiPage.Button>,
             ]),
           }}
           isPortSelect={false}
+          isAllSelect={false}
         />
         <MultiPage.ButtonsRow>
           <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
