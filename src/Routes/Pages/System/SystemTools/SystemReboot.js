@@ -24,7 +24,7 @@ export default function SystemReboot() {
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
-            <MultiPage.Text>Reboot:</MultiPage.Text>
+            <MultiPage.Text>{t('Reboot')}:</MultiPage.Text>
             <div style={{ width: '60px' }}>
               <MultiPage.Button isSpecial action={handleReboot}>
                 {t('Reboot')}
@@ -33,9 +33,7 @@ export default function SystemReboot() {
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
-        <MultiPage.Note>
-          To avoid damage, please don't turn off the device while rebooting.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note7')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

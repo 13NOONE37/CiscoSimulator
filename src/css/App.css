@@ -2,8 +2,11 @@
 body {
   margin: 0;
 }
+* {
+  font-size: 12px;
+}
 .App {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Arial';
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -30,7 +33,7 @@ body {
   color: var(--tplink-grey1);
 
   padding: 4px 10px;
-  font-size: 14px;
+  font-size: 12px;
   text-decoration: none;
   outline: none;
 }

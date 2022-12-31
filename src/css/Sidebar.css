@@ -1,58 +1,59 @@
 .sidebar {
-   width: 200px;
-   padding: 0px 0px 5px 0px;
-   user-select: none;
-   background-color: var(--tplink-blue4);
+  width: 200px;
+  padding: 0px 0px 5px 0px;
+  user-select: none;
+  background-color: var(--tplink-blue4);
 }
 .sidebar h1 {
-   padding: 0;
-   margin: 0;
-   padding-left: 10px;
-   padding-top: 10px;
-   padding-bottom: 10px;
-   background-color: var(--tplink-grey1);
+  padding: 0;
+  margin: 0;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: var(--tplink-grey1);
 
-   border-bottom: 3px solid #000;
+  font-size: 20px;
+  border-bottom: 3px solid #000;
 }
 .sidebar .elements {
-   display: flex;
-   flex-direction: column;
-   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 .sideButton {
-   cursor: pointer;
-   width: 100%;
-   height: 25px;
-   background-color: transparent;
-   border: none;
-   outline: none;
-   padding: 0;
-   margin: 0;
-   text-align: left;
-   font-size: 15px;
-   line-height: 25px;
-   padding-left: 10px;
-   color: var(--tplink-blue3);
+  cursor: pointer;
+  width: 100%;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font-size: 12px;
+  line-height: 25px;
+  padding-left: 10px;
+  color: var(--tplink-blue3);
 
-   border-bottom: 1px solid var(--tplink-blue1);
+  border-bottom: 1px solid var(--tplink-blue1);
 }
 .sideButton:hover {
-   background-color: var(--tplink-blue1);
-   color: #fff;
+  background-color: var(--tplink-blue1);
+  color: #fff;
 }
 .sideButton:focus {
-   backdrop-filter: brightness(1.1);
+  backdrop-filter: brightness(1.1);
 }
 
 .sidebar details {
-   outline: none;
+  outline: none;
 }
 .sidebar details button {
-   padding-left: 20px;
+  padding-left: 20px;
 }
 
 .sidebar details summary {
-   font-size: 15px;
-   padding-left: 10px;
+  font-size: 12px;
+  padding-left: 10px;
 }

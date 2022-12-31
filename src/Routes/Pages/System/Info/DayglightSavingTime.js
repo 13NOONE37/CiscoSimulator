@@ -37,7 +37,7 @@ export default function DayglightSavingTime() {
               },
               defaultChecked: localConfig.dstSource === 'PredefinedMode',
             }}
-            afterText="PredefinedMode"
+            afterText={t('PredefinedMode')}
           />
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine FirstColumnWidth={300}>
@@ -83,7 +83,7 @@ export default function DayglightSavingTime() {
                     },
                     disabled: localConfig.dstSource !== 'PredefinedMode',
                   }}
-                  afterText="Europe"
+                  afterText={t('Europe')}
                 />
                 <MultiPage.Input
                   inputProps={{
@@ -98,7 +98,7 @@ export default function DayglightSavingTime() {
                     },
                     disabled: localConfig.dstSource !== 'PredefinedMode',
                   }}
-                  afterText="New Zealand"
+                  afterText={t('New Zealand')}
                 />
               </MultiPage.SubElementsLine>
             </MultiPage.SubElementsLine>
@@ -116,11 +116,11 @@ export default function DayglightSavingTime() {
               },
               defaultChecked: localConfig.dstSource === 'RecurringMode',
             }}
-            afterText="RecurringMode"
+            afterText={t('RecurringMode')}
           />
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>Offset:</span>
+              <span>{t('Offset')}:</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'number',
@@ -133,13 +133,13 @@ export default function DayglightSavingTime() {
                   },
                   disabled: localConfig.dstSource !== 'RecurringMode',
                 }}
-                afterText="(minutes)"
+                afterText={t('(minutes)')}
               />
             </MultiPage.SubElementsLine>
           </MultiPage.ElementsLine>
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>End Time:</span>
+              <span>{t('End Time')}:</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'datetime-local',
@@ -157,7 +157,7 @@ export default function DayglightSavingTime() {
           </MultiPage.ElementsLine>
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>Start Time:</span>
+              <span>{t('Start Time')}:</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'datetime-local',
@@ -186,11 +186,11 @@ export default function DayglightSavingTime() {
               },
               defaultChecked: localConfig.dstSource === 'DateMode',
             }}
-            afterText="DateMode"
+            afterText={t('DateMode')}
           />
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>Offset:</span>
+              <span>{t('Offset')}:</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'number',
@@ -201,13 +201,13 @@ export default function DayglightSavingTime() {
                   },
                   disabled: localConfig.dstSource !== 'DateMode',
                 }}
-                afterText="(minutes)"
+                afterText={t('(minutes)')}
               />
             </MultiPage.SubElementsLine>
           </MultiPage.ElementsLine>
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>End Time:</span>
+              <span>{t('End Time')}:</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'datetime-local',
@@ -225,7 +225,7 @@ export default function DayglightSavingTime() {
           </MultiPage.ElementsLine>
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>Start Time:</span>
+              <span>{t('Start Time')}:</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'datetime-local',
@@ -244,6 +244,7 @@ export default function DayglightSavingTime() {
         </MultiPage.ElementsLine>
         <MultiPage.ButtonsRow>
           <MultiPage.Button
+            isSpecial
             action={() => {
               MultiPage.handleApplyToConfig(config, localConfig, 'dstStatus');
               MultiPage.handleApplyToConfig(config, localConfig, 'dstSource');
@@ -286,7 +287,7 @@ export default function DayglightSavingTime() {
           >
             {t('Apply')}
           </MultiPage.Button>
-          <MultiPage.Button>{t('Help')}</MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note />
       </MultiPage.Section>

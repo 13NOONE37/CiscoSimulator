@@ -26,11 +26,7 @@ export default function ConfigBackup() {
       <MultiPage.Section width={700}>
         <MultiPage.Title>{t('ConfigBackup')}</MultiPage.Title>
         <MultiPage.ElementsLine>
-          <MultiPage.Text>
-            Backup System Config
-            <br /> Click the Backup Config button to save the config to your
-            computer.
-          </MultiPage.Text>
+          <MultiPage.Text>{t('BackupConfigText')}</MultiPage.Text>
         </MultiPage.ElementsLine>
 
         <MultiPage.ButtonsRow>
@@ -48,10 +44,7 @@ export default function ConfigBackup() {
           ></a>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
-        <MultiPage.Note>
-          It will take a long time to backup the config file. Please wait
-          without any operation.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note5')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

@@ -26,10 +26,7 @@ export default function SystemReset() {
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
-        <MultiPage.Note>
-          The System Reset option will restore the configuration to default and
-          your current settings will be lost.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note8')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

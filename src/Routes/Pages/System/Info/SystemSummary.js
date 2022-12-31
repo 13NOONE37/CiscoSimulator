@@ -30,8 +30,8 @@ export default function SystemSummary() {
           title={t('SystemInfo')}
         />
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>Refresh</MultiPage.Button>
-          <MultiPage.Button isSpecial>Help</MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Refresh')}</MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note></MultiPage.Note>
       </MultiPage.Section>

@@ -86,10 +86,7 @@ export default function DeviceDescription() {
             />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
-        <MultiPage.Note>
-          The Device Name, Location and Contact should not be more than 32
-          characters.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note1')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

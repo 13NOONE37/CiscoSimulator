@@ -24,14 +24,16 @@ export default function SystemTime() {
         <MultiPage.Title>{t('TimeInfo')}</MultiPage.Title>
         <MultiPage.ElementsLine>
           <span>
-            Current System Date:&nbsp;
+            {t('Current System Date')}:&nbsp;
             {localConfig.currentDate}
             &nbsp;&nbsp;&nbsp;
             {localConfig.currentTime}
           </span>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
-          <span>Current Time Source: {localConfig.timeSource}</span>
+          <span>
+            {t('Current Time Source')}: {t(localConfig.timeSource)}
+          </span>
         </MultiPage.ElementsLine>
 
         <MultiPage.Title>{t('TimeConfig')}</MultiPage.Title>
@@ -46,11 +48,11 @@ export default function SystemTime() {
               },
               defaultChecked: localConfig.timeSource === 'Manual',
             }}
-            afterText="Manual"
+            afterText={t('Manual')}
           />
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>Date:</span>
+              <span>{t('Date')}:</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'date',
@@ -65,7 +67,7 @@ export default function SystemTime() {
           </MultiPage.ElementsLine>
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>Time</span>
+              <span>{t('Time')}</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'time',
@@ -92,7 +94,7 @@ export default function SystemTime() {
               },
               defaultChecked: localConfig.timeSource === 'NTP Server',
             }}
-            afterText="Get Time from NTP Server"
+            afterText={t('Get Time from NTP Server')}
           />
           <MultiPage.ElementsLine
             actionButton={() => (
@@ -140,7 +142,7 @@ export default function SystemTime() {
             )}
           >
             <MultiPage.SubElementsLine>
-              <span>Time Zone:</span>
+              <span>{t('Time Zone')}:</span>
               <MultiPage.Select
                 onChangeCallback={(e) =>
                   setLocalConfig({ ['timeZone']: e.target.value })
@@ -302,7 +304,7 @@ export default function SystemTime() {
             )}
           >
             <MultiPage.SubElementsLine>
-              <span>Primary Server:</span>
+              <span>{t('Primary Server')}:</span>
               <MultiPage.MaskedInput
                 isDisabled={localConfig.timeSource !== 'NTP Server'}
                 changeCallback={(data) => {
@@ -318,7 +320,7 @@ export default function SystemTime() {
             )}
           >
             <MultiPage.SubElementsLine>
-              <span>Secoundary Server:</span>
+              <span>{t('Secoundary Server')}:</span>
               <MultiPage.MaskedInput
                 isDisabled={localConfig.timeSource !== 'NTP Server'}
                 changeCallback={(data) => {
@@ -330,7 +332,7 @@ export default function SystemTime() {
           </MultiPage.ElementsLine>
           <MultiPage.ElementsLine>
             <MultiPage.SubElementsLine>
-              <span>Update Rate:</span>
+              <span>{t('Update Rate')}:</span>
               <MultiPage.Input
                 inputProps={{
                   type: 'number',
@@ -342,7 +344,7 @@ export default function SystemTime() {
                   defaultValue: localConfig.updateRate,
                   disabled: localConfig.timeSource !== 'NTP Server',
                 }}
-                afterText={'hour(s)'}
+                afterText={t('hour(s)')}
               />
             </MultiPage.SubElementsLine>
           </MultiPage.ElementsLine>
@@ -363,7 +365,7 @@ export default function SystemTime() {
               },
               defaultChecked: localConfig.timeSource === `Sync with PC's Clock`,
             }}
-            afterText={`Sync with PC's Clock`}
+            afterText={t(`Sync with PC's Clock`)}
           />
         </MultiPage.ElementsLine>
         <MultiPage.Note />

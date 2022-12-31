@@ -117,7 +117,7 @@ export default function HTTPSConfig() {
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine FirstColumnWidth={250}>
-            <span>{t('HTTPS')}:</span>
+            <span>{t('TLSVersion1')}:</span>
             <MultiPage.SubElementsLine>
               <MultiPage.Input
                 inputProps={{

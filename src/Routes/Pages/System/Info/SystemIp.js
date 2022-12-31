@@ -141,11 +141,7 @@ export default function SystemIp() {
             />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
-        <MultiPage.Note>
-          Changing IP address to a different IP segment will interrupt the
-          network communication, so please keep the new IP address in the same
-          IP segment with the local network.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note2')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

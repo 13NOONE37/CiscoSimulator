@@ -314,7 +314,7 @@ export default function SSHConfig() {
         >
           <MultiPage.SubElementsLine>
             <span>{t('KeyType')}:</span>
-            <MultiPage.Select options={['SSH-2 RSA/DSA']} />
+            <MultiPage.Select options={['SSH-2 RSA/DSA', 'SSH-1 RSA']} />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
@@ -324,12 +324,9 @@ export default function SSHConfig() {
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.Note>
-          1. It will take a long time to download the key file. Please wait
-          without any operation.
+          {t('Note9_1')}
           <br />
-          2. After the Key File is downloaded, the user's original key of the
-          same type will be replaced. The wrong downloaded file will result in
-          the SSH access to the switch via Password authentication.
+          {t('Note9_2')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>

@@ -49,7 +49,9 @@ export default function Telnet() {
         <MultiPage.ButtonsRow>
           <MultiPage.Button
             isSpecial
-            action={() => setLocalConfig(config, localConfig, 'telnetStatus')}
+            action={() =>
+              MultiPage.handleApplyToConfig(config, localConfig, 'telnetStatus')
+            }
           >
             {t('Apply')}
           </MultiPage.Button>

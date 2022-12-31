@@ -27,7 +27,7 @@ export default function ConfigRestore() {
     if (uploadedConfig == null) return;
     if (
       window.confirm(
-        'Are you sure? It will overwrite your current configuration',
+        t('Are you sure? It will overwrite your current configuration'),
       )
     ) {
       if (compareKeys(config, uploadedConfig)) {
@@ -41,12 +41,7 @@ export default function ConfigRestore() {
       <MultiPage.Section width={700}>
         <MultiPage.Title>{t('ConifgRestore')}</MultiPage.Title>
         <MultiPage.ElementsLine>
-          <MultiPage.Text>
-            Restore the config from the saved config file
-            <br />
-            Select a backup config file and click the Restore Config button, and
-            then you can restore to the <br /> previous config.
-          </MultiPage.Text>
+          <MultiPage.Text>{t('RestoreConfigText')}</MultiPage.Text>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine FirstColumnWidth={100}>
@@ -64,10 +59,7 @@ export default function ConfigRestore() {
           </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
-        <MultiPage.Note>
-          It will take a long time to restore the config file. Please wait
-          wihout any operation.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note4')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

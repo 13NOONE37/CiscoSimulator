@@ -35,6 +35,22 @@ const defaultConfig = {
     },
   ],
 
+  accessControlMode: 'Disable',
+  accessControlInterface: [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ],
+  accessControlIp: [null, null, null, null],
+  accessControlMask: [null, null, null, null],
+  accessControlMAC: '',
+  accessControlPort: [false, false, false, false, false, false, false, false],
+
   //SSH-START
   sshStatus: 'Disable',
   protocolv2SSH: 'Disable',

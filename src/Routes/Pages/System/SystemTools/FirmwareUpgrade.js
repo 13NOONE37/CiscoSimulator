@@ -12,9 +12,7 @@ export default function FirmwareUpgrade() {
       <MultiPage.Section width={700}>
         <MultiPage.Title>{t('FirmwareUpgrade')}</MultiPage.Title>
         <MultiPage.ElementsLine>
-          <MultiPage.Text>
-            You will get the new function after upgrading the firmware.
-          </MultiPage.Text>
+          <MultiPage.Text>{t('FirmwareUpgradeText')}</MultiPage.Text>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine
           actionButton={() => (
@@ -41,14 +39,13 @@ export default function FirmwareUpgrade() {
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.Note>
-          1. Please select the proper software version matching with your
-          hardware to upgrade.
+          {t('Note6_1')}
           <br />
-          2. To avoid damage, please don't turn off the device while upgrading.
+          {t('Note6_2')}
           <br />
-          3. After upgrading, the device will reboot automatically.
+          {t('Note6_3')}
           <br />
-          4. You are suggested to backup the configuration before upgrading.
+          {t('Note6_4')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>

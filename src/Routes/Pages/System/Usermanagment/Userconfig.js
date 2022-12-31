@@ -11,109 +11,117 @@ export default function Userconfig() {
       username: '',
       password1: '',
       password2: '',
+      passwordCompare: '',
       permission: 'Guest',
+      isEditing: false,
     },
   );
-  const [username, setusername] = useState('');
-  const [password1, setpassword1] = useState('');
-  const [password2, setpassword2] = useState('');
-  const [permission, setpermission] = useState('Guest');
 
-  const [tempUsersToDelete, settempUsersToDelete] = useState(config.users);
   const [tempUsers, settempUsers] = useState(config.users);
 
   const handleClear = () => {
-    setusername('');
-    setpassword1('');
-    setpassword2('');
-    setpermission('Guest');
-    setcurrentEdit(undefined);
+    setLocalConfig({ ['username']: '' });
+    setLocalConfig({ ['password1']: '' });
+    setLocalConfig({ ['password2']: '' });
+    setLocalConfig({ ['passwordCompare']: '' });
+    setLocalConfig({ ['permission']: 'Guest' });
+    setLocalConfig({ ['isEditing']: false });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (currentEdit == undefined) {
-      if ((password1.length > 0) | (username.length > 0)) {
-        let addUser = true;
-        config.users.map((item) => {
-          if (item.username == username) {
-            addUser = false;
-            alert(`User already exist`);
-          }
-        });
-        if (password1 != password2) {
+  const handleEdit = ({ username, password, permission }, index) => {
+    setLocalConfig({ ['username']: username });
+    setLocalConfig({ ['passwordCompare']: password });
+    setLocalConfig({ ['permission']: permission });
+    setLocalConfig({ ['isEditing']: index + 1 });
+  };
+
+  const handleSubmit = () => {
+    if (
+      localConfig.username.length > 0 &&
+      localConfig.password1.length > 0 &&
+      localConfig.password2.length > 0
+    ) {
+      let addUser = true;
+      config.users.map((item) => {
+        if (item.username == localConfig.username) {
           addUser = false;
-          alert(`Password don't match`);
+          alert(t('User already exist'));
         }
-
-        if (addUser) {
-          config.users.push({ username, password: password1, permission });
-          setusername('');
-          setpassword1('');
-          setpassword2('');
-          setpermission('Guest');
-        }
+      });
+      if (localConfig.password1 != localConfig.password2) {
+        addUser = false;
+        alert(t("Password don't match"));
       }
-    } else {
-      if (password1.length > 0 || username.length > 0) {
-        let applyUser = true;
-        config.users.map((item) => {
-          if (item != currentEdit && item.username == username) {
-            applyUser = false;
-            alert(`User already exist`);
-          }
+      if (addUser) {
+        let temp = tempUsers;
+        temp.push({
+          username: localConfig.username,
+          password: localConfig.password1,
+          permission: localConfig.permission,
+          checked: false,
         });
-        if (password1 != password2) {
-          applyUser = false;
-          alert(`Password don't match`);
-        }
+        console.log(temp);
+        settempUsers(temp);
+        // MultiPage.handleApplyToConfig(config, temp, 'users');
+        handleClear();
+      }
+    }
+  };
+  const handleModify = () => {
+    if (
+      localConfig.username.length > 0 &&
+      localConfig.password1.length > 0 &&
+      localConfig.password2.length > 0
+    ) {
+      let addUser = true;
+      if (
+        tempUsers.filter(
+          ({ username }, index) =>
+            username == localConfig.username &&
+            localConfig.isEditing - 1 != index,
+        ).length > 0
+      ) {
+        addUser = false;
+        alert(t('User already exist'));
+      }
 
-        if (applyUser) {
-          console.log(username, password1, permission);
-          config.users.map((item) => {
-            if (item === currentEdit) {
-              item.username = username;
-              item.password = password1;
-              item.permission = permission;
-            }
-          });
-          setusername('');
-          setpassword1('');
-          setpassword2('');
-          setpermission('Guest');
-        }
+      if (localConfig.password1 != localConfig.passwordCompare) {
+        addUser = false;
+        alert(t('Old password is wrong'));
+      }
+      if (addUser) {
+        let temp = tempUsers;
+        temp[localConfig.isEditing - 1] = {
+          username: localConfig.username,
+          password: localConfig.password2,
+          permission: localConfig.permission,
+          checked: temp[localConfig.isEditing - 1]?.checked,
+        };
+        console.log(temp);
+        settempUsers(temp);
+        // MultiPage.handleApplyToConfig(config, temp, 'users');
+        handleClear();
       }
     }
   };
 
-  const usersRef = useRef(null);
   const handleDelete = () => {
-    [].forEach.call(usersRef.current.children, (item) => {
-      if (item.getAttribute('id') === 'userRow') {
-        item.children[0].children[0].checked = false;
-      }
-    });
-    settempUsers(tempUsersToDelete);
-    config.users = tempUsersToDelete;
-    settempUsersToDelete(config.users);
-  };
-  const handleSelectUser = (item) => {
-    if (tempUsersToDelete.includes(item)) {
-      settempUsersToDelete(tempUsersToDelete.filter((us) => us != item));
-    } else {
-      const temp = tempUsersToDelete;
-      temp.push(item);
-      settempUsersToDelete(temp);
+    let temp = tempUsers;
+    let isCorrect = true;
+    temp = temp.filter((user) => !user.checked);
+
+    if (temp.length == 0) {
+      isCorrect = false;
+      alert(t("You can't delete all users"));
+    }
+
+    if (isCorrect) {
+      temp = temp.map((user) => {
+        user.checked = false;
+        return user;
+      });
+      settempUsers(temp);
     }
   };
-  const [currentEdit, setcurrentEdit] = useState(undefined);
-  const handleEdit = (item) => {
-    setcurrentEdit(item);
-    setusername(item.username);
-    setpassword1(item.password);
-    setpassword2(item.password);
-    setpermission(item.permission);
-  };
-
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>
@@ -132,9 +140,14 @@ export default function Userconfig() {
             />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
+
         <MultiPage.ElementsLine
           actionButton={() => (
-            <MultiPage.Button>{t('Create')}</MultiPage.Button>
+            <MultiPage.Button
+              action={localConfig.isEditing ? handleModify : handleSubmit}
+            >
+              {localConfig.isEditing ? t('Modify') : t('Create')}
+            </MultiPage.Button>
           )}
         >
           <MultiPage.SubElementsLine FirstColumnWidth={160}>
@@ -142,20 +155,28 @@ export default function Userconfig() {
             <MultiPage.Select
               options={['Guest', 'Admin']}
               selectProps={{
-                value: localConfig.permisson,
+                value: localConfig.permission,
                 onChange: (e) =>
                   setLocalConfig({ ['permission']: e.target.value }),
               }}
             />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
+
         <MultiPage.ElementsLine
-          actionButton={() => <MultiPage.Button>{t('Clear')}</MultiPage.Button>}
+          actionButton={() => (
+            <MultiPage.Button action={handleClear}>
+              {t('Clear')}
+            </MultiPage.Button>
+          )}
         >
           <MultiPage.SubElementsLine FirstColumnWidth={160}>
-            <span>{t('Password')}:</span>
+            <span>
+              {localConfig.isEditing ? t('OldPassword') : t('Password')}:
+            </span>
             <MultiPage.Input
               inputProps={{
+                type: 'password',
                 value: localConfig.password1,
                 onChange: (e) =>
                   setLocalConfig({ ['password1']: e.target.value }),
@@ -163,11 +184,15 @@ export default function Userconfig() {
             />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
+
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine FirstColumnWidth={160}>
-            <span>{t('ConfirmPassword')}:</span>
+            <span>
+              {localConfig.isEditing ? t('NewPassword') : t('ConfirmPassword')}:
+            </span>
             <MultiPage.Input
               inputProps={{
+                type: 'password',
                 value: localConfig.password2,
                 onChange: (e) =>
                   setLocalConfig({ ['password2']: e.target.value }),
@@ -180,30 +205,43 @@ export default function Userconfig() {
         <MultiPage.EditableTable
           title={t('UserTable')}
           data={{
-            names: ['UserID', 'UserName', 'AccessLevel', 'Operation'],
+            names: ['Select', 'UserID', 'Username', 'AccessLevel', 'Operation'],
             fields: [
               { type: 'disabled' },
               { type: 'disabled' },
-              { type: 'disabledd' },
+              { type: 'disabled' },
+              { type: 'disabled' },
               { type: 'disabled' },
             ],
-            data: config.users.map((user) => [
-              ...Object.values(user),
-              <MultiPage.Button isBlank>Edit</MultiPage.Button>,
+            data: tempUsers.map((user, index) => [
+              <input
+                type="checkbox"
+                checked={user.checked}
+                onChange={() => {
+                  let temp = tempUsers;
+                  temp[index].checked = !temp[index]?.checked;
+                  settempUsers(temp);
+                }}
+              />,
+              String(index + 1),
+              user.username,
+              user.permission,
+              <MultiPage.Button isBlank action={() => handleEdit(user, index)}>
+                {t('Edit')}
+              </MultiPage.Button>,
             ]),
           }}
           isPortSelect={false}
           isAllSelect={false}
+          isLeftPortSelect={false}
         />
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleDelete}>
+            {t('Delete')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
-        <MultiPage.Note>
-          The user name should not be more than 16 characters using digits,
-          English letters and underlines only and password should not be more
-          than 31 characters
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note3')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
     // <article>

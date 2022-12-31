@@ -13,7 +13,7 @@
 .editableTable .row {
   display: grid;
   place-items: center;
-  font-size: 14px;
+  font-size: 12px;
   border-bottom: 2px solid var(--tplink-grey1);
   grid-template-columns: var(--columnsCount);
   padding: 2px;
@@ -36,7 +36,7 @@
   padding: 2 !important; /*TODO:delete*/
   background-color: var(--tplink-grey1);
   color: var(--tplink-blue1);
-  font-size: 14px;
+  font-size: 12px;
   border-bottom: 1px solid var(--tplink-grey2);
 }
 
