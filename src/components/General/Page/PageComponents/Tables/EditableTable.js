@@ -171,7 +171,14 @@ export default function EditableTable({
               {data.fields[elementIndex].type === 'inputmasked' ? (
                 <span>{dataElement.join('.')}</span>
               ) : (
-                <span>{dataElement ? dataElement : '---'} </span>
+                <span>
+                  {' '}
+                  {typeof dataElement === 'object'
+                    ? dataElement !== undefined
+                      ? dataElement
+                      : '---'
+                    : t(dataElement !== undefined ? dataElement : '---')}{' '}
+                </span>
               )}
             </>
           ))}

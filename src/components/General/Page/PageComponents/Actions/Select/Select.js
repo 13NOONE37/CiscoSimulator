@@ -1,8 +1,10 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import '../Actions.css';
+import { useTranslation } from 'react-i18next';
 
 export default function Select({ isSpecial, options, selectProps }) {
+  const { t } = useTranslation();
   return (
     <div className="alignVerticaly">
       <select
@@ -10,7 +12,7 @@ export default function Select({ isSpecial, options, selectProps }) {
         {...selectProps}
       >
         {options.map((item) => (
-          <option value={item}>{item}</option>
+          <option value={item}>{t(item)}</option>
         ))}
       </select>
     </div>

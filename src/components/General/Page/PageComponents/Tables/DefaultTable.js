@@ -2,8 +2,11 @@ import React from 'react';
 import './Tables.css';
 import propTypes from 'prop-types';
 import { Title } from '../../MultiPage';
+import { useTranslation } from 'react-i18next';
 
 export default function DefaultTable({ data, navItems, gridTemp, title }) {
+  const { t } = useTranslation();
+
   return (
     <div
       className="editableTable"
@@ -17,7 +20,7 @@ export default function DefaultTable({ data, navItems, gridTemp, title }) {
       {navItems.join('').length > 0 && (
         <div className="row tableNav">
           {navItems.map((item) => (
-            <span>{item}</span>
+            <span>{t(item)}</span>
           ))}
         </div>
       )}
@@ -25,7 +28,13 @@ export default function DefaultTable({ data, navItems, gridTemp, title }) {
       {data.map((dataRow, dataIndex) => (
         <div className="row">
           {dataRow.map((dataElement) => (
-            <span>{dataElement !== undefined ? dataElement : '---'}</span>
+            <span>
+              {typeof dataElement === 'object'
+                ? dataElement !== undefined
+                  ? dataElement
+                  : '---'
+                : t(dataElement !== undefined ? dataElement : '---')}
+            </span>
           ))}
         </div>
       ))}

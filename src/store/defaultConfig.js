@@ -373,8 +373,12 @@ const defaultConfig = {
   addressTable: [
     ['00-19-66-35-E0-F6', 1, 4, 'Static', 'no-Aging'],
     ['00-02-B3-E9-0C-19', 1, 5, 'Dynamic', 'Aging'],
-    ['00-19-66-35-E0-F8', 1, 4, 'Static', 'Aging'],
+    ['11-19-66-35-E0-F8', 1, 4, 'Static', 'no-Aging'],
+    ['00-02-B3-E9-0C-19', 14, 5, 'Dynamic', 'Aging'],
   ],
+  autoAging: 'Enable',
+  agingTime: 300,
+
   trafficAutoRefresh: 'Enable',
   trafficRefreshRate: 3,
   //LOG-End

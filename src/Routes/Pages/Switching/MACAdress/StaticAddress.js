@@ -38,8 +38,17 @@ export default function StaticAddress() {
     let temp = config.addressTable.filter((item) => {
       let isCorrect = true;
       if (localConfig.SearchOption === 'MAC Address') {
+        if (item[0] != localConfig.SearchPhrase) {
+          isCorrect = false;
+        }
       } else if (localConfig.SearchOption === 'VLAN ID') {
+        if (item[1] != localConfig.SearchPhrase) {
+          isCorrect = false;
+        }
       } else if (localConfig.SearchOption === 'Port') {
+        if (item[2] != localConfig.SearchPhrase) {
+          isCorrect = false;
+        }
       }
 
       return isCorrect;
@@ -131,10 +140,34 @@ export default function StaticAddress() {
             </MultiPage.SubElementsLine>
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
-        <MultiPage.DefaultTable
-          title={t('AddressTable')}
-          navItems={['MACAddress', 'VLAN ID', 'Port', 'Type', 'AgingStatus']}
-          data={localConfig.addressTable.filter((item) => item[3] == 'Static')}
+        <MultiPage.EditableTable
+          title={t('StaticAddressTable')}
+          isPortSelect={false}
+          data={{
+            names: ['MACAddress', 'VLAN ID', 'Port', 'Type', 'AgingStatus'],
+            fields: [
+              { type: 'disable' },
+              { type: 'disable' },
+              {
+                type: 'select',
+                options: [
+                  'Port 1',
+                  'Port 2',
+                  'Port 3',
+                  'Port 4',
+                  'Port 5',
+                  'Port 6',
+                  'Port 7',
+                  'Port 8',
+                ],
+              },
+              { type: 'disable' },
+              { type: 'disable' },
+            ],
+            data: localConfig.addressTable.filter(
+              (item) => item[3] == 'Static',
+            ),
+          }}
         />
         <MultiPage.ButtonsRow>
           <MultiPage.Button isSpecial>{t('Apply')}</MultiPage.Button>
@@ -142,7 +175,11 @@ export default function StaticAddress() {
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>
-          {t('Note16_1')}: 3
+          {t('Note16_1')}:{' '}
+          {
+            localConfig.addressTable.filter((item) => item[3] == 'Static')
+              .length
+          }
           <br />
           {t('Note16_2')}
         </MultiPage.Note>
