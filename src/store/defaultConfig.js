@@ -106,9 +106,12 @@ const defaultConfig = {
     ],
     fields: [
       { type: 'disable' },
-      { type: 'input', options: { type: 'text' } },
+      { type: 'input', options: { type: 'text', maxLength: '16' } },
       { type: 'select', options: ['Enable', 'Disable'] },
-      { type: 'select', options: ['Auto', '10MHD'] },
+      {
+        type: 'select',
+        options: ['Auto', '10MHD', '10MFD', '100MHD', '100MFD', '1000MFD'],
+      },
       { type: 'select', options: ['Enable', 'Disable'] },
       { type: 'disable' },
     ],
@@ -149,13 +152,32 @@ const defaultConfig = {
       mirroredPortEgress: [],
     },
   ],
+  portMirrorTable: {
+    names: ['Port', 'Ingress', 'Egress', 'LAG'],
+    fields: [
+      { type: 'disabled' },
+      { type: 'select', options: ['Enable', 'Disable'] },
+      { type: 'select', options: ['Enable', 'Disable'] },
+      { type: 'disabled' },
+    ],
+    data: [
+      ['1', 'Disable', 'Disable', undefined],
+      ['2', 'Disable', 'Disable', undefined],
+      ['3', 'Disable', 'Disable', undefined],
+      ['4', 'Disable', 'Disable', undefined],
+      ['5', 'Disable', 'Disable', undefined],
+      ['6', 'Disable', 'Disable', undefined],
+      ['7', 'Disable', 'Disable', undefined],
+      ['8', 'Disable', 'Disable', undefined],
+    ],
+  },
   portSecurity: {
     names: ['Port', 'Max Learned MAC', 'Learned Num', 'Learn Mode', 'Status'],
     fields: [
       { type: 'disable' },
       { type: 'input', options: { type: 'number', max: 64, min: 0 } },
       { type: 'disable' },
-      { type: 'select', options: ['Dynamic', 'Static'] },
+      { type: 'select', options: ['Dynamic', 'Static', 'Permanent'] },
       { type: 'select', options: ['Enable', 'Disable'] },
     ],
     data: [
@@ -170,14 +192,14 @@ const defaultConfig = {
     ],
   },
   portIsolationConfig: [
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, true, false, false, false, false],
+    [true, true, true, true, true, true, true, true],
+    [true, true, true, true, true, true, true, true],
+    [true, true, true, true, true, true, true, true],
+    [true, true, true, true, true, true, true, true],
+    [true, true, true, true, true, true, true, true],
+    [true, true, true, true, true, true, true, true],
+    [true, true, true, true, true, true, true, true],
+    [true, true, true, true, true, true, true, true],
   ],
   //LOOPBACK DETECTION-START
   loopbackDetectionStatus: 'Enable',
@@ -199,7 +221,7 @@ const defaultConfig = {
       { type: 'disabled' },
       { type: 'select', options: ['Enable', 'Disable'] },
       { type: 'select', options: ['Alert', 'Port Based'] },
-      { type: 'select', options: ['Auto'] },
+      { type: 'select', options: ['Auto', 'Recovery'] },
       { type: 'disable' },
       { type: 'disable' },
       { type: 'disable' },
@@ -215,11 +237,12 @@ const defaultConfig = {
       ['8', 'Enable', 'PortBased', 'Auto', '---', '---', '---'],
     ],
   },
+
   //LOOPBACK DETECTION-END
 
   //LAG-START
   hashAlgorithmLAG: 'SRC MAC+DST MAC',
-  lagTable: [['LAG1', 'Active LACP', '1,2']],
+  lagTable: [['LAG1', 'Active LACP', [1, 2, 3]]],
 
   //LAG-END
 
@@ -347,6 +370,13 @@ const defaultConfig = {
       ['Log File', 'level_2', 'Disable'],
     ],
   },
+  addressTable: [
+    ['00-19-66-35-E0-F6', 1, 4, 'Static', 'no-Aging'],
+    ['00-02-B3-E9-0C-19', 1, 5, 'Dynamic', 'Aging'],
+    ['00-19-66-35-E0-F8', 1, 4, 'Static', 'Aging'],
+  ],
+  trafficAutoRefresh: 'Enable',
+  trafficRefreshRate: 3,
   //LOG-End
   //STP-Start
   stpConfigEnable: 'Enable',

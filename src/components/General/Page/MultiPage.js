@@ -21,6 +21,9 @@ const deepCopy = (object) => JSON.parse(JSON.stringify(object));
 const handleApplyToConfig = (conf, localConf, name) => {
   conf[name] = localConf[name];
 };
+function isValidMAC(str) {
+  return /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/.test(str);
+}
 
 const WizardContext = createContext({
   t: undefined,
@@ -55,4 +58,5 @@ export {
   deepCopy,
   handleApplyToConfig,
   DevidedColumn,
+  isValidMAC,
 };

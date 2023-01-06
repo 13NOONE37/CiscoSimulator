@@ -67,14 +67,11 @@ export default function LACPConfig() {
         </MultiPage.ButtonsRow>
 
         <MultiPage.Note>
-          1. To avoid any broadcast storm when LACP takes effect, you are
-          suggested to enable Spanning Tree function.
+          {t('Note15_1')}
           <br />
-          2. LACP function can't be enabled for the port already in a static
-          link aggregation group.
+          {t('Note15_2')}
           <br />
-          3. The value of admin key can't be the same with the group number of
-          any static link aggregation group in used and vice versa.
+          {t('Note15_3')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>

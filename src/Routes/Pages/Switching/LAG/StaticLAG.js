@@ -21,7 +21,18 @@ export default function StaticLAG() {
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
             <span>{t('GroupNumber')}:</span>
-            <MultiPage.Select options={['LAG1', 'LAG2', '3']} />
+            <MultiPage.Select
+              options={[
+                'LAG1',
+                'LAG2',
+                'LAG3',
+                'LAG4',
+                'LAG5',
+                'LAG6',
+                'LAG7',
+                'LAG8',
+              ]}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
@@ -71,11 +82,11 @@ export default function StaticLAG() {
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>
-          1. LAG* denotes the Link Aggregation Group which the port belngs to.
+          {t('Note14_1')}
           <br />
-          2. it's not suggested to set 100M and 1000M ports in the same LAG. 3.
+          {t('Note14_2')}
           <br />
-          The LAG created by LACP can't be modified.
+          {t('Note14_3')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>

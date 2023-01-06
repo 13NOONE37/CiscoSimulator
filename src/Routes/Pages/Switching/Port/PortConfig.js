@@ -34,9 +34,7 @@ export default function PortConfig() {
           </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
-        <MultiPage.Note>
-          The Port Description should not be more than 16 characters.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note10')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

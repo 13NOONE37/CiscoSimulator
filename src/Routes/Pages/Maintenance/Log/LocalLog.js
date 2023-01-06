@@ -13,6 +13,7 @@ export default function LocalLog() {
       localLogTable: MultiPage.deepCopy(config.localLogTable),
     },
   );
+
   return (
     <MultiPage.Wizard>
       <MultiPage.Section width={600}>

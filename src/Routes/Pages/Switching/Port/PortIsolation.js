@@ -8,16 +8,9 @@ export default function PortIsolation() {
   const { config } = useContext(AppContext);
 
   const [currentPort, setcurrentPort] = useState(1);
-  const [forwardPortChecked, setforwardPortChecked] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [forwardPortChecked, setforwardPortChecked] = useState(
+    config.portIsolationConfig[currentPort],
+  );
   const [forceUpdate, setforceUpdate] = useState(1);
 
   const handleSelectMainPort = (e) => {
@@ -71,7 +64,7 @@ export default function PortIsolation() {
           options={[1, 2, 3, 4, 5, 6, 7, 8]}
         />
         <MultiPage.ElementsLine>
-          <MultiPage.Text>{t('ForwardPortlist')}:</MultiPage.Text>
+          <MultiPage.Text>{t('ForwardPortList')}:</MultiPage.Text>
           <MultiPage.Row style={{ gap: '25px' }}>
             {forceUpdate &&
               forwardPortChecked.map((item, index) => (

@@ -34,10 +34,7 @@ export default function PortSecurity() {
           </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
-        <MultiPage.Note>
-          The maximum number of MAC addresses learned from individual port can
-          be set to 64.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note11')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

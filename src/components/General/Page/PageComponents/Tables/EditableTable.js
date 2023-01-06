@@ -185,4 +185,5 @@ EditableTable.defaultProps = {
   isPortSelect: true,
   isLeftPortSelect: true,
   isAllSelect: true,
+  saveTable: () => {},
 };

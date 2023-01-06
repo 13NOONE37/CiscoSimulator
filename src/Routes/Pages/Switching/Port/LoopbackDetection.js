@@ -72,7 +72,7 @@ export default function LoopbackDetection() {
                     ['detectionIntervalLoopback']: e.target.value,
                   }),
               }}
-              afterText="seconds(1-1000)"
+              afterText={t('seconds(1-1000)')}
             />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
@@ -180,7 +180,7 @@ export default function LoopbackDetection() {
                     ['webRefreshIntervalLoopback']: e.target.value,
                   }),
               }}
-              afterText="sec(3-100)"
+              afterText={t('sec(3-100)')}
             />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
@@ -206,11 +206,7 @@ export default function LoopbackDetection() {
           <MultiPage.Button isSpecial>{t('ManualRecover')}</MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
-        <MultiPage.Note>
-          Recovery mode is just useful to process not in Alrt process mode.
-          <br />
-          Loopback Detection must coordinate with storm control.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note12')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );
