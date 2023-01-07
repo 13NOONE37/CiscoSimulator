@@ -39,10 +39,9 @@ export default function LocalLog() {
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>
-          1.Local log includes 2 channels: log buffer and log file.
+          {t('Note18_1')}
           <br />
-          2. There are 8 severity levels marked with values 0-7. The samller
-          value has the higher priority.
+          {t('Note18_2')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>

@@ -284,7 +284,24 @@ const defaultConfig = {
     fields: [
       { type: 'disable' },
       { type: 'disable' },
-      { type: 'select', options: ['All Module', 'LAG', 'Link', 'User'] },
+      {
+        type: 'select',
+        options: [
+          'All Module',
+          '802.1x',
+          'IGMP',
+          'NTP',
+          'MIRROR',
+          'LOG',
+          'PORT',
+          'QoS',
+          'RSTP',
+          'SNMP',
+          'LAG',
+          'VCT',
+          'VLAN',
+        ],
+      },
 
       {
         type: 'select',

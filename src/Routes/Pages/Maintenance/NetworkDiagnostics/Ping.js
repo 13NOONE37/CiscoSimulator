@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import { useTranslation } from 'react-i18next';
 
 export default function Ping() {
   const { t } = useTranslation();
-
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      ip: [null, null, null, null],
+    },
+  );
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>
@@ -12,7 +17,10 @@ export default function Ping() {
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
             <span>{t('DestinationIP')}:</span>
-            <MultiPage.MaskedInput />
+            <MultiPage.MaskedInput
+              value={localConfig.ip}
+              changeCallback={(data) => setLocalConfig({ ['ip']: data })}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 

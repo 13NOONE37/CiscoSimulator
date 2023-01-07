@@ -23,9 +23,7 @@ export default function BackupLog() {
       <MultiPage.Section width={700}>
         <MultiPage.Title>{t('BackupLog')}</MultiPage.Title>
         <MultiPage.ElementsLine>
-          <MultiPage.Text>
-            Click the button here to backup the log file:
-          </MultiPage.Text>
+          <MultiPage.Text>{t('BackupLogText')}:</MultiPage.Text>
         </MultiPage.ElementsLine>
 
         <MultiPage.ButtonsRow>
@@ -43,10 +41,7 @@ export default function BackupLog() {
           ></a>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
-        <MultiPage.Note>
-          It will take a long time to backup the config file. Please wait
-          without any operation.
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note20')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

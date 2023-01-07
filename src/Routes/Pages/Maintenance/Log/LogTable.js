@@ -30,11 +30,9 @@ export default function LogTable() {
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>
-          1. There are 8 severity levels marked with values 0-7. The samller
-          value has the higher priority.
+          {t('Note17_1')}
           <br />
-          2. This page displays logs in the log buffer and at most 512 logs are
-          displayed.
+          {t('Note17_2')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>

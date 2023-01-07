@@ -38,10 +38,9 @@ export default function RemoteLog() {
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>
-          1.Up to 4 log hosts are supported.
+          {t('Note19_1')}
           <br />
-          2.There are 8 severnity levels marked with values 07. The smaller
-          value has the higher priority.
+          {t('Note19_2')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
