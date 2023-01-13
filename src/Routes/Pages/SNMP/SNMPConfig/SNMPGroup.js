@@ -1,23 +1,108 @@
-import React from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
 
 export default function SNMPGroup() {
   const { t } = useTranslation();
-  //!todo  workflow
+
+  const { config } = useContext(AppContext);
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      groupName: '',
+      securityModel: 'v1',
+      securityLevel: 'noAuthNoPriv',
+      readView: 'viewDefault',
+      writeView: 'viewDefault',
+      notifyView: 'viewDefault',
+      isEditing: false,
+    },
+  );
+
+  const [tempNotify, settempNotify] = useState(config.SNMPGroupTable);
+  const [forceUpdate, setforceUpdate] = useState(1);
+
+  const handleClear = () => {
+    setLocalConfig({ ['groupName']: '' });
+    setLocalConfig({ ['securityModel']: 'v1' });
+    setLocalConfig({ ['securityLevel']: 'noAuthNoPriv' });
+    setLocalConfig({ ['readView']: 'viewDefault' });
+    setLocalConfig({ ['writeView']: 'viewDefault' });
+    setLocalConfig({ ['notifyView']: 'viewDefault' });
+    setLocalConfig({ ['isEditing']: false });
+  };
+  const handleEdit = (
+    {
+      groupName,
+      securityModel,
+      securityLevel,
+      readView,
+      writeView,
+      notifyView,
+    },
+    index,
+  ) => {
+    setLocalConfig({ ['groupName']: groupName });
+    setLocalConfig({ ['securityModel']: securityModel });
+    setLocalConfig({ ['securityLevel']: securityLevel });
+    setLocalConfig({ ['readView']: readView });
+    setLocalConfig({ ['writeView']: writeView });
+    setLocalConfig({ ['notifyView']: notifyView });
+    setLocalConfig({ ['isEditing']: index + 1 });
+  };
+  const handleSubmit = () => {
+    if (localConfig.groupName.length > 0) {
+      let temp = tempNotify;
+      temp.push({
+        groupName: localConfig.groupName,
+        securityModel: localConfig.securityModel,
+        securityLevel: localConfig.securityLevel,
+        readView: localConfig.readView,
+        writeView: localConfig.writeView,
+        notifyView: localConfig.notifyView,
+      });
+      settempNotify(temp);
+      handleClear();
+    } else {
+      alert(t('There are empty fields'));
+    }
+  };
+  const handleModify = () => {
+    if (localConfig.groupName?.length > 0) {
+      let temp = tempNotify;
+      temp[localConfig.isEditing - 1] = {
+        groupName: localConfig.groupName,
+        securityModel: localConfig.securityModel,
+        securityLevel: localConfig.securityLevel,
+        readView: localConfig.readView,
+        writeView: localConfig.writeView,
+        notifyView: localConfig.notifyView,
+      };
+
+      settempNotify(temp);
+      handleClear();
+    } else {
+      alert(t('There are empty fields'));
+    }
+  };
+  const viewOptions = config.SNMPViewTable.map((i) => i.viewName);
 
   return (
     <MultiPage.Wizard>
-      <MultiPage.Section width={750}>
+      <MultiPage.Section width={850}>
         <MultiPage.Title>{t('GroupConfig')}</MultiPage.Title>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
-            <span>{t('Group Name')}:</span>
+            <span>{t('GroupName')}:</span>
             <MultiPage.SubElementsLine FirstColumnWidth={400}>
               <MultiPage.Input
                 inputProps={{
                   type: 'text',
-                  max: 16,
+                  maxLength: 16,
+                  value: localConfig.groupName,
+                  onChange: (e) =>
+                    setLocalConfig({ ['groupName']: e.target.value }),
                 }}
                 afterText={t('(16 characters maximum)')}
               />
@@ -26,78 +111,127 @@ export default function SNMPGroup() {
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
-            <span>{t('Security Model')}:</span>
+            <span>{t('SecurityModel')}:</span>
             <MultiPage.SubElementsLine>
-              <MultiPage.Select options={['v1', 'v2']} />
+              <MultiPage.Select
+                selectProps={{
+                  value: localConfig.securityModel,
+                  onChange: (e) =>
+                    setLocalConfig({ ['securityModel']: e.target.value }),
+                }}
+                options={['v1', 'v2c', 'v3']}
+              />
             </MultiPage.SubElementsLine>
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine
           actionButton={() => (
-            <MultiPage.Button>{t('Create')}</MultiPage.Button>
+            <MultiPage.Button
+              action={localConfig.isEditing ? handleModify : handleSubmit}
+            >
+              {localConfig.isEditing ? t('Modify') : t('Create')}
+            </MultiPage.Button>
           )}
         >
           <MultiPage.SubElementsLine>
-            <span>{t('Security Level')}:</span>
+            <span>{t('SecurityLevel')}:</span>
             <MultiPage.SubElementsLine>
-              <MultiPage.Select options={['noAuthNoPriv']} />
+              <MultiPage.Select
+                selectProps={{
+                  value: localConfig.securityLevel,
+                  onChange: (e) =>
+                    setLocalConfig({ ['securityLevel']: e.target.value }),
+
+                  disabled: localConfig.securityModel === 'v1',
+                }}
+                options={['noAuthNoPriv', 'authNoPriv', 'AuthPriv']}
+              />
             </MultiPage.SubElementsLine>
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine
-          actionButton={() => <MultiPage.Button>{t('Clear')}</MultiPage.Button>}
+          actionButton={() => (
+            <MultiPage.Button action={handleClear}>
+              {t('Clear')}
+            </MultiPage.Button>
+          )}
         >
           <MultiPage.SubElementsLine>
-            <span>{t('Read View')}:</span>
+            <span>{t('ReadView')}:</span>
             <MultiPage.SubElementsLine>
-              <MultiPage.Select options={['viewDefault']} />
+              <MultiPage.Select
+                selectProps={{
+                  value: localConfig.readView,
+                  onChange: (e) =>
+                    setLocalConfig({ ['readView']: e.target.value }),
+                }}
+                options={viewOptions}
+              />
             </MultiPage.SubElementsLine>
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
-            <span>{t('Write View')}:</span>
+            <span>{t('WriteView')}:</span>
             <MultiPage.SubElementsLine>
-              <MultiPage.Select options={['None']} />
+              <MultiPage.Select
+                selectProps={{
+                  value: localConfig.writeView,
+                  onChange: (e) =>
+                    setLocalConfig({ ['writeView']: e.target.value }),
+                }}
+                options={viewOptions}
+              />
             </MultiPage.SubElementsLine>
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
-            <span>{t('Notify View')}:</span>
+            <span>{t('NotifyView')}:</span>
             <MultiPage.SubElementsLine>
-              <MultiPage.Select options={['None']} />
+              <MultiPage.Select
+                selectProps={{
+                  value: localConfig.notifyView,
+                  onChange: (e) =>
+                    setLocalConfig({ ['notifyView']: e.target.value }),
+                }}
+                options={viewOptions}
+              />
             </MultiPage.SubElementsLine>
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
-        <MultiPage.EditableTable
+        <MultiPage.DefaultTable
           title={t('GroupTable')}
-          isPortSelect={false}
-          data={{
-            names: [
-              'Select',
-              'Group Name',
-              'Security Model',
-              'Security Level',
-              'Read View',
-              'Write View',
-              'Notify View',
-              'Operation',
-            ],
-            fields: [],
-            data: [],
-          }}
+          navItems={[
+            'Select',
+            'GroupName',
+            'SecurityModel',
+            'SecurityLevel',
+            'ReadView',
+            'WriteView',
+            'NotifyView',
+            'Operation',
+          ]}
+          data={tempNotify.map((user, index) => [
+            <input type="checkbox" />,
+            user.groupName,
+            user.securityModel,
+            user.securityLevel,
+            user.readView,
+            user.writeView,
+            user.notifyView,
+            <MultiPage.Button isBlank action={() => handleEdit(user, index)}>
+              {t('Edit')}
+            </MultiPage.Button>,
+          ])}
         />
         <MultiPage.ButtonsRow>
           <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
-        <MultiPage.Note>
-          A group should contain a read view, and the default read view is
-          viewDefault
-        </MultiPage.Note>
+        <MultiPage.Note>{t('Note23')}</MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
   );

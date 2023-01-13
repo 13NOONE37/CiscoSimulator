@@ -1,248 +1,40 @@
-import React from 'react';
+import React, { useContext, useReducer } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+
 export default function AlarmConfig() {
   const { t } = useTranslation();
-  //!todo  workflow
+  const { config } = useContext(AppContext);
 
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      alarmConfigTable: MultiPage.deepCopy(config.alarmConfigTable),
+    },
+  );
   return (
     <MultiPage.Wizard>
       <MultiPage.Section width={1600}>
         <MultiPage.EditableTable
           isPortSelect={false}
           title={t('AlarmTable')}
-          data={{
-            names: [
-              'Index',
-              'Variable',
-              'Port',
-              'Sample Type',
-              'Rising Threshold',
-              'Rising Event',
-              'Falling Threshold',
-              'Falling Event',
-              'Alarm Type',
-              'Interval(sec)',
-              'Owner',
-              'Status',
-            ],
-            fields: [
-              { type: 'disable' },
-              {
-                type: 'select',
-                options: ['DropEvents'],
-              },
-              {
-                type: 'select',
-                options: [
-                  'Port 1',
-                  'Port 2',
-                  'Port 3',
-                  'Port 4',
-                  'Port 5',
-                  'Port 6',
-                  'Port 7',
-                  'Port 8',
-                ],
-              },
-              {
-                type: 'select',
-                options: ['Absolute'],
-              },
-              { type: 'input', options: { type: 'number' } },
-              {
-                type: 'select',
-                options: ['1'],
-              },
-              { type: 'input', options: { type: 'number' } },
-              {
-                type: 'select',
-                options: ['1'],
-              },
-              {
-                type: 'select',
-                options: ['All'],
-              },
-              { type: 'input', options: { type: 'number' } },
-
-              { type: 'input', options: { type: 'text' } },
-
-              { type: 'select', options: ['Enable', 'Disable'] },
-            ],
-            data: [
-              [
-                '1',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '2',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '3',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '4',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '5',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '6',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '7',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '8',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '9',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '10',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '11',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-              [
-                '12',
-                'DropEvents',
-                'Port 1',
-                'Absolute',
-                '100',
-                '1',
-                '100',
-                '1',
-                'All',
-                '1800',
-                'monitor',
-                'Disable',
-              ],
-            ],
-          }}
+          data={localConfig.alarmConfigTable}
+          saveTable={(data) => setLocalConfig({ ['alarmConfigTable']: data })}
         />
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('Apply')}</MultiPage.Button>
+          <MultiPage.Button
+            isSpecial
+            action={() =>
+              MultiPage.handleApplyToConfig(
+                config,
+                localConfig,
+                'alarmConfigTable',
+              )
+            }
+          >
+            {t('Apply')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note />

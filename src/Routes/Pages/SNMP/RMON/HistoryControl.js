@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useContext, useReducer } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
 
 export default function HistoryControl() {
   const { t } = useTranslation();
+  const { config } = useContext(AppContext);
+
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      historyControlTable: MultiPage.deepCopy(config.historyControlTable),
+    },
+  );
+
   //!todo  workflow
   return (
     <MultiPage.Wizard>
@@ -11,46 +21,24 @@ export default function HistoryControl() {
         <MultiPage.EditableTable
           isPortSelect={false}
           title={t('HistoryControlTable')}
-          data={{
-            names: ['Index', 'Port', 'Interval(sec)', 'Owner', 'Status'],
-            fields: [
-              { type: 'disable' },
-              {
-                type: 'select',
-                options: [
-                  'Port 1',
-                  'Port 2',
-                  'Port 3',
-                  'Port 4',
-                  'Port 5',
-                  'Port 6',
-                  'Port 7',
-                  'Port 8',
-                ],
-              },
-              { type: 'input', options: { type: 'number', min: 0, max: 1800 } },
-              { type: 'input', options: { type: 'text' } },
-
-              { type: 'select', options: ['Enable', 'Disable'] },
-            ],
-            data: [
-              ['1', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['2', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['3', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['4', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['5', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['6', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['7', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['8', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['9', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['10', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['11', 'Port 1', '1800', 'monitor', 'Disable'],
-              ['12', 'Port 1', '1800', 'monitor', 'Disable'],
-            ],
-          }}
+          data={localConfig.historyControlTable}
+          saveTable={(data) =>
+            setLocalConfig({ ['historyControlTable']: data })
+          }
         />
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('Apply')}</MultiPage.Button>
+          <MultiPage.Button
+            isSpecial
+            action={() =>
+              MultiPage.handleApplyToConfig(
+                config,
+                localConfig,
+                'historyControlTable',
+              )
+            }
+          >
+            {t('Apply')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note />

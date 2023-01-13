@@ -187,7 +187,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideSNMP'),
+      name: t('SideSNMP✅'),
       action: () => history.push('/snmpconfig/globalconfig'),
       style: null,
       isSubitem: true,
