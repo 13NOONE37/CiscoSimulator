@@ -16,20 +16,23 @@ export default function BindingTable() {
         >
           <MultiPage.SubElementsLine>
             <span>{t('Source')}:</span>
-            <MultiPage.Select options={['All']} />
+            <MultiPage.Select
+              options={['All', 'Manual', 'Scanning', 'Snooping']}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
         <MultiPage.EditableTable
           title={t('BindingTable')}
+          gridTemp={'65px 100px repeat(4,95px) 1fr 65px'}
           data={{
             names: [
-              'Host Name',
-              'IP Address',
+              'Hostname',
+              'IPAddress',
               'MAC Address',
               'VLAN ID',
               'Port',
-              'Protect Type',
+              'ProtectType',
               'Source',
               'Collision',
             ],
@@ -39,7 +42,10 @@ export default function BindingTable() {
               { type: 'input', options: { type: 'text' } },
               { type: 'input', options: { type: 'number' } },
               { type: 'input', options: { type: 'number' } },
-              { type: 'select', options: [] },
+              {
+                type: 'select',
+                options: ['Disable', 'ARPDetection', 'IPSourceGuard', 'All'],
+              },
 
               { type: 'disabled' },
               { type: 'disabled' },
@@ -54,11 +60,9 @@ export default function BindingTable() {
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>
-          1. Among the entries with critical collision level, the one having the
-          highest source priority will take effect.
+          {t('Note28_1')}
           <br />
-          2. Among the entries with the same Source priority, only the last
-          added or edited one will take effect.
+          {t('Note28_2')}
           <br />
         </MultiPage.Note>
       </MultiPage.Section>

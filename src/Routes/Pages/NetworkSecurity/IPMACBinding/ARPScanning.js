@@ -1,19 +1,32 @@
-import React from 'react';
+import React, { useContext, useReducer } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
 
 export default function ARPScanning() {
   const { t } = useTranslation();
 
+  const { config } = useContext(AppContext);
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      startIP: [null, null, null, null],
+      endIP: [null, null, null, null],
+      VLANID: undefined,
+    },
+  );
   return (
     <MultiPage.Wizard>
-      <MultiPage.Section width={700}>
+      <MultiPage.Section width={750}>
         <MultiPage.Title>{t('ScanningOption')}</MultiPage.Title>
 
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
             <span>{t('StartIPAddress')}:</span>
-            <MultiPage.MaskedInput />
+            <MultiPage.MaskedInput
+              value={localConfig.startIP}
+              changeCallback={(data) => setLocalConfig({ ['startIP']: data })}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine
@@ -21,7 +34,10 @@ export default function ARPScanning() {
         >
           <MultiPage.SubElementsLine>
             <span>{t('EndIPAddress')}:</span>
-            <MultiPage.MaskedInput />
+            <MultiPage.MaskedInput
+              value={localConfig.endIP}
+              changeCallback={(data) => setLocalConfig({ ['endIP']: data })}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
@@ -38,14 +54,15 @@ export default function ARPScanning() {
         <MultiPage.EditableTable
           title={t('ScanningResult')}
           isPortSelect={false}
+          gridTemp={'65px 100px repeat(4,75px) 1fr 65px'}
           data={{
             names: [
-              'Host Name',
-              'IP Address',
-              'MAC Address',
+              'Hostname',
+              'IPAddress',
+              'MACAddress',
               'VLAN ID',
               'Port',
-              'Protect Type',
+              'ProtectType',
               'Collision',
             ],
             fields: [
@@ -54,7 +71,10 @@ export default function ARPScanning() {
               { type: 'disabled' },
               { type: 'disabled' },
               { type: 'disabled' },
-              { type: 'select', options: [] },
+              {
+                type: 'select',
+                options: ['Disable', 'ARPDetection', 'IPSourceGuard', 'All'],
+              },
               { type: 'disabled' },
             ],
             data: [],
@@ -68,15 +88,13 @@ export default function ARPScanning() {
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>
-          1. The VLAN ID options is intended for scanning the network topology
-          with the VLAN spanning across multiple switches.
+          {t('Note30_1')}
+
           <br />
-          2. VLAN ID affects the VLAN Tag in the ARP request packets used in the
-          ARP request packets in the ARP Scanning, and is independent of the
-          VLAN configuration.
+          {t('Note30_2')}
+
           <br />
-          3. If VLAN ID is blank, the switch will broadcast untaged ARP request
-          packets in the ARP Scanning.
+          {t('Note30_3')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>

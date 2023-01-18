@@ -163,7 +163,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('NetworkSecurity'),
+      name: t('NetworkSecurity✅'),
       action: () => history.push('/ipmacbinding/bindingtable'),
       style: null,
       isSubitem: true,

@@ -1,10 +1,20 @@
 import React, { useContext, useReducer } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
 
 export default function ARPStatistics() {
   const { t } = useTranslation();
 
+  const { config } = useContext(AppContext);
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      netSecARPStatisticsRefresh: config.netSecARPStatisticsRefresh,
+      netSecARPStatisticsRefreshInterval:
+        config.netSecARPStatisticsRefreshInterval,
+    },
+  );
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>
@@ -16,12 +26,26 @@ export default function ARPStatistics() {
               <MultiPage.Input
                 inputProps={{
                   type: 'radio',
+                  value: 'Enable',
+                  name: 'ARPDetect',
+                  onChange: (e) =>
+                    setLocalConfig({
+                      ['netSecARPStatisticsRefresh']: e.target.value,
+                    }),
+                  checked: localConfig.netSecARPStatisticsRefresh === 'Enable',
                 }}
                 afterText={t('Enable')}
               />
               <MultiPage.Input
                 inputProps={{
                   type: 'radio',
+                  value: 'Disable',
+                  name: 'ARPDetect',
+                  onChange: (e) =>
+                    setLocalConfig({
+                      ['netSecARPStatisticsRefresh']: e.target.value,
+                    }),
+                  checked: localConfig.netSecARPStatisticsRefresh === 'Disable',
                 }}
                 afterText={t('Disable')}
               />
@@ -29,7 +53,24 @@ export default function ARPStatistics() {
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine
-          actionButton={() => <MultiPage.Button>{t('Apply')}</MultiPage.Button>}
+          actionButton={() => (
+            <MultiPage.Button
+              action={() => {
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'netSecARPStatisticsRefresh',
+                );
+                MultiPage.handleApplyToConfig(
+                  config,
+                  localConfig,
+                  'netSecARPStatisticsRefreshInterval',
+                );
+              }}
+            >
+              {t('Apply')}
+            </MultiPage.Button>
+          )}
         >
           <MultiPage.SubElementsLine>
             <span>{t('RefreshInterval')}:</span>
@@ -39,6 +80,11 @@ export default function ARPStatistics() {
                   type: 'number',
                   min: 3,
                   max: 300,
+                  value: localConfig.netSecARPStatisticsRefreshInterval,
+                  onChange: (e) =>
+                    setLocalConfig({
+                      ['netSecARPStatisticsRefreshInterval']: e.target.value,
+                    }),
                 }}
                 afterText={t('sec(3-300)')}
               />
@@ -50,11 +96,11 @@ export default function ARPStatistics() {
           title={t('IllegalARPPacket')}
           navItems={[
             'Port',
-            'Trusted Port',
-            'Illegal ARP Packet',
+            'TrustedPort',
+            'IllegalARPPacket',
             'Port',
-            'Trusted Port',
-            'Illegal ARP Packet',
+            'TrustedPort',
+            'IllegalARPPacket',
           ]}
           data={[
             [1, 'No', undefined, '2', 'No', undefined],

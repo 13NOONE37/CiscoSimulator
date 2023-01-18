@@ -17,7 +17,6 @@ export default function SNMPCommunity() {
   );
 
   const [tempNotify, settempNotify] = useState(config.SNMPCommunityTable);
-  const [forceUpdate, setforceUpdate] = useState(1);
 
   const handleClear = () => {
     setLocalConfig({ ['communityName']: '' });
@@ -64,100 +63,98 @@ export default function SNMPCommunity() {
   };
 
   return (
-    forceUpdate && (
-      <MultiPage.Wizard>
-        <MultiPage.Section>
-          <MultiPage.Title>{t('CommunityConfig')}</MultiPage.Title>
-          <MultiPage.ElementsLine>
-            <MultiPage.SubElementsLine>
-              <span>{t('CommunityName')}:</span>
-              <MultiPage.SubElementsLine FirstColumnWidth={400}>
-                <MultiPage.Input
-                  inputProps={{
-                    type: 'text',
-                    maxLength: 16,
-                    value: localConfig.communityName,
-                    onChange: (e) =>
-                      setLocalConfig({ ['communityName']: e.target.value }),
-                  }}
-                  afterText={t('(16 characters maximum)')}
-                />
-              </MultiPage.SubElementsLine>
+    <MultiPage.Wizard>
+      <MultiPage.Section>
+        <MultiPage.Title>{t('CommunityConfig')}</MultiPage.Title>
+        <MultiPage.ElementsLine>
+          <MultiPage.SubElementsLine>
+            <span>{t('CommunityName')}:</span>
+            <MultiPage.SubElementsLine FirstColumnWidth={400}>
+              <MultiPage.Input
+                inputProps={{
+                  type: 'text',
+                  maxLength: 16,
+                  value: localConfig.communityName,
+                  onChange: (e) =>
+                    setLocalConfig({ ['communityName']: e.target.value }),
+                }}
+                afterText={t('(16 characters maximum)')}
+              />
             </MultiPage.SubElementsLine>
-          </MultiPage.ElementsLine>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
 
-          <MultiPage.ElementsLine
-            actionButton={() => (
-              <MultiPage.Button
-                action={localConfig.isEditing ? handleModify : handleSubmit}
-              >
-                {localConfig.isEditing ? t('Modify') : t('Create')}
-              </MultiPage.Button>
-            )}
-          >
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button
+              action={localConfig.isEditing ? handleModify : handleSubmit}
+            >
+              {localConfig.isEditing ? t('Modify') : t('Create')}
+            </MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine>
+            <span>{t('Access')}:</span>
             <MultiPage.SubElementsLine>
-              <span>{t('Access')}:</span>
-              <MultiPage.SubElementsLine>
-                <MultiPage.Select
-                  selectProps={{
-                    value: localConfig.access,
-                    onChange: (e) =>
-                      setLocalConfig({ ['access']: e.target.value }),
-                  }}
-                  options={['read-only', 'read-write']}
-                />
-              </MultiPage.SubElementsLine>
+              <MultiPage.Select
+                selectProps={{
+                  value: localConfig.access,
+                  onChange: (e) =>
+                    setLocalConfig({ ['access']: e.target.value }),
+                }}
+                options={['read-only', 'read-write']}
+              />
             </MultiPage.SubElementsLine>
-          </MultiPage.ElementsLine>
-          <MultiPage.ElementsLine
-            actionButton={() => (
-              <MultiPage.Button action={() => handleClear()}>
-                {t('Clear')}
-              </MultiPage.Button>
-            )}
-          >
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
+        <MultiPage.ElementsLine
+          actionButton={() => (
+            <MultiPage.Button action={() => handleClear()}>
+              {t('Clear')}
+            </MultiPage.Button>
+          )}
+        >
+          <MultiPage.SubElementsLine>
+            <span>{t('MIBView')}:</span>
             <MultiPage.SubElementsLine>
-              <span>{t('MIBView')}:</span>
-              <MultiPage.SubElementsLine>
-                <MultiPage.Select
-                  selectProps={{
-                    value: localConfig.MIBView,
-                    onChange: (e) =>
-                      setLocalConfig({ ['MIBView']: e.target.value }),
-                  }}
-                  options={config.SNMPViewTable.map((i) => i.viewName)}
-                />
-              </MultiPage.SubElementsLine>
+              <MultiPage.Select
+                selectProps={{
+                  value: localConfig.MIBView,
+                  onChange: (e) =>
+                    setLocalConfig({ ['MIBView']: e.target.value }),
+                }}
+                options={config.SNMPViewTable.map((i) => i.viewName)}
+              />
             </MultiPage.SubElementsLine>
-          </MultiPage.ElementsLine>
+          </MultiPage.SubElementsLine>
+        </MultiPage.ElementsLine>
 
-          <MultiPage.DefaultTable
-            title={t('CommunityTable')}
-            navItems={[
-              'Select',
-              'CommunityName',
-              'Access',
-              'MIBView',
-              'Operation',
-            ]}
-            data={tempNotify.map((user, index) => [
-              <input type="checkbox" />,
-              user.communityName,
-              user.access,
-              user.MIBView,
-              <MultiPage.Button isBlank action={() => handleEdit(user, index)}>
-                {t('Edit')}
-              </MultiPage.Button>,
-            ])}
-          />
-          <MultiPage.ButtonsRow>
-            <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-            <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
-            <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
-          </MultiPage.ButtonsRow>
-          <MultiPage.Note>{t('Note21')}</MultiPage.Note>
-        </MultiPage.Section>
-      </MultiPage.Wizard>
-    )
+        <MultiPage.DefaultTable
+          title={t('CommunityTable')}
+          navItems={[
+            'Select',
+            'CommunityName',
+            'Access',
+            'MIBView',
+            'Operation',
+          ]}
+          data={tempNotify.map((user, index) => [
+            <input type="checkbox" />,
+            user.communityName,
+            user.access,
+            user.MIBView,
+            <MultiPage.Button isBlank action={() => handleEdit(user, index)}>
+              {t('Edit')}
+            </MultiPage.Button>,
+          ])}
+        />
+        <MultiPage.ButtonsRow>
+          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
+        </MultiPage.ButtonsRow>
+        <MultiPage.Note>{t('Note21')}</MultiPage.Note>
+      </MultiPage.Section>
+    </MultiPage.Wizard>
   );
 }

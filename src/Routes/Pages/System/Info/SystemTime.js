@@ -13,7 +13,7 @@ export default function SystemTime() {
       currentTime: config.currentTime,
       timeSource: config.timeSource,
       firstNTP: config.firstNTP,
-      secoundNTP: config.secoundNTP,
+      SecondNTP: config.SecondNTP,
       updateRate: config.updateRate,
       timeZone: config.timeZone,
     },
@@ -123,7 +123,7 @@ export default function SystemTime() {
                   MultiPage.handleApplyToConfig(
                     config,
                     localConfig,
-                    'secoundNTP',
+                    'SecondNTP',
                   );
                   MultiPage.handleApplyToConfig(
                     config,
@@ -320,13 +320,13 @@ export default function SystemTime() {
             )}
           >
             <MultiPage.SubElementsLine>
-              <span>{t('Secoundary Server')}:</span>
+              <span>{t('Secondary Server')}:</span>
               <MultiPage.MaskedInput
                 isDisabled={localConfig.timeSource !== 'NTP Server'}
                 changeCallback={(data) => {
-                  setLocalConfig({ ['secoundNTP']: data });
+                  setLocalConfig({ ['SecondNTP']: data });
                 }}
-                value={localConfig.secoundNTP}
+                value={localConfig.SecondNTP}
               />
             </MultiPage.SubElementsLine>
           </MultiPage.ElementsLine>

@@ -1,9 +1,65 @@
-import React from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
 
 export default function ManualBinding() {
   const { t } = useTranslation();
+
+  const { config } = useContext(AppContext);
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      hostname: '',
+      ipAddress: [null, null, null, null],
+      mac: '',
+      VLANID: undefined,
+      port: 1,
+      protectType: 'Disable',
+    },
+  );
+  const [tempNotify, settempNotify] = useState(config.manualBinding);
+  const handleClear = () => {
+    setLocalConfig({ ['hostname']: '' });
+    setLocalConfig({ ['ipAddress']: [null, null, null, null] });
+    setLocalConfig({ ['mac']: '' });
+    setLocalConfig({ ['VLANID']: undefined });
+    setLocalConfig({ ['port']: 1 });
+    setLocalConfig({ ['protectType']: 'Disable' });
+  };
+
+  const regExIP =
+    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  const handleSubmit = () => {
+    if (
+      localConfig.hostname.length == 0 ||
+      localConfig.mac.length == 0 ||
+      isNaN(localConfig.VLANID)
+    ) {
+      alert(t('There are empty fields'));
+      return;
+    }
+    if (!regExIP.test(localConfig.ipAddress.join('.'))) {
+      alert(t('Incorrect IP address'));
+      return;
+    }
+    if (!MultiPage.isValidMAC(localConfig.mac)) {
+      alert(t('Incorrect MAC address'));
+      return;
+    }
+    let temp = tempNotify;
+    temp.push({
+      hostname: localConfig.hostname,
+      ipAddress: localConfig.ipAddress,
+      mac: localConfig.mac,
+      VLANID: localConfig.VLANID,
+      port: localConfig.port,
+      protectType: localConfig.protectType,
+      collision: undefined,
+    });
+    settempNotify(temp);
+    handleClear();
+  };
 
   return (
     <MultiPage.Wizard>
@@ -11,9 +67,15 @@ export default function ManualBinding() {
         <MultiPage.Title>{t('ManualBindingOption')}</MultiPage.Title>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
-            <span>{t('HostName')}:</span>
+            <span>{t('Hostname')}:</span>
             <MultiPage.Input
-              inputProps={{ type: 'text', maxLength: 20 }}
+              inputProps={{
+                type: 'text',
+                maxLength: 20,
+                value: localConfig.hostname,
+                onChange: (e) =>
+                  setLocalConfig({ ['hostname']: e.target.value }),
+              }}
               afterText={'(20 characters maximum)'}
             />
           </MultiPage.SubElementsLine>
@@ -21,16 +83,28 @@ export default function ManualBinding() {
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
             <span>{t('IPAddress')}:</span>
-            <MultiPage.MaskedInput afterText={t('(Format: 192.168.0.1)')} />
+            <MultiPage.MaskedInput
+              value={localConfig.ipAddress}
+              changeCallback={(data) => setLocalConfig({ ['ipAddress']: data })}
+              afterText={t('(Format: 192.168.0.1)')}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine
-          actionButton={() => <MultiPage.Button>{t('Bind')}</MultiPage.Button>}
+          actionButton={() => (
+            <MultiPage.Button action={handleSubmit}>
+              {t('Bind')}
+            </MultiPage.Button>
+          )}
         >
           <MultiPage.SubElementsLine>
             <span>{t('MACAddress')}:</span>
             <MultiPage.Input
-              inputProps={{ type: 'text' }}
+              inputProps={{
+                type: 'text',
+                value: localConfig.mac,
+                onChange: (e) => setLocalConfig({ ['mac']: e.target.value }),
+              }}
               afterText={'(Format: 00-00-00-00-00-01)'}
             />
           </MultiPage.SubElementsLine>
@@ -39,7 +113,13 @@ export default function ManualBinding() {
           <MultiPage.SubElementsLine>
             <span>VLAN ID:</span>
             <MultiPage.Input
-              inputProps={{ type: 'number', min: 1, max: 4094 }}
+              inputProps={{
+                type: 'number',
+                min: 1,
+                max: 4094,
+                value: localConfig.VLANID,
+                onChange: (e) => setLocalConfig({ ['VLANID']: e.target.value }),
+              }}
               afterText={'(1-4094)'}
             />
           </MultiPage.SubElementsLine>
@@ -47,32 +127,53 @@ export default function ManualBinding() {
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
             <span>{t('Port')}:</span>
-            <MultiPage.Select options={[1, 2, 3, 4, 5, 6, 7, 8]} />
+            <MultiPage.Select
+              selectProps={{
+                value: localConfig.port,
+                value: localConfig.port,
+                onChange: (e) => setLocalConfig({ ['port']: e.target.value }),
+              }}
+              options={[1, 2, 3, 4, 5, 6, 7, 8]}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine>
             <span>{t('ProtectType')}:</span>
-            <MultiPage.Select options={['Disable', 'Enable']} />
+            <MultiPage.Select
+              selectProps={{
+                value: localConfig.protectType,
+                value: localConfig.protectType,
+                onChange: (e) =>
+                  setLocalConfig({ ['protectType']: e.target.value }),
+              }}
+              options={['Disable', 'ARP Detection', 'IP Source Guard', 'All']}
+            />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
-        <MultiPage.EditableTable
+        <MultiPage.DefaultTable
           title={t('ManualBindingTable')}
-          isPortSelect={false}
-          data={{
-            names: [
-              'Host Name',
-              'IP Address',
-              'MAC Address',
-              'VLAN ID',
-              'Port',
-              'Protect Type',
-              'Collision',
-            ],
-            fields: [],
-            data: [],
-          }}
+          navItems={[
+            'Select',
+            'Hostname',
+            'IPAddress',
+            'MAC Address',
+            'VLAN ID',
+            'Port',
+            'ProtectType',
+            'Collision',
+          ]}
+          data={tempNotify.map((item) => [
+            <input type="checkbox" />,
+            item.hostname,
+            item.ipAddress?.join('.'),
+            item.mac,
+            item.VLANID,
+            item.port,
+            item.protectType,
+            item.collision,
+          ])}
         />
 
         <MultiPage.ButtonsRow>
@@ -81,12 +182,9 @@ export default function ManualBinding() {
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>
-          1. Among the entries with critical collision level, the one having the
-          highest source priority will take effect.
+          {t('Note29_1')}
           <br />
-          2. Among the entries with the same Source priority, only the last
-          added or edited one will take effect.
-          <br />
+          {t('Note29_2')}
         </MultiPage.Note>
       </MultiPage.Section>
     </MultiPage.Wizard>
