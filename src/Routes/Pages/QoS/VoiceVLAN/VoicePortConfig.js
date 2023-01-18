@@ -1,45 +1,45 @@
-import React from "react";
-import * as MultiPage from "components/General/Page/MultiPage";
-import { useTranslation } from "react-i18next";
+import React, { useContext, useReducer, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import AppContext from 'store/AppContext';
+import * as MultiPage from 'components/General/Page/MultiPage';
+
 export default function VoicePortConfig() {
   const { t } = useTranslation();
-  //!todo  workflow
+  const { config } = useContext(AppContext);
+
+  const [localConfig, setLocalConfig] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      QoSVoiceGlobalPortConfig: MultiPage.deepCopy(
+        config.QoSVoiceGlobalPortConfig,
+      ),
+    },
+  );
+
   return (
     <MultiPage.Wizard>
       <MultiPage.Section width={750}>
         <MultiPage.EditableTable
-          title={t("PortConfig")}
-          data={{
-            names: [
-              "Port",
-              "Port Mode",
-              "Security Mode",
-              "Member State",
-              "LAG",
-            ],
-            fields: [
-              { type: "disable" },
-              { type: "select", options: ["Auto"] },
-              { type: "select", options: ["Enable", "Disable"] },
-              { type: "disable" },
-
-              { type: "disable" },
-            ],
-            data: [
-              ["1", "Auto", "Disable", "Inactive", "LAG1"],
-              ["2", "Auto", "Disable", "Inactive", "LAG1"],
-              ["3", "Auto", "Disable", "Inactive", undefined],
-              ["4", "Auto", "Disable", "Inactive", undefined],
-              ["5", "Auto", "Disable", "Inactive", undefined],
-              ["6", "Auto", "Disable", "Inactive", undefined],
-              ["7", "Auto", "Disable", "Inactive", undefined],
-              ["8", "Auto", "Disable", "Inactive", undefined],
-            ],
-          }}
+          title={t('PortConfig')}
+          data={localConfig.QoSVoiceGlobalPortConfig}
+          saveTable={(data) =>
+            setLocalConfig({ ['QoSVoiceGlobalPortConfig']: data })
+          }
         />
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t("Apply")}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t("Help")}</MultiPage.Button>
+          <MultiPage.Button
+            isSpecial
+            action={() =>
+              MultiPage.handleApplyToConfig(
+                config,
+                localConfig,
+                'QoSVoiceGlobalPortConfig',
+              )
+            }
+          >
+            {t('Apply')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note />
       </MultiPage.Section>

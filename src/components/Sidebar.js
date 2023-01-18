@@ -123,7 +123,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('QoS'),
+      name: t('QoS✅'),
       action: () => history.push('/diffserv/portpriority'),
       style: null,
       isSubitem: true,

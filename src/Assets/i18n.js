@@ -486,6 +486,36 @@ i18n.init({
         IPSourceGuard: 'IP source guard',
         ARPDetection: 'ARP detection',
 
+        Priority: 'Priority',
+        'min(1-43200, default 1440)': 'min(1-43200, default 1440)',
+        PortMode: 'Port mode',
+        SecurityMode: 'Security mode',
+        MemberState: 'Member state',
+        Auto: 'Automatyczny',
+        CreateOUI: 'Create OUI',
+        '(Default: FF-FF-FF-00-00-00)': '(Default: FF-FF-FF-00-00-00)',
+        RateLimit: 'Rate limit',
+        RateLimitConfig: 'Rate limit config',
+        'Ingress Rate(Kbps)': 'Ingress Rate(Kbps)',
+        'Egress Rate(Kbps)': 'Egress Rate(Kbps)',
+        StormControl: 'Storm control',
+        StormControlConfig: 'Storm control config',
+        ScheduleModeConfig: 'Schedule mode config',
+        ScheduleMode: 'Schedule mode',
+        '802.1P/CoSmapping': '802.1P/CoS mapping',
+        'Priority and CoS-mapping Config': 'Priority and CoS-mapping Config',
+        'Tag-id/CoS-id': 'Tag-id/CoS-id',
+        'Queue TC-id': 'Queue TC-id',
+        '802.1P Priority': '802.1P priority',
+        DSCPPriorityConfig: 'DSCP priority config',
+        DSCPPriority: 'DSCP priority ',
+        DSCPPriority: 'DSCP priority',
+        PriorityLevel: 'Priority level',
+
+        'Broadcast Rate(bps)': 'Broadcast rate(bps)',
+        'Multicast Rate(bps)': 'Multicast rate(bps)',
+        'UL-Frame Rate(bps)': 'UL-Frame rate(bps)',
+
         Note1:
           'The Device Name, Location and Contact should not be more than 32',
         Note2:
@@ -557,6 +587,20 @@ i18n.init({
         VLAN configuration.`,
         Note30_3: `3. If VLAN ID is blank, the switch will broadcast untaged ARP request
         packets in the ARP Scanning.`,
+
+        //translate
+        Note31_1: `1. For one port, you cannot enable the Storm Control and the Ingress
+        rate control at the same time.`,
+        Note31_2: `2. If you select "Manual" to set Ingress/Egress rate, the system will
+        automatically select integral multiple of 64 Kbps that closest to the
+        rate you entered as the real Ingress/Egress rate.`,
+        Note32: `For one port, you cannot enable the Storm Control and the Ingress rate
+        control at the same time.`,
+        Note33: `Among the Queue TC-id TC0, TC1..TC3, the bigger value, the higher
+        priority.`,
+        Note34: `Among the Queue TC-id TC0, TC1..TC3, the bigger value, the higher
+        priority.`,
+        Note35: `If the DSCP mapped to priority is selected,IP datagram will be mapped to different priority levels based on the mapping relation between the CoS and TC in 802.1P.`,
       },
     },
     pl: {
@@ -629,7 +673,7 @@ i18n.init({
         'Current System Date': 'Aktualna data systemowa',
         'Current Time Source': 'Bieżące źródło czasu',
         TimeConfig: 'Konfiguracja czasu',
-        Manual: 'Ręcznie',
+        Manual: 'Ręczny',
         Date: 'Data',
         Time: 'Czas',
         'Get Time from NTP Server': 'Pobierz czas z serwera NTP',
@@ -1043,6 +1087,37 @@ i18n.init({
         IPSourceGuard: 'Obrona źródła IP',
         ARPDetection: 'Wykrywanie ARP',
 
+        Priority: 'Priorytet',
+        'min(1-43200, default 1440)': 'min(1-43200, domyślnie 1440)',
+        PortMode: 'Tryb portu',
+        SecurityMode: 'Tryb bezpieczeństwa',
+        MemberState: 'Stan członkostwa',
+        Auto: 'Automatyczny',
+        CreateOUI: 'Utwórz OUI',
+        '(Default: FF-FF-FF-00-00-00)': '(Domyślnie: FF-FF-FF-00-00-00)',
+        RateLimit: 'Ograniczenie prędkości',
+        RateLimitConfig: 'Konfiguracja ograniczenia prędkości',
+        'Ingress Rate(Kbps)': 'Szybkośc przyjścia(Kbps)',
+        'Egress Rate(Kbps)': 'Szybkość wyjścia(Kbps)',
+        StormControl: 'Kontrola burzy',
+        StormControlConfig: 'Konfiguracja kontroli burzy',
+        ScheduleModeConfig: 'Konfiguracja trybu harmonogramu',
+        ScheduleMode: 'Tryb harmonogramu',
+        '802.1P/CoSmapping': 'Mapowanie 802.1P/CoS',
+        'Priority and CoS-mapping Config':
+          'Konfiguracja priorytetu i mapowania CoS',
+        'Tag-id/CoS-id': 'Tag-id/CoS-id',
+        'Queue TC-id': 'Kolejka TC-id',
+        '802.1P Priority': 'Priorytet 802.1P',
+        DSCPPriorityConfig: 'Konfiguracja priorytetu DSCP',
+        DSCPPriority: 'Priorytet DSCP ',
+        DSCPPriority: 'Priorytet DSCP',
+        PriorityLevel: 'Poziom priorytetu',
+
+        'Broadcast Rate(bps)': 'Szybkość rozgłaszania(bps)',
+        'Multicast Rate(bps)': 'Szybkość multicastu(bps)',
+        'UL-Frame Rate(bps)': 'Szybkość UL-Frame (bps)',
+
         Note1:
           'Nazwa urządzenia, Lokalizacja i Kontakt nie powinny mieć więcej niż 32 znaki.',
         Note2:
@@ -1114,6 +1189,12 @@ i18n.init({
         konfiguracji VLAN.`,
         Note30_3: `3. Jeśli VLAN ID jest pusty, przełącznik będzie rozgłaszał niezainicjowane pakiety ARP request
         pakiety ARP w ramach skanowania ARP.`,
+        Note31_1: `1. Na jednym porcie nie można jednocześnie włączyć kontroli przeciążenia burzą i kontroli prędkości wejściowej.`,
+        Note31_2: `2. Jeśli wybierzesz "Manualny" do ustawienia prędkości wejściowej/wyjściowej, system automatycznie wybierze najbliższą wielokrotność 64 Kbps, którą wprowadziłeś jako rzeczywistą prędkość wejściową/wyjściową.`,
+        Note32: `Na jednym porcie nie można jednocześnie włączyć kontroli przeciążenia burzą i kontroli prędkości wejściowej.`,
+        Note33: `Wśród identyfikatorów kolejki TC-id TC0, TC1..TC3, im większa wartość, tym wyższy priorytet.`,
+        Note34: `Wśród identyfikatorów kolejki TC-id TC0, TC1..TC3, im większa wartość, tym wyższy priorytet.`,
+        Note35: `Jeśli wybierzesz mapowanie DSCP na priorytet, pakiety IP zostaną przypisane do różnych poziomów priorytetu na podstawie relacji mapowania między CoS i TC w 802.1P.`,
       },
     },
   },
