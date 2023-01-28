@@ -34,10 +34,7 @@ export default function STPPortConfig() {
         <MultiPage.Button isSpecial>{t('Refresh')}</MultiPage.Button>
         <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
       </MultiPage.ButtonsRow>
-      <MultiPage.Note>
-        If the Path Cost of a port is set to 0, it will after automatically
-        according to the ports link speed.
-      </MultiPage.Note>
+      <MultiPage.Note>{t('Note38')}</MultiPage.Note>
     </MultiPage.Section>
   );
 }

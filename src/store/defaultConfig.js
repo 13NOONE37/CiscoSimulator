@@ -427,12 +427,13 @@ const defaultConfig = {
     fields: [
       { type: 'disable' },
       { type: 'select', options: ['Disable', 'Enable'] },
-      { type: 'input', option: { type: 'number', min: 1, max: 128 } },
-      { type: 'select', options: ['Auto', '100', '19', '4', '2'] },
-      { type: 'select', options: ['Auto', '100', '19', '4', '2'] },
+      { type: 'input', option: { type: 'number' } },
+      { type: 'input', option: { type: 'text' } },
+      { type: 'input', option: { type: 'text' } },
+
       { type: 'select', options: ['Disable', 'Enable'] },
-      { type: 'select', options: ['Auto'] },
-      { type: 'select', options: ['UnChange', 'Change'] },
+      { type: 'select', options: ['Auto', 'Enable', 'Disable'] },
+      { type: 'select', options: ['UnChange', 'Enable'] },
       { type: 'disable' },
       { type: 'disable' },
       { type: 'disable' },
@@ -1278,6 +1279,248 @@ const defaultConfig = {
   QoSGlobalDiffDSCPMappingEnable: 'Disable',
   QoSGlobalDiffDSCPMapping1: undefined,
   QoSGlobalDiffDSCPMapping2: undefined,
+  STPSecurityPortProtect: {
+    names: [
+      'Port',
+      'LoopProtect',
+      'RootProtect',
+      'TCProtect',
+      'BPDUProtect',
+      'BPDUFilter',
+      'LAG',
+    ],
+    fields: [
+      { type: 'disable' },
+      {
+        type: 'select',
+        options: ['Disable', 'Enable'],
+      },
+      {
+        type: 'select',
+        options: ['Disable', 'Enable'],
+      },
+      {
+        type: 'select',
+        options: ['Disable', 'Enable'],
+      },
+      {
+        type: 'select',
+        options: ['Disable', 'Enable'],
+      },
+      {
+        type: 'select',
+        options: ['Disable', 'Enable'],
+      },
+      { type: 'disable' },
+    ],
+    data: [
+      ['1', 'Disable', 'Disable', 'Disable', 'Disable', 'Disable', undefined],
+      ['2', 'Disable', 'Disable', 'Disable', 'Disable', 'Disable', undefined],
+      ['3', 'Disable', 'Disable', 'Disable', 'Disable', 'Disable', undefined],
+      ['4', 'Disable', 'Disable', 'Disable', 'Disable', 'Disable', undefined],
+      ['5', 'Disable', 'Disable', 'Disable', 'Disable', 'Disable', undefined],
+      ['6', 'Disable', 'Disable', 'Disable', 'Disable', 'Disable', undefined],
+      ['7', 'Disable', 'Disable', 'Disable', 'Disable', 'Disable', undefined],
+      ['8', 'Disable', 'Disable', 'Disable', 'Disable', 'Disable', undefined],
+    ],
+  },
+  STPSecurityTCThreshold: 8,
+  TCSecurityTCProtectCycle: 4,
+
+  STPMSTPInstanceTable: {
+    names: ['Instance', 'Status', 'Priority', 'VLANID', ''],
+    fields: [
+      { type: 'disable' },
+      {
+        type: 'select',
+        options: ['Disable', 'Enable'],
+      },
+      {
+        type: 'input',
+        options: { type: 'number' },
+      },
+      {
+        type: 'input',
+        options: {
+          type: 'text',
+        },
+      },
+
+      { type: 'disable' },
+    ],
+    data: [
+      ['1', 'Disable', 32768, '', 'Clear'],
+      ['2', 'Disable', 32768, '', 'Clear'],
+      ['3', 'Disable', 32768, '', 'Clear'],
+      ['4', 'Disable', 32768, '', 'Clear'],
+      ['5', 'Disable', 32768, '', 'Clear'],
+      ['6', 'Disable', 32768, '', 'Clear'],
+      ['7', 'Disable', 32768, '', 'Clear'],
+      ['8', 'Disable', 32768, '', 'Clear'],
+      ['CIST', 'Disable', 32768, '', 'Clear'],
+    ],
+  },
+  STPMSTPInstancePortTable: {
+    names: ['Port', 'Priority', 'PathCost', 'PortRole', 'PortStatus', 'LAG'],
+    fields: [
+      { type: 'disable' },
+
+      {
+        type: 'input',
+        options: {
+          type: 'text',
+        },
+      },
+      {
+        type: 'input',
+        options: {
+          type: 'text',
+        },
+      },
+
+      { type: 'disable' },
+      { type: 'disable' },
+      { type: 'disable' },
+    ],
+    data: [
+      [1, 128, 'Auto', undefined, undefined, undefined],
+      [2, 128, 'Auto', undefined, undefined, undefined],
+      [3, 128, 'Auto', undefined, undefined, undefined],
+      [4, 128, 'Auto', undefined, undefined, undefined],
+      [5, 128, 'Auto', undefined, undefined, undefined],
+      [6, 128, 'Auto', undefined, undefined, undefined],
+      [7, 128, 'Auto', undefined, undefined, undefined],
+      [8, 128, 'Auto', undefined, undefined, undefined],
+    ],
+  },
+  MulticastAutoRefresh: 'Disable',
+  MulticastRefreshPeriod: undefined,
+  MulticastStatisticsTable: {
+    names: [
+      'Port',
+      'QueryPacket',
+      'ReportPacket(V1)',
+      'ReportPacket(V2)',
+      'ReportPacket(V3)',
+      'LeavePacket',
+      'ErrorPacket',
+    ],
+    fields: [
+      { type: 'disable' },
+      { type: 'disable' },
+      { type: 'disable' },
+      { type: 'disable' },
+      { type: 'disable' },
+      { type: 'disable' },
+      { type: 'disable' },
+    ],
+    data: [
+      [1, 0, 0, 0, 0, 0, 0],
+      [2, 0, 0, 0, 0, 0, 0],
+      [3, 0, 0, 0, 0, 0, 0],
+      [4, 0, 0, 0, 0, 0, 0],
+      [5, 0, 0, 0, 0, 0, 0],
+      [6, 0, 0, 0, 0, 0, 0],
+      [7, 0, 0, 0, 0, 0, 0],
+      [8, 0, 0, 0, 0, 0, 0],
+    ],
+  },
+  IPRangeConfig: {
+    names: ['IP-RangeID', 'StartMulticastIP', 'EndMulticastIP'],
+    fields: [
+      { type: 'disable' },
+      { type: 'inputmasked' },
+      { type: 'inputmasked' },
+    ],
+    data: [
+      [1, [224, 0, 1, 10], [224, 0, 1, 20]],
+      [2, [239, 128, 5, 90], [239, 128, 5, 100]],
+      [5, [239, 192, 20, 10], [239, 192, 20, 20]],
+    ],
+  },
+  MulticastPortFilterTable: {
+    names: [
+      'Port',
+      'Filter',
+      'ActionMode',
+      'BoundIP-Range(ID)',
+      'MaxGroups',
+      'LAG',
+    ],
+    fields: [
+      { type: 'disable' },
+      { type: 'select', options: ['Disable', 'Enable'] },
+      { type: 'select', options: ['Permit', 'Deny'] },
+      { type: 'input', options: { type: 'text' } },
+      { type: 'input', options: { type: 'number' } },
+      { type: 'disable' },
+    ],
+    data: [
+      [1, 'Disable', 'Permit', undefined, 256, undefined],
+      [2, 'Disable', 'Permit', undefined, 256, undefined],
+      [3, 'Disable', 'Permit', undefined, 256, undefined],
+      [4, 'Disable', 'Permit', undefined, 256, undefined],
+      [5, 'Disable', 'Permit', undefined, 256, undefined],
+      [6, 'Disable', 'Permit', undefined, 256, undefined],
+      [7, 'Disable', 'Permit', undefined, 256, undefined],
+      [8, 'Disable', 'Permit', undefined, 256, undefined],
+    ],
+  },
+  multicastIPTable: [[[192, 168, 8, 8], 1, 2, 'Static']],
+  IGMPSnooping: 'Disable',
+  IGMPUnkownMulticast: 'Forward',
+  IGMPPortConfigTable: {
+    names: ['Port', 'IGMPSnooping', 'FastLeave', 'LAG'],
+    fields: [
+      { type: 'disable' },
+      { type: 'select', options: ['Disable', 'Enable'] },
+      { type: 'select', options: ['Disable', 'Enable'] },
+      { type: 'disable' },
+    ],
+    data: [
+      [1, 'Disable', 'Disable', undefined],
+      [2, 'Disable', 'Disable', undefined],
+      [3, 'Disable', 'Disable', undefined],
+      [4, 'Disable', 'Disable', undefined],
+      [5, 'Disable', 'Disable', undefined],
+      [6, 'Disable', 'Disable', undefined],
+      [7, 'Disable', 'Disable', undefined],
+      [8, 'Disable', 'Disable', undefined],
+    ],
+  },
+  IGMPMulticastVLANEnable: 'Disable',
+  IGMPMulticastVLANID: undefined,
+  IGMPMulticastVLANRouterPortTime: undefined,
+  IGMPMulticastVLANMemberPortTime: undefined,
+  IGMPMulticastVLANLeaveTime: undefined,
+  IGMPMulticastVLANStaticRouterPort: 'Disable',
+  MulticastIGMPSnoopingVLANConfig: {
+    names: [
+      'VLANID',
+      'RouterPortTime',
+      'MemberPortTime',
+      'LeaveTime',
+      'RouterPort',
+    ],
+    fields: [
+      { type: 'disable' },
+      { type: 'input', options: { type: 'number', min: 60, max: 600 } },
+      { type: 'input', options: { type: 'number', min: 60, max: 600 } },
+      { type: 'input', options: { type: 'number', min: 1, max: 30 } },
+      { type: 'select', options: ['Disable', 1, 2, 3, 4, 5, 6, 7, 8] },
+    ],
+    data: [],
+  },
+  VLANTable: [
+    [
+      1,
+      'Default VLAN',
+      [1, 2, 3, 4, 5, 6, 7, 8],
+      [],
+      [1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, undefined, undefined, undefined, undefined, undefined, undefined],
+    ],
+  ],
 };
 
 export default defaultConfig;

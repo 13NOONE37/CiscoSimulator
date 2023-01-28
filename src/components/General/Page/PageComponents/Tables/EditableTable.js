@@ -83,7 +83,7 @@ export default function EditableTable({
             inputProps={{
               type: 'number',
               min: 1,
-              max: 8,
+              max: data.data.length | 8,
               value: tableStates.currentPortValue,
               name: 'currentPortValue',
               onChange: handleChange,

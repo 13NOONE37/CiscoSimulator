@@ -14,7 +14,6 @@ export default function RegionConfig() {
       stpRevision: config.stpRevision,
     },
   );
-  //TODO mac address input
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>

@@ -1,6 +1,6 @@
-import React from "react";
-import * as MultiPage from "components/General/Page/MultiPage";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import * as MultiPage from 'components/General/Page/MultiPage';
+import { useTranslation } from 'react-i18next';
 
 export default function PortBinding() {
   const { t } = useTranslation();
@@ -8,24 +8,24 @@ export default function PortBinding() {
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>
-        <MultiPage.Title>{t("Port-BindConfig")}</MultiPage.Title>
+        <MultiPage.Title>{t('Port-BindConfig')}</MultiPage.Title>
         <MultiPage.ElementsLine
-          actionButton={() => <MultiPage.Button>{t("Bind")}</MultiPage.Button>}
+          actionButton={() => <MultiPage.Button>{t('Bind')}</MultiPage.Button>}
         >
           <MultiPage.SubElementsLine>
-            <span>{t("PolicyName")}:</span>
-            <MultiPage.Select options={["SelectPolicy"]} />
+            <span>{t('PolicyName')}:</span>
+            <MultiPage.Select options={['SelectPolicy']} />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
         <MultiPage.ElementsLine>
           <MultiPage.SubElementsLine
             actionButton={() => (
-              <MultiPage.Button>{t("Help")}</MultiPage.Button>
+              <MultiPage.Button>{t('Help')}</MultiPage.Button>
             )}
           >
-            <span>{t("Port")}:</span>
+            <span>{t('Port')}:</span>
             <MultiPage.Input
-              inputProps={{ type: "text" }}
+              inputProps={{ type: 'text' }}
               afterText={`(Format: 1-3,6,8)`}
             />
           </MultiPage.SubElementsLine>
@@ -33,14 +33,14 @@ export default function PortBinding() {
 
         <MultiPage.EditableTable
           isPortSelect={false}
-          title={t("PolicyBindTable")}
+          title={t('PolicyBindTable')}
           data={{
-            names: ["Index", "Policy Name", "Interface", "Direction"],
+            names: ['Index', 'PolicyName', 'Interface', 'Direction'],
             fields: [
-              { type: "disable" },
-              { type: "disable" },
-              { type: "disable" },
-              { type: "disable" },
+              { type: 'disable' },
+              { type: 'disable' },
+              { type: 'disable' },
+              { type: 'disable' },
             ],
             data: [],
           }}

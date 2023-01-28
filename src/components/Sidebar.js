@@ -63,7 +63,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideVLAN'),
+      name: t('SideVLAN✅'),
       action: () => history.push('/vlan/vlanconfig'),
       style: null,
       isSubitem: true,
@@ -75,7 +75,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideSpaningTree'),
+      name: t('SideSpaningTree✅'),
       action: () => history.push('/stpconfig/stpconfig'),
       style: null,
       isSubitem: true,
@@ -99,7 +99,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideMulticast'),
+      name: t('SideMulticast✅'),
       action: () => history.push('/igmpsnooping/snoopingconfig'),
       style: null,
       isSubitem: true,
@@ -143,7 +143,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideACL'),
+      name: t('SideACL✅'),
       action: () => history.push('/aclconfig/aclsummary'),
       style: null,
       isSubitem: true,

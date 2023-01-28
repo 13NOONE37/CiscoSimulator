@@ -20,18 +20,6 @@ export default function STPConfig() {
       stpConfigMaxHops: config.stpConfigMaxHops,
     },
   );
-  /*
-  //STP-Start
-  stpConfigEnable: 'Enable',
-  stpConfigVersion: 'STP',
-  stpConfigCISTPriority: 32768,
-  stpConfigHelloTime: 2,
-  stpConfigMaxAge: 20,
-  stpConfigForwardDelay: 15,
-  stpConfigTxHoldCount: 5,
-  stpConfigMaxHops: 20,
-  //STP-END
-*/
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>
@@ -91,7 +79,7 @@ export default function STPConfig() {
                 onChange: (e) =>
                   setLocalConfig({ ['setpConfigVersion']: e.target.value }),
               }}
-              options={['STP']}
+              options={['STP', 'RSTP', 'MSTP']}
             />
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
