@@ -45,7 +45,6 @@ export default function PortIsolation() {
     setforceUpdate(forceUpdate + 1);
   };
   const getForwardList = (list) => {
-    //#TODO: better ranges
     for (let i = 0; i < 8; i++) {
       console.log(list[i]);
     }

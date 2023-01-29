@@ -58,6 +58,30 @@ export default function StaticMulticastIP() {
     setLocalConfig({ ['multicastIPTable']: temp });
   };
 
+  const handleDelete = () => {
+    let temp = localConfig.multicastIPTable;
+
+    temp = temp.filter((user) => !user[5]);
+
+    temp = temp.map((user) => {
+      user[5] = false;
+      return user;
+    });
+    setLocalConfig({ multicastIPTable: temp });
+    MultiPage.handleApplyToConfig(
+      config,
+      { multicastIPTable: temp },
+      'multicastIPTable',
+    );
+  };
+
+  const handleAll = () => {
+    let temp = localConfig.multicastIPTable.map((item) => {
+      item[5] = true;
+      return item;
+    });
+    setLocalConfig({ multicastIPTable: temp });
+  };
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>
@@ -142,16 +166,28 @@ export default function StaticMulticastIP() {
         <MultiPage.DefaultTable
           title={t('FilteringAddressTable')}
           navItems={['Select', 'MulticastIP', 'VLANID', 'ForwardPort']}
-          data={localConfig.multicastIPTable.map((item) => [
-            <input type="checkbox" />,
+          data={localConfig.multicastIPTable.map((item, itemIndex) => [
+            <input
+              type="checkbox"
+              checked={item[5]}
+              onChange={() => {
+                let temp = localConfig.multicastIPTable;
+                temp[itemIndex][5] = !temp[itemIndex][5];
+                setLocalConfig({ multicastIPTable: temp });
+              }}
+            />,
             item[0].join('.'),
             item[1],
             item[2],
           ])}
         />
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleAll}>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleDelete}>
+            {t('Delete')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>

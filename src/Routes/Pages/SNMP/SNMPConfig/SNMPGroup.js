@@ -21,7 +21,7 @@ export default function SNMPGroup() {
   );
 
   const [tempNotify, settempNotify] = useState(config.SNMPGroupTable);
-  const [forceUpdate, setforceUpdate] = useState(1);
+  const [forceUpdate, setForceUpdate] = useState(1);
 
   const handleClear = () => {
     setLocalConfig({ ['groupName']: '' });
@@ -87,6 +87,31 @@ export default function SNMPGroup() {
     }
   };
   const viewOptions = config.SNMPViewTable.map((i) => i.viewName);
+
+  const handleDelete = () => {
+    let temp = tempNotify;
+    temp = temp.filter((user) => !user.checked);
+
+    temp = temp.map((user) => {
+      user.checked = false;
+      return user;
+    });
+    settempNotify(temp);
+    setForceUpdate(forceUpdate + 1);
+    MultiPage.handleApplyToConfig(
+      config,
+      { SNMPGroupTable: temp },
+      'SNMPGroupTable',
+    );
+  };
+
+  const handleAll = () => {
+    let temp = tempNotify.map((notify) => {
+      notify.checked = true;
+      return notify;
+    });
+    settempNotify(temp);
+  };
 
   return (
     <MultiPage.Wizard>
@@ -214,7 +239,16 @@ export default function SNMPGroup() {
             'Operation',
           ]}
           data={tempNotify.map((user, index) => [
-            <input type="checkbox" />,
+            <input
+              type="checkbox"
+              checked={user.checked}
+              onChange={() => {
+                let temp = tempNotify;
+                temp[index].checked = !temp[index]?.checked;
+                settempNotify(temp);
+                setForceUpdate(forceUpdate + 1);
+              }}
+            />,
             user.groupName,
             user.securityModel,
             user.securityLevel,
@@ -227,8 +261,12 @@ export default function SNMPGroup() {
           ])}
         />
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleAll}>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleDelete}>
+            {t('Delete')}
+          </MultiPage.Button>{' '}
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>{t('Note23')}</MultiPage.Note>

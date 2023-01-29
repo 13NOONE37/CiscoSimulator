@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import AppContext from 'store/AppContext';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ export default function StaticAddress() {
       addressTable: config.addressTable,
     },
   );
+  const [forceUpdate, setForceUpdate] = useState(2);
 
   const handleCreate = () => {
     if (MultiPage.isValidMAC(localConfig.MACAddress)) {
@@ -164,9 +165,12 @@ export default function StaticAddress() {
               { type: 'disable' },
               { type: 'disable' },
             ],
-            data: localConfig.addressTable.filter(
-              (item) => item[3] == 'Static',
-            ),
+            data:
+              forceUpdate &&
+              localConfig.addressTable.filter((item) => item[3] == 'Static'),
+          }}
+          saveTable={(data) => {
+            setForceUpdate(forceUpdate + 1);
           }}
         />
         <MultiPage.ButtonsRow>

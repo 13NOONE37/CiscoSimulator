@@ -15,7 +15,7 @@ export default function Sidebar() {
   const switchName = 'TL-SG2008';
   const elements = [
     {
-      name: t('SideSystem✅'),
+      name: t('System'),
       action: () => history.push('/systeminfo/systemsummary'),
       style: null,
       isSubitem: true,
@@ -39,7 +39,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideSwitching✅'),
+      name: t('Switching'),
       action: () => history.push('/switching/portconfig'),
       style: null,
       isSubitem: true,
@@ -63,7 +63,7 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideVLAN✅'),
+      name: t('VLAN'),
       action: () => history.push('/vlan/vlanconfig'),
       style: null,
       isSubitem: true,
@@ -75,109 +75,109 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideSpaningTree✅'),
+      name: t('Spaning Tree'),
       action: () => history.push('/stpconfig/stpconfig'),
       style: null,
       isSubitem: true,
       subitems: [
         {
-          name: 'STPConfig',
+          name: 'STP Config',
           action: () => history.push('/stpconfig/stpconfig'),
         },
         {
-          name: 'PortConfig',
+          name: 'Port Config',
           action: () => history.push('/stpportconfig/portconfig'),
         },
         {
-          name: 'MSTPInstance',
+          name: 'MSTP Instance',
           action: () => history.push('/mstpinstance/regionconfig'),
         },
         {
-          name: 'STPSecurity',
+          name: 'STP Security',
           action: () => history.push('/stpsecurity/portprotect'),
         },
       ],
     },
     {
-      name: t('SideMulticast✅'),
+      name: t('Multicast'),
       action: () => history.push('/igmpsnooping/snoopingconfig'),
       style: null,
       isSubitem: true,
       subitems: [
         {
-          name: 'IGMPSnooping',
+          name: 'IGMP nooping',
           action: () => history.push('/igmpsnooping/snoopingconfig'),
         },
         {
-          name: 'MulticastIPTable',
+          name: 'Multicast IP',
           action: () => history.push('/multicastip/multicastiptable'),
         },
         {
-          name: 'MulticastFilter',
+          name: 'Multicast Filter',
           action: () => history.push('/multicastfilter/iprange'),
         },
         {
-          name: 'PacketStatistics',
+          name: 'Packet Statistics',
           action: () => history.push('/packetstatistics/packetstatistics'),
         },
       ],
     },
     {
-      name: t('QoS✅'),
+      name: t('QoS'),
       action: () => history.push('/diffserv/portpriority'),
       style: null,
       isSubitem: true,
       subitems: [
         {
-          name: 'DiffServ',
+          name: 'Diff Serv',
           action: () => history.push('/diffserv/portpriority'),
         },
         {
-          name: 'BandwidthControl',
+          name: 'Bandwidth Control',
           action: () => history.push('/bandwidthcontrol/ratelimit'),
         },
         {
-          name: 'VoiceVLAN',
+          name: 'Voice VLAN',
           action: () => history.push('/voicevlan/globalconfig'),
         },
       ],
     },
     {
-      name: t('SideACL✅'),
+      name: t('ACL'),
       action: () => history.push('/aclconfig/aclsummary'),
       style: null,
       isSubitem: true,
       subitems: [
         {
-          name: 'ACLConfig',
+          name: 'ACL Config',
           action: () => history.push('/aclconfig/aclsummary'),
         },
         {
-          name: 'PolicyConfig',
+          name: 'Policy Config',
           action: () => history.push('/policyconfig/policysummary'),
         },
         {
-          name: 'PolicyBinding',
+          name: 'Policy Binding',
           action: () => history.push('/policybinding/BindingTableACL'),
         },
       ],
     },
     {
-      name: t('NetworkSecurity✅'),
+      name: t('NetworkSecurity'),
       action: () => history.push('/ipmacbinding/bindingtable'),
       style: null,
       isSubitem: true,
       subitems: [
         {
-          name: 'IPMACBinding',
+          name: 'IP-MAC Binding',
           action: () => history.push('/ipmacbinding/bindingtable'),
         },
         {
-          name: 'ARPInspection',
+          name: 'ARP Inspection',
           action: () => history.push('/arpinspection/arpdetect'),
         },
         {
-          name: 'DoSDefend',
+          name: 'DoS Defend',
           action: () => history.push('/dosdefend/dosdefend'),
         },
         {
@@ -187,13 +187,13 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideSNMP✅'),
+      name: t('SNMP'),
       action: () => history.push('/snmpconfig/globalconfig'),
       style: null,
       isSubitem: true,
       subitems: [
         {
-          name: 'SNMPConfig',
+          name: 'SNMP Config',
           action: () => history.push('/snmpconfig/globalconfig'),
         },
         {
@@ -207,13 +207,13 @@ export default function Sidebar() {
       ],
     },
     {
-      name: t('SideMaintenance✅'),
+      name: t('Maintenance'),
       action: () => history.push('/systemmonitor/cpumonitor'),
       style: null,
       isSubitem: true,
       subitems: [
         {
-          name: 'SystemMonitor',
+          name: 'System Monitor',
           action: () => history.push('/systemmonitor/cpumonitor'),
         },
         {
@@ -221,23 +221,23 @@ export default function Sidebar() {
           action: () => history.push('/log/logtable'),
         },
         {
-          name: 'DeviceDiagnostics',
+          name: 'Device Diagnostics',
           action: () => history.push('/devicediagnostics/cabletest'),
         },
         {
-          name: 'NetworkDiagnostics',
+          name: 'Network Diagnostics',
           action: () => history.push('/networkdiagnostics/ping'),
         },
       ],
     },
     {
-      name: t('SideSaveConfig✅'),
+      name: t('Save Config'),
       action: () => {},
       style: null,
       isSubitem: false,
     },
     {
-      name: t('SideLogout✅'),
+      name: t('Logout'),
       action: () => {
         setLoggedIn(false);
         sessionStorage.setItem('loggedIn', 'false');

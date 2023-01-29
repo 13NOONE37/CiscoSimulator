@@ -16,12 +16,6 @@ export default function LAGTable() {
 
   const [tempUsers, settempUsers] = useState(localConfig.lagTable);
 
-  const handleAll = () => {
-    let temp = tempUsers;
-    temp = temp.map((user) => true);
-    settempUsers(temp);
-  };
-
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>

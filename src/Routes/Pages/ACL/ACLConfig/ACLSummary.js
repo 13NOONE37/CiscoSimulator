@@ -33,21 +33,6 @@ export default function ACLSummary() {
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
-        {/* <MultiPage.EditableTable
-          isPortSelect={false}
-          title={t("RuleTable")}
-          data={{
-            names: ["", "", "", ""],
-            fields: [
-              { type: "disable" },
-              { type: "disable" },
-              { type: "disable" },
-              { type: "disable" },
-            ],
-            data: [],
-          }}
-        /> */}
-
         <MultiPage.ButtonsRow>
           <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>

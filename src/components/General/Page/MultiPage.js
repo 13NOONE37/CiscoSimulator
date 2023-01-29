@@ -22,7 +22,7 @@ const handleApplyToConfig = (conf, localConf, name) => {
   conf[name] = localConf[name];
 };
 function isValidMAC(str) {
-  return /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/.test(str);
+  return /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/.test(str.trim());
 }
 
 const WizardContext = createContext({

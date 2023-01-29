@@ -164,7 +164,9 @@ export default function MulticastVLANConfig() {
           >
             {t('Apply')}
           </MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial disabled>
+            {t('Delete')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>{t('Note43')}</MultiPage.Note>

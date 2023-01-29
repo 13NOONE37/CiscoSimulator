@@ -90,6 +90,9 @@ export default function PacketStatistics() {
           title={t('IGMPStatistics')}
           isLeftPortSelect={false}
           data={localConfig.MulticastStatisticsTable}
+          saveTable={(data) =>
+            setLocalConfig({ ['MulticastStatisticsTable']: data })
+          }
           gridTemp={`65px repeat(6,1fr)`}
         />
 

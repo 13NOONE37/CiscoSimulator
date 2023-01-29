@@ -100,6 +100,32 @@ export default function SNMPUser() {
     }
   };
 
+  const [forceUpdate, setForceUpdate] = useState(1);
+
+  const handleDelete = () => {
+    let temp = tempNotify;
+    temp = temp.filter((user) => !user.checked);
+
+    temp = temp.map((user) => {
+      user.checked = false;
+      return user;
+    });
+    settempNotify(temp);
+    setForceUpdate(forceUpdate + 1);
+    MultiPage.handleApplyToConfig(
+      config,
+      { SNMPUserTable: temp },
+      'SNMPUserTable',
+    );
+  };
+
+  const handleAll = () => {
+    let temp = tempNotify.map((notify) => {
+      notify.checked = true;
+      return notify;
+    });
+    settempNotify(temp);
+  };
   return (
     <MultiPage.Wizard>
       <MultiPage.Section width={1000}>
@@ -266,7 +292,16 @@ export default function SNMPUser() {
             'Operation',
           ]}
           data={tempNotify.map((user, index) => [
-            <input type="checkbox" />,
+            <input
+              type="checkbox"
+              checked={user.checked}
+              onChange={() => {
+                let temp = tempNotify;
+                temp[index].checked = !temp[index]?.checked;
+                settempNotify(temp);
+                setForceUpdate(forceUpdate + 1);
+              }}
+            />,
             user.userName,
             user.userType,
             user.groupName,
@@ -279,9 +314,14 @@ export default function SNMPUser() {
             </MultiPage.Button>,
           ])}
         />
+
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleAll}>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleDelete}>
+            {t('Delete')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>{t('Note24')}</MultiPage.Note>

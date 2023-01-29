@@ -41,6 +41,32 @@ export default function SNMPView() {
     }
   };
 
+  const [forceUpdate, setForceUpdate] = useState(1);
+
+  const handleDelete = () => {
+    let temp = tempNotify;
+    temp = temp.filter((user) => !user.checked);
+
+    temp = temp.map((user) => {
+      user.checked = false;
+      return user;
+    });
+    settempNotify(temp);
+    setForceUpdate(forceUpdate + 1);
+    MultiPage.handleApplyToConfig(
+      config,
+      { SNMPViewTable: temp },
+      'SNMPViewTable',
+    );
+  };
+
+  const handleAll = () => {
+    let temp = tempNotify.map((notify) => {
+      notify.checked = true;
+      return notify;
+    });
+    settempNotify(temp);
+  };
   return (
     <MultiPage.Wizard>
       <MultiPage.Section>
@@ -118,16 +144,30 @@ export default function SNMPView() {
         <MultiPage.DefaultTable
           title={t('ViewTable')}
           navItems={['Select', 'ViewName', 'ViewType', 'MIBObjectID']}
-          data={tempNotify.map((user) => [
-            <input type="checkbox" />,
+          data={tempNotify.map((user, index) => [
+            <input
+              type="checkbox"
+              checked={user.checked}
+              onChange={() => {
+                let temp = tempNotify;
+                temp[index].checked = !temp[index]?.checked;
+                settempNotify(temp);
+                setForceUpdate(forceUpdate + 1);
+              }}
+            />,
             user.viewName,
             user.viewType,
             user.mibID,
           ])}
         />
+
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleAll}>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleDelete}>
+            {t('Delete')}
+          </MultiPage.Button>{' '}
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note />

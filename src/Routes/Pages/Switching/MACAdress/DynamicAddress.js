@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import AppContext from 'store/AppContext';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,7 @@ export default function DynamicAddress() {
       addressTable: config.addressTable,
     },
   );
+  const [forceUpdate, setForceUpdate] = useState(2);
 
   const handleFilter = () => {
     let temp = config.addressTable.filter((item) => {
@@ -155,15 +156,25 @@ export default function DynamicAddress() {
               { type: 'disable' },
               { type: 'disable' },
             ],
-            data: localConfig.addressTable.filter(
-              (item) => item[3] == 'Dynamic',
-            ),
+            data:
+              forceUpdate &&
+              localConfig.addressTable.filter((item) => item[3] == 'Dynamic'),
+          }}
+          saveTable={(data) => {
+            setForceUpdate(forceUpdate + 1);
           }}
         />
+
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Bind')}</MultiPage.Button>
+          <MultiPage.Button isSpecial disabled>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial disabled>
+            {t('Delete')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial disabled>
+            {t('Bind')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>

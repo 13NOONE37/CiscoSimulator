@@ -23,7 +23,7 @@ export default function LogTable() {
           isLeftPortSelect={false}
           gridTemp={'65px 165px 95px 95px 1fr'}
           data={localConfig.logTable}
-          saveTable={() => null}
+          saveTable={(data) => setLocalConfig({ ['logTable']: data })}
         />
         <MultiPage.ButtonsRow>
           <MultiPage.Button isSpecial>{t('Refresh')}</MultiPage.Button>

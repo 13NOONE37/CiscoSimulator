@@ -27,6 +27,7 @@ export default function ManualBinding() {
     setLocalConfig({ ['port']: 1 });
     setLocalConfig({ ['protectType']: 'Disable' });
   };
+  const [forceUpdate, setForceUpdate] = useState(1);
 
   const regExIP =
     /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
@@ -56,9 +57,33 @@ export default function ManualBinding() {
       port: localConfig.port,
       protectType: localConfig.protectType,
       collision: undefined,
+      checked: false,
     });
     settempNotify(temp);
     handleClear();
+  };
+  const handleDelete = () => {
+    let temp = tempNotify;
+    temp = temp.filter((user) => !user.checked);
+
+    temp = temp.map((user) => {
+      user.checked = false;
+      return user;
+    });
+    settempNotify(temp);
+    MultiPage.handleApplyToConfig(
+      config,
+      { manualBinding: temp },
+      'manualBinding',
+    );
+  };
+
+  const handleAll = () => {
+    let temp = tempNotify.map((notify) => {
+      notify.checked = true;
+      return notify;
+    });
+    settempNotify(temp);
   };
 
   return (
@@ -152,33 +177,48 @@ export default function ManualBinding() {
           </MultiPage.SubElementsLine>
         </MultiPage.ElementsLine>
 
-        <MultiPage.DefaultTable
-          title={t('ManualBindingTable')}
-          navItems={[
-            'Select',
-            'Hostname',
-            'IPAddress',
-            'MAC Address',
-            'VLAN ID',
-            'Port',
-            'ProtectType',
-            'Collision',
-          ]}
-          data={tempNotify.map((item) => [
-            <input type="checkbox" />,
-            item.hostname,
-            item.ipAddress?.join('.'),
-            item.mac,
-            item.VLANID,
-            item.port,
-            item.protectType,
-            item.collision,
-          ])}
-        />
+        {forceUpdate && (
+          <MultiPage.DefaultTable
+            title={t('ManualBindingTable')}
+            navItems={[
+              'Select',
+              'Hostname',
+              'IPAddress',
+              'MAC Address',
+              'VLAN ID',
+              'Port',
+              'ProtectType',
+              'Collision',
+            ]}
+            data={tempNotify.map((item, index) => [
+              <input
+                type="checkbox"
+                checked={item.checked}
+                onChange={() => {
+                  let temp = tempNotify;
+                  temp[index].checked = !temp[index].checked;
+                  settempNotify(temp);
+                  setForceUpdate(forceUpdate + 1);
+                }}
+              />,
+              item.hostname,
+              item.ipAddress?.join('.'),
+              item.mac,
+              item.VLANID,
+              item.port,
+              item.protectType,
+              item.collision,
+            ])}
+          />
+        )}
 
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleAll}>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleDelete}>
+            {t('Delete')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>

@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import * as MultiPage from 'components/General/Page/MultiPage';
 import AppContext from 'store/AppContext';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ export default function FilteringAddress() {
       addressTable: config.addressTable,
     },
   );
+  const [forceUpdate, setForceUpdate] = useState(2);
 
   const handleCreate = () => {
     if (MultiPage.isValidMAC(localConfig.MACAddress)) {
@@ -146,14 +147,22 @@ export default function FilteringAddress() {
               { type: 'disable' },
               { type: 'disable' },
             ],
-            data: localConfig.addressTable.filter(
-              (item) => item[3] == 'Filtering',
-            ),
+            data:
+              forceUpdate &&
+              localConfig.addressTable.filter((item) => item[3] == 'Filtering'),
+          }}
+          saveTable={(data) => {
+            setForceUpdate(forceUpdate + 1);
           }}
         />
+
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial disabled>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial disabled>
+            {t('Delete')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note>

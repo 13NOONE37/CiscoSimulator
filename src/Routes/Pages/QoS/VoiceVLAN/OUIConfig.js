@@ -16,7 +16,7 @@ export default function OUIConfig() {
     },
   );
   const [tempNotify, settempNotify] = useState(config.QoSVoiceGlobalQUIConfig);
-
+  const [forceUpdate, setForceUpdate] = useState(1);
   const handleClear = () => {
     setLocalConfig({ ['oui']: '' });
     setLocalConfig({ ['mask']: '' });
@@ -48,6 +48,30 @@ export default function OUIConfig() {
     console.log(temp);
     settempNotify(temp);
     handleClear();
+  };
+  const handleDelete = () => {
+    let temp = tempNotify;
+    temp = temp.filter((user) => !user.checked);
+
+    temp = temp.map((user) => {
+      user.checked = false;
+      return user;
+    });
+    settempNotify(temp);
+    setForceUpdate(forceUpdate + 1);
+    MultiPage.handleApplyToConfig(
+      config,
+      { QoSVoiceGlobalQUIConfig: temp },
+      'QoSVoiceGlobalQUIConfig',
+    );
+  };
+
+  const handleAll = () => {
+    let temp = tempNotify.map((notify) => {
+      notify.checked = true;
+      return notify;
+    });
+    settempNotify(temp);
   };
 
   return (
@@ -105,16 +129,29 @@ export default function OUIConfig() {
         <MultiPage.DefaultTable
           title={t('CreateOUI')}
           navItems={['Select', 'OUI', 'Mask', 'Description']}
-          data={tempNotify.map((item) => [
-            <input type="checkbox" />,
+          data={tempNotify.map((item, index) => [
+            <input
+              type="checkbox"
+              checked={item.checked}
+              onChange={() => {
+                let temp = tempNotify;
+                temp[index].checked = !temp[index]?.checked;
+                settempNotify(temp);
+                setForceUpdate(forceUpdate + 1);
+              }}
+            />,
             item.oui,
             item.mask,
             item.description,
           ])}
         />
         <MultiPage.ButtonsRow>
-          <MultiPage.Button isSpecial>{t('All')}</MultiPage.Button>
-          <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleAll}>
+            {t('All')}
+          </MultiPage.Button>
+          <MultiPage.Button isSpecial action={handleDelete}>
+            {t('Delete')}
+          </MultiPage.Button>
           <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
         </MultiPage.ButtonsRow>
         <MultiPage.Note />

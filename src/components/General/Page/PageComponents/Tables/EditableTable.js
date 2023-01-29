@@ -37,14 +37,21 @@ export default function EditableTable({
   };
   const handleSelectAllPorts = () => {
     let temp = tableStates.checkedPorts;
+
     if (temp.includes(false)) {
       //here was tableStates.checkedPorts
-      temp = temp.map((item) => {
-        if (!item) item = true;
-        return item;
-      });
+      for (let i = 0; i <= data.data.length; i++) {
+        temp[i] = true;
+      }
+      // temp = temp.map((item) => {
+      //   if (!item) item = true;
+      //   return item;
+      // });
     } else {
-      temp = temp.map((item) => (item = false));
+      for (let i = 0; i <= data.data.length; i++) {
+        temp[i] = false;
+      }
+      // temp = temp.map((item) => (item = false));
     }
     setTableStates({
       checkedPorts: temp,

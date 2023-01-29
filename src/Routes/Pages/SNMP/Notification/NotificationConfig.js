@@ -137,6 +137,22 @@ export default function NotificationConfig() {
       alert(t('There are empty fields'));
     }
   };
+  const handleDelete = () => {
+    let temp = tempNotify;
+    temp = temp.filter((user) => !user.checked);
+
+    temp = temp.map((user) => {
+      user.checked = false;
+      return user;
+    });
+    settempNotify(temp);
+    MultiPage.handleApplyToConfig(
+      config,
+      { notificationConfig: temp },
+      'notificationConfig',
+    );
+  };
+
   const handleAll = () => {
     let temp = tempNotify.map((notify) => {
       notify.checked = true;
@@ -348,7 +364,9 @@ export default function NotificationConfig() {
             <MultiPage.Button isSpecial action={handleAll}>
               {t('All')}
             </MultiPage.Button>
-            <MultiPage.Button isSpecial>{t('Delete')}</MultiPage.Button>
+            <MultiPage.Button isSpecial action={handleDelete}>
+              {t('Delete')}
+            </MultiPage.Button>
             <MultiPage.Button isSpecial>{t('Help')}</MultiPage.Button>
           </MultiPage.ButtonsRow>
           <MultiPage.Note />
