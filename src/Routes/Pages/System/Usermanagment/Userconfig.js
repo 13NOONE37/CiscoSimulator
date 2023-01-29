@@ -59,7 +59,7 @@ export default function Userconfig() {
           permission: localConfig.permission,
           checked: false,
         });
-        console.log(temp);
+        // console.log(temp);
         settempUsers(temp);
         // MultiPage.handleApplyToConfig(config, temp, 'users');
         handleClear();
@@ -96,7 +96,7 @@ export default function Userconfig() {
           permission: localConfig.permission,
           checked: temp[localConfig.isEditing - 1]?.checked,
         };
-        console.log(temp);
+        // console.log(temp);
         settempUsers(temp);
         // MultiPage.handleApplyToConfig(config, temp, 'users');
         handleClear();

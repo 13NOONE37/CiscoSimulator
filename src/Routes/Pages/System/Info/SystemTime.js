@@ -361,7 +361,7 @@ export default function SystemTime() {
                 setLocalConfig({ ['timeSource']: e.target.value });
                 setLocalConfig({ ['currentTime']: date.toLocaleTimeString() });
                 setLocalConfig({ ['currentDate']: date.toLocaleDateString() });
-                console.log(date.toLocaleDateString());
+                // console.log(date.toLocaleDateString());
               },
               defaultChecked: localConfig.timeSource === `Sync with PC's Clock`,
             }}

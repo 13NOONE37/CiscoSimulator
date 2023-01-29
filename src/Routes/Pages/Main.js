@@ -7,6 +7,7 @@ import {
   NavLink,
   useParams,
   useRouteMatch,
+  Redirect,
 } from 'react-router-dom';
 import AppContext from 'store/AppContext';
 
@@ -792,6 +793,9 @@ export default function Main() {
         <Sidebar />
 
         <Switch>
+          <Route path="/" exact={true}>
+            <Redirect to={'/systeminfo/systemsummary'} />
+          </Route>
           {pageRoutes.map((route1, index1) => (
             <Route path={route1.path} key={index1}>
               <SubPages navItems={route1.navItems} />
@@ -808,7 +812,6 @@ export default function Main() {
 
 const SubPages = ({ navItems }) => {
   let { path, url } = useRouteMatch();
-  console.log(url, path);
   return (
     <div className="InfoContainer">
       <nav>

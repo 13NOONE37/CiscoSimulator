@@ -331,7 +331,7 @@ export default function VLANConfig() {
                         dataElementIndex
                       ],
                     onChange: (e) => {
-                      console.log(localConfig.currentVLAN);
+                      // console.log(localConfig.currentVLAN);
                       if (localConfig.currentVLAN != null) {
                         let temp = localConfig.VLANTable;
                         temp[localConfig.currentVLAN][4][dataElementIndex] =

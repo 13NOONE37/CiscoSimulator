@@ -16,7 +16,6 @@ export default function OUIConfig() {
     },
   );
   const [tempNotify, settempNotify] = useState(config.QoSVoiceGlobalQUIConfig);
-  const [forceUpdate, setForceUpdate] = useState(1);
   const handleClear = () => {
     setLocalConfig({ ['oui']: '' });
     setLocalConfig({ ['mask']: '' });
@@ -45,10 +44,12 @@ export default function OUIConfig() {
       mask: localConfig.mask,
       description: localConfig.description,
     });
-    console.log(temp);
+    // console.log(temp);
     settempNotify(temp);
     handleClear();
   };
+  const [forceUpdate, setForceUpdate] = useState(1);
+
   const handleDelete = () => {
     let temp = tempNotify;
     temp = temp.filter((user) => !user.checked);

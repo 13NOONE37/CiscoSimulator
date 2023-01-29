@@ -46,7 +46,7 @@ export default function PortIsolation() {
   };
   const getForwardList = (list) => {
     for (let i = 0; i < 8; i++) {
-      console.log(list[i]);
+      // console.log(list[i]);
     }
     return `${list
       .map((item, index) => {
