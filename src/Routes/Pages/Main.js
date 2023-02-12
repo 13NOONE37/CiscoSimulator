@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Switch,
   Route,
   Link,
@@ -789,7 +789,7 @@ export default function Main() {
   ];
   return (
     <div className="ContentContainer">
-      <Router>
+      <HashRouter>
         <Sidebar />
 
         <Switch>
@@ -805,7 +805,7 @@ export default function Main() {
             <NotFound />
           </Route>
         </Switch>
-      </Router>
+      </HashRouter>
     </div>
   );
 }
